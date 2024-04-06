@@ -46,4 +46,56 @@ const deleteComment = catchAsync(async (req, res, next)=>{
     })
 })
 
-module.exports = {postComment, updateComment, deleteComment};
+const getCommentsForUser = catchAsync(async (req, res, next)=>{
+    const allComments = await CommentModel.aggregate([
+        {
+            $match: {username : req.user.username}
+        },{
+            $project: {
+                text: 1
+            }
+        }
+    ])
+
+    res.status(200).json({
+        status: 'success',
+        comments: allComments
+    })
+})
+
+const getCommentForPost = catchAsync(async (req, res, next) => {
+    const allComments = await CommentModel.aggregate([
+        {
+            $match: { postId: req.params.blogid } 
+        },
+        {
+            $lookup: {
+                from: 'userdatas', 
+                localField: 'username',
+                foreignField: 'username',
+                as: 'user' 
+            }
+        },
+        {
+            $unwind: '$user'
+        },
+        {
+            $project: { 
+                _id: 0, 
+                commentId: 1,
+                text: 1,
+                postId: 1,
+                'user.username': 1,
+                'user.name': 1 
+            }
+        }
+    ]);
+
+    res.status(200).json({
+        status: 'success',
+        comments: allComments
+    });
+});
+
+
+module.exports = {postComment, updateComment, deleteComment, getCommentsForUser, getCommentForPost};
