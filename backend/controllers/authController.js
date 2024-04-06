@@ -74,9 +74,8 @@ const validateJWT = catchAsync(async(req, res, next)=>{
     }
 
     // validationg token
-
     const verifyToken = util.promisify(jwt.verify);
-    const decoded = await verifyToken(token, process.env.JWT_SECRET);
+    const decoded = await verifyToken(token, process.env.JWT_SECRET); // if signature not verified throws an error catched by catch in catchAsync
 
     //to check if user still exists in DB
     const user = await UserData.findById(decoded.id);
