@@ -8,4 +8,6 @@ router.post('/signup', authController.signup);
 
 router.post('/login', authController.login);
 
+
+// router.get('/validate', authController.validateJWT);
 module.exports = router;
