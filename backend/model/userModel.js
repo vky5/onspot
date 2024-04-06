@@ -38,8 +38,7 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['admin', 'writer', 'reader'],
-        default: 'reader',
-        select: false
+        default: 'reader'
     },
     date: {
         type: Date,
@@ -61,7 +60,7 @@ userSchema.pre('save', async function(next){
 })
 
 
-userSchema.method.correctPassword = async function(password, actualPassword){
+userSchema.methods.correctPassword = async function(password, actualPassword){
     return await bcrypt.compare(password, actualPassword);
 }
 

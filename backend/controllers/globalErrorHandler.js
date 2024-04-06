@@ -1,19 +1,19 @@
 const AppError = require('../utils/appError');
 
-// check for invalid field types
+// Check for the invalid type fields
 const handleCastErrorDB = (err)=>{
     const message = `Invalid ${err.path}: ${err.value}`
     return new AppError(message, 400);
 }
 
-// check for duplicate field that should be unique
-const handleDuplicateFieldsDB = (err)=>{
-    const value = Object.keys(err.keyvalue).map(key=> `${key} : ${err.keyValue[key]}`);
+// check for the duplicate fields that should be unique
+const handleDuplicateFieldsDB = (err) => {
+    const value = Object.keys(err.keyValue).map(key=> `${key} : ${err.keyValue[key]}`);
     const message = `Duplicate field value {${value}}. Please use another value!`;
     return new AppError(message, 400);
 }
 
-// validation errors for schema
+// validation errors for schemas
 const handleValidationErrorDB = err=>{
     const errName = Object.values(err.errors).map(ele=> ele.message); // error has errors object which contains info about all errors.
     const message = `Invalid input data. ${errName.join('. ')}`;
@@ -23,7 +23,6 @@ const handleValidationErrorDB = err=>{
 // JWT related errors
 const handleJWTError = ()=> new AppError('Invalid token. Please log in again!', 401);
 const handleJWTexpired = err => new AppError('Your token has expired. Please log in again', 401);
-
 
 
 

@@ -22,19 +22,22 @@ const createAndSendJWT = (user, res, responseCode)=>{
     });
 }
 
-const signup = catchAsync(async (req, res, next)=>{
-    const newUser = UserModel.create({
+const signup = catchAsync (async (req, res, next) => {
+    const newUser = await UserModel.create({
         name: req.body.name,
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
         checkPassword: req.body.checkPassword
     });
-
-    if (!newUser) return next(new AppError('User can not be created', 400));
-
+    
+    if (!newUser){
+        return next(new AppError('User can not be created', 400));
+    }
+      
     createAndSendJWT(newUser, res, 201);
-})
+});
+
 
 
 const login = catchAsync(async (req, res, next)=>{
@@ -45,10 +48,13 @@ const login = catchAsync(async (req, res, next)=>{
     }
 
     const findUser = await UserModel.findOne({email: email}).select('+password');
+    const ans = await findUser.correctPassword(password, findUser.password); // this returns a promise and we need to await
 
-    if (!findUser || await findUser.){
-
+    if (!findUser || !ans){
+        return next(new AppError('Incorrect email or password', 401)) // unauthorized)
     }
+    
+    createAndSendJWT(findUser, res, 200);
 })
 
-module.exports = {signup};
+module.exports = {signup, login};
