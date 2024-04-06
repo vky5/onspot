@@ -11,9 +11,16 @@ router
         authController.validateJWT,
         commentControllers.postComment
     )
+
+router
+    .route('/:commentid')
     .patch(
         authController.validateJWT,
         commentControllers.updateComment
+    )
+    .delete(
+        authController.validateJWT,
+        commentControllers.deleteComment
     )
 
 module.exports = router;

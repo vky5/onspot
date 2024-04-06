@@ -19,9 +19,9 @@ const postComment = catchAsync(async (req, res, next)=>{
 
 const updateComment = catchAsync(async (req, res, next) => {
     const updateComment = await CommentModel.findByIdAndUpdate(
-        req.body._id, // Assuming _id is used as the identifier
-        { text: req.body.text }, // Updating the text field
-        { runValidators: true, new: true } // Options to run validators and return the new document
+        req.params.commentid, 
+        { text: req.body.text }, 
+        { runValidators: true, new: true } 
     );
 
     if (!updateComment) return next(new AppError('No comment found', 400));
@@ -33,4 +33,17 @@ const updateComment = catchAsync(async (req, res, next) => {
 });
 
 
-module.exports = {postComment, updateComment};
+const deleteComment = catchAsync(async (req, res, next)=>{
+    const deleteComment = await CommentModel.findByIdAndDelete(req.params.commentid);
+
+    if (!deleteComment){
+        return next(new AppError('No comment found', 400));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        deletedComment: deleteComment
+    })
+})
+
+module.exports = {postComment, updateComment, deleteComment};
