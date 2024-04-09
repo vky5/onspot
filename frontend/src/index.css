@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@font-face{
+    font-family: 'fuerte';
+    src: url('/src/assets/fonts/fuerte.ai');
+}
+
+
+@layer utilities {
+.text-gradient {
+    background: linear-gradient(to left top, #07FDEB, #EABC26);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+}
+

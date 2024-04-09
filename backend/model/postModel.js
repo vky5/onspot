@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    writer:{
+    username:{
         type: String,
         required: true 
     },
@@ -17,17 +17,20 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Post can not be blank']
     },
+    like: {
+        type: Number,
+        default: 0
+    },
     generatedId:{
         type: Number,
         unique: true
     }
-})
+});
 
-
-postSchema.pre('save', function(next){
-    this.generatedId = generateUniqueId();
+postSchema.pre('save', async function(next){
+    this.generatedId = await generateUniqueId();
     next();
-})
+});
 
 async function generateUniqueId(){
     let id;
@@ -38,6 +41,6 @@ async function generateUniqueId(){
     return id;
 }
 
-const PostModel = mongoose.Model('PostModel', postSchema);
+const PostModel = mongoose.model('PostModel', postSchema); // Use mongoose.model(), not mongoose.Model()
 
 module.exports = PostModel;

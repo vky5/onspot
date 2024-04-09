@@ -34,9 +34,9 @@ function Navbar() {
             
             <div className="hidden md:block p-2 px-6 rounded-3xl relative">
                 <ul className="flex space-x-4 text-white text-xl md:text-2xl lg:text-3xl xl:text-3xl">
-                    <li className="hover:text-blue-600">Home</li>
-                    <li className="hover:text-blue-600">Categories</li>
-                    <li className="hover:text-blue-600">About Us</li>
+                    <li className="hover:text-blue-900">Home</li>
+                    <li className="hover:text-blue-900">Categories</li>
+                    <li className="hover:text-blue-900">About Us</li>
                 </ul>
                 <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white opacity-50 rounded-3xl pointer-events-none"></div>
             </div>

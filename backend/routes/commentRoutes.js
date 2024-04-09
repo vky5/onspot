@@ -23,6 +23,8 @@ router
         authController.validateJWT,
         commentControllers.deleteComment
     )
+
+    
 router.get('/', 
     authController.validateJWT,
     commentControllers.getCommentsForUser
