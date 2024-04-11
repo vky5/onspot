@@ -26,7 +26,7 @@ function Footer() {
             type='text'
             name='user_email'
             id='signupemail'
-            className={`text-blue-900 rounded-3xl outline-none border-blue-900 w-full px-3 py-3 text-[12px] font-bold translate- ease-linear duration-1000 ${
+            className={`text-blue-900 rounded-3xl outline-none border-blue-900 w-full px-3 py-3 text-[12px] font-bold focus-visible:transition-transform focus-visible:duration-1000 ${
               email ? 'w-3/4' : 'w-full'
             }`}
             placeholder='Email Address !!'

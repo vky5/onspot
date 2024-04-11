@@ -4,7 +4,7 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="bg-gradient-to-tr from-teal-800 to-teal-900 w-full h-screen flex flex-col items-center">
+    <div className="bg-gradient-to-br from-blue-500 via-blue-400 to-gray-800 w-full h-screen flex flex-col items-center">
       <Navbar />
       <Home />
       <Footer />
