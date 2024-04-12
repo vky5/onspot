@@ -2,7 +2,8 @@ const UserData = require('../model/userModel');
 const UserModel = require('../model/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
-
+const sendEmail = require('../utils/email');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const util = require('util')
 
@@ -103,4 +104,73 @@ const restrictsTo = (...roles)=>{
     }
 }
 
-module.exports = {signup, login, validateJWT, restrictsTo};
+// to generate and send a token when user forget password
+const forgotPassword = catchAsync(async (req, res, next)=>{
+    const user = await UserData.findOne({email: req.body.email});
+    if (!user) return next (new AppError('Email does not exists in the database', 404)); // but this way someone can know if the email that they have is valid or not
+
+    // 2) generate reset token
+    const resetToken = user.createPasswordResetToken(); // because we are only updating the field in user document and not saving it
+    await user.save({
+        validateBeforeSave: false // this deactivates all validatiorss in schema
+    });
+
+    // 3) send it to user's email
+
+    const resetURL = `${req.protocol}://${req.get('host')}/api/v1/auth/resetpassword/${resetToken}`
+
+    const message = `If you have forget your password change your password on the url given at ${resetURL}\nif you didn't forget your password, please ignore this email`;
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: 'Your password reset token {valid for 10 min}',
+            message
+        })
+    } catch (error) {
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+
+        await user.save({
+            validateBeforeSave: false
+        })
+
+        console.log(error)
+        return next(
+            new AppError('Something went wrong in server side', 500)
+        )
+    }
+
+
+    res.status(200).json({
+        status:'success',
+        message: 'Token sent to email'
+    })
+})
+
+const resetPassword = catchAsync (async (req, res, next)=>{
+    // 1) get user based on token
+    const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
+
+    const user = await UserModel.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: {$gt: Date.now()} // 2) if token has not expired and there is user, set the new password
+    });
+
+    if (!user) return next (new AppError('Token is invalid or has expired', 400));
+
+    // 3) update changedPasswordAt property for the user done as middleware in userData
+    user.password = req.body.password;
+    user.checkPassword = req.body.checkPassword;
+
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+
+    await user.save(); // here we used save not update because we need validators to run to confirm password
+
+    // 4) Log the user in, send JWT
+
+    createAndSendJWT(user, res, 200);
+})
+
+
+module.exports = {signup, login, validateJWT, restrictsTo, forgotPassword, resetPassword};
