@@ -70,7 +70,7 @@ const validateJWT = catchAsync(async(req, res, next)=>{
     }
 
     if (!token){
-        return next(new AppError('You are not loggedd in!', 401));
+        return next(new AppError('You are not logged in!', 401));
     }
 
     // validationg token
@@ -88,16 +88,14 @@ const validateJWT = catchAsync(async(req, res, next)=>{
     }
 
     req.user = user;
-
     next();
     
 })
 
-
+// this is to restrict user routes to particular roles 
 const restrictsTo = (...roles)=>{
     return (req, res, next)=>{
         if (!roles.includes(req.user.role)){
-            console.log(req.user.role)
             return next(new AppError('You are not authorized to access this route', 403));
         }
     

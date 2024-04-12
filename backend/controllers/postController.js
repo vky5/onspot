@@ -40,20 +40,27 @@ const updateBlog = catchAsync(async (req, res, next) => {
         return next(new AppError('Blog not found', 404));
     }
 
-    if (postToUpdate.username !== req.user.username && req.user.role !== 'admin') {
+    if (postToUpdate.username !== req.user.username && req.user.role!=='admin') {
         return next(new AppError('You are not authorized to edit this blog', 403));
     }
 
-    const updatedPost = await postToUpdate.updateOne(req.body, {
-        runValidators: true,
-        new: true
-    });
+    // Update the post
+    const updatedPost = await PostModel.findOneAndUpdate(
+        { generatedId: req.params.blogid }, // Filter
+        req.body, // Updated data
+        { new: true, runValidators: true } // Options: return updated document and run validators
+    );
+
+    if (!updatedPost) {
+        return next(new AppError('Failed to update the blog', 500));
+    }
 
     res.status(200).json({
         status: 'success',
-        post: updatedPost 
+        post: updatedPost // Sending the updated document back
     });
 });
+
 
 
 // to delete a blog from params
@@ -81,9 +88,20 @@ const deleteBlog = catchAsync(async (req, res, next) => {
 });
 
 
+const getAllWriterPosts = catchAsync(async (req, res, next)=>{
+    const posts = await PostModel.aggregate([
+      {
+        $match: {username: req.params.username}
+      }
+    ])
+
+    res.status(200).json({
+        status: 'success',
+        posts
+    })
+})
 
 
 
 
-
-module.exports = { postBlog, updateBlog, getBlogByParams, deleteBlog };
+module.exports = { postBlog, updateBlog, getBlogByParams, deleteBlog, getAllWriterPosts };

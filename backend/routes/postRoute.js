@@ -12,8 +12,15 @@ router // this is to post and get all post and I am going to implement paginatio
         postController.postBlog
     )
 
+router // this route is to get all blogs from a particular writer
+    .route('/author/:username')
+    .get(
+        postController.getAllWriterPosts
+    )
+
+
 router // this is to get info about a blog or patch blog only admin and original writer can make changes in a blog
-    .route(':blogid')
+    .route('/blog/:blogid')
     .get(
         postController.getBlogByParams
     )
@@ -28,11 +35,6 @@ router // this is to get info about a blog or patch blog only admin and original
         postController.deleteBlog
     )
 
-router // this route is to get all blogs from a particular writer
-    .route(':writerid')
-    .get(
-        postController.getAllPosts
-    )
 
 
 module.exports = router;

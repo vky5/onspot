@@ -25,6 +25,7 @@ const updateComment = catchAsync(async (req, res, next) => {
     );
 
     if (!updateComment) return next(new AppError('No comment found', 400));
+    if (updateComment.username!==req.user.username && req.user.role!=='admin') return next(new AppError('You are not authorized to make these changes', 403))
 
     res.status(200).json({
         status: 'success',
@@ -39,6 +40,7 @@ const deleteComment = catchAsync(async (req, res, next)=>{
     if (!deleteComment){
         return next(new AppError('No comment found', 400));
     }
+    if (updateComment.username!==req.user.username && req.user.role!=='admin') return next(new AppError('You are not authorized to make these changes', 403))
 
     res.status(200).json({
         status: 'success',
@@ -99,3 +101,5 @@ const getCommentForPost = catchAsync(async (req, res, next) => {
 
 
 module.exports = {postComment, updateComment, deleteComment, getCommentsForUser, getCommentForPost};
+
+// the beautiful thing about this is you will only have access to mongoDB ids of comments for your own comments

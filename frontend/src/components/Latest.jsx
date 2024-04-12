@@ -12,13 +12,13 @@ function Latest() {
               alt="Paper Plane Image"
             />
           </div>
-          <div className="ml-1">
-            <div className="">
+          <div className="ml-3">
+            <div className="text-sm">
               This is the title of the plane and we are going flee
             </div>
             <div className="space-x-6">
-              <span>12 April 2024</span>
-              <span>By VKY</span>
+              <span className="text-xs">12 April 2024</span>
+              <span className="text-xs">By VKY</span>
             </div>
             <div className="space-x-2">
               <span>❤️</span>
@@ -37,8 +37,6 @@ function Latest() {
               <span className="bg-green-700 p-1 rounded-xl shadow-md">
                 edge computing
               </span>
-              <span className="bg-green-700 p-1 rounded-xl shadow-md">Red</span>
-              <span className="bg-green-700 p-1 rounded-xl shadow-md">Jey</span>
             </div>
           </div>
         </div>
