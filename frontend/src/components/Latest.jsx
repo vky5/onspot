@@ -1,31 +1,50 @@
-
+// import paperPlaneImage from "../assets/paperplane.png"; // Assuming you have an image file named paperplane.png in your assets folder
 
 function Latest() {
   return (
-    <>
-    
-      <div className="carousel w-full">
-  <div id="item1" className="carousel-item w-full">
-    <img src="https://daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg" className="w-full" />
-  </div> 
-  <div id="item2" className="carousel-item w-full">
-    <img src="https://daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.jpg" className="w-full" />
-  </div> 
-  <div id="item3" className="carousel-item w-full">
-    <img src="https://daisyui.com/images/stock/photo-1414694762283-acccc27bca85.jpg" className="w-full" />
-  </div> 
-  <div id="item4" className="carousel-item w-full">
-    <img src="https://daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.jpg" className="w-full" />
-  </div>
-</div> 
-<div className="flex justify-center w-full py-2 gap-2">
-  <a href="#item1" className="btn btn-xs">1</a> 
-  <a href="#item2" className="btn btn-xs">2</a> 
-  <a href="#item3" className="btn btn-xs">3</a> 
-  <a href="#item4" className="btn btn-xs">4</a>
-</div>
-</>
-  )
+    <div className=" text-white bg-white rounded-3xl bg-opacity-20 drop-shadow-sm w-11/12">
+      <div className="w-full text-white pr-2">
+        <div className="flex">
+          <div className="w-1/2">
+            <img
+              className="w-full h-full object-cover rounded-bl-3xl rounded-tl-3xl"
+              src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D"
+              alt="Paper Plane Image"
+            />
+          </div>
+          <div className="ml-1">
+            <div className="">
+              This is the title of the plane and we are going flee
+            </div>
+            <div className="space-x-6">
+              <span>12 April 2024</span>
+              <span>By VKY</span>
+            </div>
+            <div className="space-x-2">
+              <span>❤️</span>
+              <span>10</span>
+            </div>
+            <div className="tags-container max-w-full flex flex-wrap space-y-1 space-x-1 text-xs">
+              <span className="bg-green-700 p-1 rounded-xl shadow-md">
+                quantum computing
+              </span>
+              <span className="bg-green-700 p-1 rounded-xl shadow-md">
+                Cybersecurity
+              </span>
+              <span className="bg-green-700 p-1 rounded-xl shadow-md">
+                Web Security
+              </span>
+              <span className="bg-green-700 p-1 rounded-xl shadow-md">
+                edge computing
+              </span>
+              <span className="bg-green-700 p-1 rounded-xl shadow-md">Red</span>
+              <span className="bg-green-700 p-1 rounded-xl shadow-md">Jey</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Latest
+export default Latest;
