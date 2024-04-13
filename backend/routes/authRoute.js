@@ -12,5 +12,7 @@ router.post('/forgotpassword', authController.forgotPassword); // this will only
 
 router.patch('/resetpassword/:token', authController.resetPassword); // this is to reset password
 
+router.patch('/updatepassword', authController.validateJWT, authController.updatePassword)
+
 // router.get('/validate', authController.validateJWT);
 module.exports = router;

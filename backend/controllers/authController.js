@@ -18,6 +18,17 @@ const createToken = id=>{
 const createAndSendJWT = (user, res, responseCode)=>{
     const token = createToken(user._id);
 
+    const cookieOptions = {
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+        ),
+        // secure: true, // this will send cookie only in https connection
+        httpOnly: true // browser will recieve the cookie store it and send it back with every request
+    }
+
+    if (process.env.NODE_ENV==='production') cookieOptions.secure = true;
+
+    res.cookie('jwt', token, cookieOptions)
+    user.password = undefined;
     res.status(responseCode).json({
         status: 'success',
         token,
@@ -173,4 +184,25 @@ const resetPassword = catchAsync (async (req, res, next)=>{
 })
 
 
-module.exports = {signup, login, validateJWT, restrictsTo, forgotPassword, resetPassword};
+const updatePassword = catchAsync (async (req, res, next)=>{
+    // 1) get user from collection
+    const user = await UserModel.findById(req.user._id).select('+password');
+    if (!user) return next(new AppError("The user does not exists",  404));
+
+    // 2) check if posted current password is correct
+    const ans = await user.correctPassword(req.body.password, user.password);
+
+    if (!ans){
+        return next(new AppError('Incorrect password', 401));
+    }
+    // 3) update password
+    user.password = req.body.newPassword;
+    user.checkPassword = req.body.newCheckPassword
+
+    await user.save();
+
+    // 4) log user in and send JWT
+    createAndSendJWT(user, res, 200);
+})
+
+module.exports = {signup, login, validateJWT, restrictsTo, forgotPassword, resetPassword, updatePassword};
