@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize')
 const xss = require('xss-clean')
 const hpp = require('hpp');
+const cors = require('cors');
 
 const authRoute = require('./routes/authRoute');
 const commentRoutes = require('./routes/commentRoutes');
@@ -15,18 +16,24 @@ const globalErrorHandler = require('./controllers/globalErrorHandler');
 
 const app = express();
 
+
 app.use(helmet());
-if (process.env.NODE_ENV==='development'){
-    app.use(morgan('dev'));
-}
 
-const limiter = rateLimit({
-    max: 100,
-    windowMs: 60 * 60 * 1000, // in millisecond
-    message: 'Too many request from this IP, please try again in few hours'
-})
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: 'GET,POST,PATCH,DELETE'
+}))
 
-app.use('/api', limiter);
+app.use(morgan('dev'));
+
+
+// const limiter = rateLimit({
+//     max: 100,
+//     windowMs: 60 * 60 * 1000, // in millisecond
+//     message: 'Too many request from this IP, please try again in few hours'
+// })
+
+// app.use('/api', limiter);
 
 // body parser, reading data from body into req.body
 app.use(express.json({limit: '10kb'}));

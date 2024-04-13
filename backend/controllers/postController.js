@@ -1,4 +1,5 @@
 const PostModel = require("../model/postModel");
+const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
@@ -102,6 +103,23 @@ const getAllWriterPosts = catchAsync(async (req, res, next)=>{
 })
 
 
+const getAllPosts = catchAsync(async (req, res, next)=>{
+    const features = new APIFeatures(PostModel, req.query)
+                                                        .finding()
+                                                        .sotring()
+                                                        .filtering()
+                                                        .pagination();
+
+    const postsAfterQueries = await features.query;
+
+    res.status(200).json({
+        status: 'success',
+        result: postsAfterQueries.length,
+        posts: postsAfterQueries
+    })
+
+})
 
 
-module.exports = { postBlog, updateBlog, getBlogByParams, deleteBlog, getAllWriterPosts };
+
+module.exports = { postBlog, updateBlog, getBlogByParams, deleteBlog, getAllWriterPosts , getAllPosts};

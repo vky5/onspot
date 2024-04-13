@@ -6,6 +6,7 @@ const router = express.Router();
 
 router // this is to post and get all post and I am going to implement pagination and other API features here
     .route('/')
+    .get(postController.getAllPosts)
     .post(
         authController.validateJWT,
         authController.restrictsTo('admin', 'writer'),
