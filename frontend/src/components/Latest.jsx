@@ -1,44 +1,29 @@
-// import paperPlaneImage from "../assets/paperplane.png"; // Assuming you have an image file named paperplane.png in your assets folder
-
 function Latest() {
   return (
-    <div className=" text-white bg-white rounded-3xl bg-opacity-20 drop-shadow-sm w-11/12">
-      <div className="w-full text-white pr-2">
-        <div className="flex">
-          <div className="w-1/2">
-            <img
-              className="w-full h-full object-cover rounded-bl-3xl rounded-tl-3xl"
-              src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D"
-              alt="Paper Plane Image"
-            />
-          </div>
-          <div className="ml-3">
-            <div className="text-sm">
-              This is the title of the plane and we are going flee
-            </div>
-            <div className="space-x-6">
-              <span className="text-xs">12 April 2024</span>
-              <span className="text-xs">By VKY</span>
-            </div>
-            <div className="space-x-2">
-              <span>❤️</span>
-              <span>10</span>
-            </div>
-            <div className="tags-container max-w-full flex flex-wrap space-y-1 space-x-1 text-xs">
-              <span className="bg-green-700 p-1 rounded-xl shadow-md">
-                quantum computing
-              </span>
-              <span className="bg-green-700 p-1 rounded-xl shadow-md">
-                Cybersecurity
-              </span>
-              <span className="bg-green-700 p-1 rounded-xl shadow-md">
-                Web Security
-              </span>
-              <span className="bg-green-700 p-1 rounded-xl shadow-md">
-                edge computing
-              </span>
-            </div>
-          </div>
+    <div
+      className="relative text-white rounded-2xl px-3 py-2 w-11/12"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-70 rounded-2xl" />
+      <div className="relative z-10">
+        <div className="text-xl font-bold bg-gradient-to-r from-gray-300 via-gray-400 to-green-700 text-transparent bg-clip-text">Music Hallucination</div>
+        <div className="flex flex-row justify-between">
+          <span>14 April 2024</span> <span>By VKY</span>
+        </div>
+        <div className="text-sm mt-2">
+          A Pantheon of music that sets up something in an attempt in a sir to
+          what the fuck did you write
+        </div>
+        <div className="flex justify-end">
+          <button
+            className="rounded-xl px-2 py-1 bg-green-800 bg-opacity-30"
+          >Read More
+          </button>
         </div>
       </div>
     </div>

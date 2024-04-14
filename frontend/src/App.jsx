@@ -2,18 +2,21 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import IRC from "./pages/IRC";
+import Blog from "./pages/Blog";
+
 
 function App() {
   return (
-    // <div className="bg-gradient-to-br from-blue-500 via-blue-400 to-gray-800 w-full flex flex-col items-center pb-10">
-    //   <Navbar />
-    //   <Home />
-    //   <Footer />
-    // </div>
+    <div className="bg-gradient-to-br from-blue-500 via-blue-400 to-gray-800 w-full flex flex-col items-center pb-10">
+      <Navbar />
+      {/* <Home /> */}
+      <Blog />
+      <Footer />
+    </div>
     // <IRC />
-    <>
-    <IRC />
-    </>
+    // <>
+    // <IRC />
+    // </>
   );
 }
 

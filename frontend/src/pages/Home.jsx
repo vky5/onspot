@@ -17,7 +17,9 @@ function Home() {
       <div>
         <h1 className="text-3xl text-white text-center mb-7 mt-5">ONSPOT</h1>
       </div>
-      <div className="flex flex-col justify-center items-center flex-grow">
+      <div className="flex flex-col justify-center items-center flex-grow space-y-3">
+        <Latest />
+        <Latest />
         <Latest />
       </div>
     </div>
