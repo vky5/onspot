@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { CgMenuRight } from "react-icons/cg";
+import blacktree from "../assets/blacktree.png";
 
 function Navbar() {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -10,27 +11,77 @@ function Navbar() {
   };
 
   return (
-    <div className="p-4 md:p-6 lg:p-8 xl:p-10 flex justify-between items-center w-full">
-      <h1 className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl text-gray-300 font-semibold">
-        OnSpot
-      </h1>
+    <div>
+      <div className="px-2 py-2 md:px-4 md:py-4 flex justify-between">
+        <div className="flex w-12 md:w-20">
+          <img src={blacktree} alt="blacktree logo" className="" />
+        </div>
 
-      <div className="relative z-[99] md:hidden" onClick={handleClick}>
-        {mobileMenu ? (
-          <IoMdClose className={"text-2xl text-white"} />
-        ) : (
-          <CgMenuRight className={"text-2xl text-white"} />
-        )}
+        <div
+          className="relative z-[99] md:hidden flex justify-center items-center"
+          onClick={handleClick}
+        >
+          {mobileMenu ? (
+            <IoMdClose className={"text-2xl "} />
+          ) : (
+            <CgMenuRight className={"text-2xl"} />
+          )}
+        </div>
+
+        <div className="hidden md:flex md:block relative justify-center">
+          <ul className="space-x-4 lg:space-x-6 text-xl md:text-xl lg:text-2xl xl:text-2xl flex justify-center items-center">
+            <li className="relative inline-block px-4 py-2 font-medium group">
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-green-600 group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+              <span className="absolute inset-0 w-full h-full bg-white border-2 border-green-600 group-hover:bg-green-600"></span>
+              <span className="relative text-black group-hover:text-white">
+                Home
+              </span>
+            </li>
+
+            <li className="relative inline-block px-4 py-2 font-medium group">
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-green-600 group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+              <span className="absolute inset-0 w-full h-full bg-white border-2 border-green-600 group-hover:bg-green-600"></span>
+              <span className="relative text-black group-hover:text-white">
+                Categories
+              </span>
+            </li>
+            <li className="relative inline-block px-4 py-2 font-medium group">
+              <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-green-600 group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+              <span className="absolute inset-0 w-full h-full bg-white border-2 border-green-600 group-hover:bg-green-600"></span>
+              <span className="relative text-black group-hover:text-white">
+                About Us
+              </span>
+            </li>
+
+            <li className="relative inline-flex items-center justify-center p-4 px-2 py-2 overflow-hidden font-medium text-green-600 transition duration-300 ease-out border-2 border-green-500 rounded-none shadow-md group">
+              <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-green-600 group-hover:translate-x-0 ease">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </span>
+              <span className="absolute flex items-center justify-center w-full h-full text-black transition-all duration-300 transform group-hover:translate-x-full ease">
+                Login
+              </span>
+              <span className="relative invisible">Button Text</span>
+            </li>
+          </ul>
+        </div>
       </div>
-      {mobileMenu && <div className="absolute">Hey</div>}
+      <div className="space-y-1">
 
-      <div className="hidden md:block p-2 px-6 rounded-3xl relative">
-        <ul className="flex space-x-4 text-white text-xl md:text-2xl lg:text-3xl xl:text-3xl">
-          <li className="hover:text-blue-900">Home</li>
-          <li className="hover:text-blue-900">Categories</li>
-          <li className="hover:text-blue-900">About Us</li>
-        </ul>
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white opacity-50 rounded-3xl pointer-events-none"></div>
+      <div className="border-b-2 border-green-600"></div>
+      <div className="border-b-2 border-green-600"></div>
       </div>
     </div>
   );

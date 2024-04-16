@@ -19,7 +19,11 @@ function Footer() {
   };
 
   return (
-    <div className="p-4 mt-10 text-white bg-white rounded-3xl bg-opacity-20 drop-shadow-sm w-11/12">
+    <div className="mt-10  bg-white rounded-3xl bg-opacity-20 drop-shadow-sm w-full">
+      <div className="space-y-1">
+        <div className="border-b-2 border-green-600"></div>
+        <div className="border-b-2 border-green-600"></div>
+      </div>
       <div className="items-center justify-between ">
         <h1>Subscribe now, Get latest updates!</h1>
 
@@ -62,22 +66,22 @@ function Footer() {
           <div className="flex space-x-4 items-center w-full mt-2 flex-1">
             <div>
               <a href="https://www.linkdin.com">
-                <BiLogoLinkedin className="text-white md:text-2xl xl:text-3xl hover:text-blue-900" />
+                <BiLogoLinkedin className="md:text-2xl xl:text-3xl hover:text-green-600 transform hover:scale-110 transition-transform" />
               </a>
             </div>
             <div>
               <a href="https://www.twitter.com">
-                <BiLogoTwitter className="text-white md:text-2xl hover:text-blue-900" />
+                <BiLogoTwitter className="md:text-2xl xl:text-3xl hover:text-green-600 transform hover:scale-110 transition-transform" />
               </a>
             </div>
             <div>
               <a href="https://www.instagram.com">
-                <BiLogoInstagram className="text-white md:text-2xl hover:text-blue-900" />
+                <BiLogoInstagram className="md:text-2xl xl:text-3xl hover:text-green-600 transform hover:scale-110 transition-transform" />
               </a>
             </div>
             <div>
               <a href="https://www.youtube.com/">
-                <BiLogoDiscord className="text-white md:text-2xl hover:text-blue-900" />
+                <BiLogoDiscord className="md:text-2xl xl:text-3xl hover:text-green-600 transform hover:scale-110 transition-transform" />
               </a>
             </div>
           </div>
@@ -85,7 +89,7 @@ function Footer() {
       </div>
 
       {/* this section has bla bla info */}
-      <div className="text-[12px] md:text-xl">@vky5-2024</div>
+      <div className="text-[12px] md:text-xl">@vky5</div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 function Latest() {
   return (
     <div
-      className="relative text-white rounded-2xl px-3 py-2 w-11/12"
+      className="relative text-white rounded-2xl px-3 py-2 w-1/4"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D')",
