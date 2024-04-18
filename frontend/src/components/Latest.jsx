@@ -15,7 +15,7 @@ function Latest() {
         <div className="flex flex-row justify-between">
           <span>14 April 2024</span> <span>By VKY</span>
         </div>
-        <div className="text-sm mt-2">
+        <div className="text-basem mt-2">
           A Pantheon of music that sets up something in an attempt in a sir to
           what the fuck did you write
         </div>

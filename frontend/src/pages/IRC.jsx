@@ -22,7 +22,7 @@ const TableComponent = () => {
   
     return (
         <div className="overflow-x-auto flex text-center">
-            <table className="min-w-full border-collapse border bg-gray-900 text-sm sm:text-base">
+            <table className="min-w-full border-collapse border bg-gray-900 text-basem sm:text-base">
                 <thead>
                     <tr>
                         <th className="border px-4 py-2 hidden md:table-cell">ID</th>

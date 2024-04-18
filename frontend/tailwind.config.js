@@ -9,6 +9,10 @@ export default {
       fontFamily: {
         'fuerte' : ['fuerte', 'sans-serif'],
       },
+      colors: {
+        emerald: '#059669',
+        teal: '#6A5ACD'
+      },
     },
   },
   plugins: [],
