@@ -65,7 +65,7 @@ function Footer() {
             name="user_email"
             id="signupemail"
             onChange={handleInputChange}
-            className="bg-gray-100 border border-emerald px-2 py-2 text-base md:text-lg lg:text-lg xl:text-xl w-5/6 text-teal"
+            className="bg-gray-100 border border-emerald px-2 py-2 text-base md:text-lg lg:text-lg xl:text-xl w-5/6 text-slate"
             style={isValidEmail?{
               opacity: 0.7,
               transition: "opacity 0.3s ease-in-out"
@@ -111,7 +111,7 @@ function Footer() {
             </div>
           </div>
 
-          <div className="text-[12px] md:text-xl pt-1 md:pt-2 text-teal">@vky5</div>
+          <div className="text-[12px] md:text-xl pt-1 md:pt-2 text-slate">@vky5</div>
         </div>
       </div>
       <div className="border-b-2 border-emerald"></div>

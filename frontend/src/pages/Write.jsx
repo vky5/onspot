@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Textar from "../components/Textar";
 // import MarkdownRenderer from "../utils/MarkDownRenderer";
 import markdownIt from "markdown-it"; //using markdownIt because it is much more safe
-// import './write.css'
+import './write.css'
 
 function Write() {
 

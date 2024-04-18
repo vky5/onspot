@@ -28,8 +28,7 @@ const Structure = () => {
 
   return (
     <div 
-        className="" 
-        // style={backgroundStyle}
+        className="bg-gray-100" 
     >
       <Navbar />
       <Outlet />  
