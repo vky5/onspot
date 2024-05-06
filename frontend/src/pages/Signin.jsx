@@ -13,23 +13,27 @@ function Signin() {
 
   useEffect(()=>{
     const handleGoogleLogin = async () =>{
-        const respnse = await fetch 
+        
     }
   })
 
   return (
     <div className="bg-primary h-screen flex justify-center items-center flex-col">
       <div className="text-white text-3xl font-semibold">Sign In</div>
+
       <div>
         <div className="text-white mt-5 text-xs">Email</div>
         <div className="">
-          <input type="text" />
+
+          <input type="text" className="h-10 rounded-md bg-secondary w-full" />
+          <img src={email} alt="" />
         </div>
-        <div className="text-white mt-5 text-xs">Password</div>
+        <div className="text-white mt-5 text-xs ">Password</div>
         <div>
-          <input type="text" />
+          <input type="text" className="h-10 rounded-md bg-secondary"/>
         </div>
-        <div className="text-white text-xs  mt-3 text-right">
+        
+        <div className="text-white text-xs  mt-3 text-right underline rounded-md">
           Forget Password?
         </div>
         <div>
