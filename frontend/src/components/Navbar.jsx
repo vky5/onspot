@@ -1,3 +1,5 @@
+import { Link, useLocation } from "react-router-dom";
+
 import logo from "../assets/logo.png";
 import dark_mode from "../assets/dark_mode_button.png";
 import search from "../assets/search.png";
@@ -6,9 +8,10 @@ import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
 import logo_w from "../assets/logo_w.png";
 import { MdHome } from "react-icons/md";
-import { MdBook } from 'react-icons/md';
-import { FaHeart } from 'react-icons/fa';
-import { AiOutlineUser } from 'react-icons/ai';
+import { MdBook } from "react-icons/md";
+import { FaHeart } from "react-icons/fa";
+import { AiOutlineUser } from "react-icons/ai";
+import profile from "../assets/profile.png";
 
 function Navbar() {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -26,9 +29,11 @@ function Navbar() {
           <img src={dark_mode} />
         </div>
         <div>
-          <button className="bg-primary text-white px-4 py-1 rounded-xl">
-            Login
-          </button>
+          <Link to="/login">
+            <button className="bg-primary text-white px-4 py-1 rounded-xl">
+              Login
+            </button>
+          </Link>
         </div>
         <div>
           <img src={search} />
@@ -50,29 +55,29 @@ function Navbar() {
           <div className="h-5/6 fixed bottom-0 px-3 flex flex-col justify-between w-full mb-8">
             <div className="space-y-6">
               <div className="flex text-white space-x-4">
-                <img src={logo} />
+                <img src={profile} />
                 <div>
                   <div className="text-xl">Pikachu Poke</div>
                   <div className="text-xs">pikachu@gmail.com</div>
                 </div>
               </div>
               <div className="space-y-4 flex flex-col items-center text-white text-[20px] ">
-                <div className="flex items-center w-full px-12 rounded-xl border-2 border-white p-2">
-                  <MdHome />
-                  Home
+                <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                  <MdHome className="mr-2" /> {/* Icon */}
+                  <span className="">Home</span> {/* Text */}
                 </div>
 
-                <div className="flex items-center w-full rounded-xl border-2 border-white p-2">
-                  <MdBook />
-                  Blogs
+                <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                  <MdBook className="mr-2" /> {/* Icon */}
+                  <span className="">Blogs</span> {/* Text */}
                 </div>
-                <div className="flex items-center w-full rounded-xl border-2 border-white p-2">
-                  <FaHeart />
-                  Liked
+                <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                  <FaHeart className="mr-2" /> {/* Icon */}
+                  <span className="">Liked</span> {/* Text */}
                 </div>
-                <div className="flex items-center w-full rounded-xl border-2 border-white p-2">
-                  <AiOutlineUser />
-                  Home
+                <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                  <AiOutlineUser className="mr-2" /> {/* Icon */}
+                  <span className="">About Us</span> {/* Text */}
                 </div>
               </div>
             </div>
@@ -81,7 +86,7 @@ function Navbar() {
               <div>
                 <img src={logo_w} />
               </div>
-              <div className="ml-3 text-[20px]">BLACKTREE</div>
+              <div className="ml-3 text-[17px]">BLACKTREE</div>
             </div>
           </div>
         </div>

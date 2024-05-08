@@ -1,0 +1,173 @@
+[33mcommit 63946b1026d1be9ebb331a8adabaf81150ff9b46[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: vky5 <vky05@proton.me>
+Date:   Tue May 7 20:11:13 2024 +0530
+
+    designed side menu
+
+[33mcommit e7a3d03692c5360450d3b8a3a7d464efb0817e1e[m
+Author: vky5 <vky05@proton.me>
+Date:   Mon May 6 20:50:47 2024 +0530
+
+    added navbar
+
+[33mcommit 0696611ace93b9c6b174f02d04663dc4736f3229[m
+Author: vky5 <vky05@proton.me>
+Date:   Tue Apr 30 05:02:54 2024 +0530
+
+    created signin page
+
+[33mcommit 73fe5e6946309a8b97f21e15f3e2252c26b52892[m
+Author: vky5 <vky05@proton.me>
+Date:   Fri Apr 19 10:17:59 2024 +0530
+
+    dependency issue solved
+
+[33mcommit f42b434c60bf02cf7826df99fab8bd0b7b1f5910[m
+Author: vky5 <vky05@proton.me>
+Date:   Fri Apr 19 00:32:07 2024 +0530
+
+    moblie view for home page
+
+[33mcommit fa970ab45eae6c81c43d71de9315ddda053ab203[m
+Author: vky5 <vky05@proton.me>
+Date:   Thu Apr 18 18:43:15 2024 +0530
+
+    created footer
+
+[33mcommit 8bdb600bed211bb29d6caee54b89f3cc9e52eaf8[m
+Author: vky5 <vky05@proton.me>
+Date:   Wed Apr 17 05:14:25 2024 +0530
+
+    updated navbar
+
+[33mcommit ed8898eb9ca1375cdd59ca1b138040a45d283154[m
+Author: vky5 <vky05@proton.me>
+Date:   Wed Apr 17 02:43:14 2024 +0530
+
+    routes done
+
+[33mcommit 249815104b5c8f4112758a9eea0939efcd2cd30b[m
+Author: vky5 <vky05@proton.me>
+Date:   Mon Apr 15 18:53:45 2024 +0530
+
+    ennabled markdown
+
+[33mcommit 609d0144e80aaeed723b2a0aee953d7c3ceee46c[m
+Author: vky5 <vky05@proton.me>
+Date:   Sun Apr 14 22:26:05 2024 +0530
+
+    added latest
+
+[33mcommit 09e018120078e0482bebb97d2e4ffa066dde8bdd[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 13 13:02:55 2024 +0530
+
+    added dev view
+
+[33mcommit 31ef519f20e41dce2ab55651843d034e11a33a69[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 13 11:18:21 2024 +0530
+
+    added security
+
+[33mcommit 0abd76839e9a71aecbc8b2f2f880ddbac90bfe21[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 13 03:28:25 2024 +0530
+
+    implemented reset password
+
+[33mcommit eaf1148e84fd5ddec7765ba5c01915192410f257[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 13 01:57:47 2024 +0530
+
+    backend complete
+
+[33mcommit bf15beebfe4b37a4ffa71c57f088d54a77ce9a60[m
+Author: vky5 <vky05@proton.me>
+Date:   Fri Apr 12 23:06:13 2024 +0530
+
+    added latest comp
+
+[33mcommit 574869a11290bf1f496e45a5e4f9ef685e219623[m
+Author: vky5 <vky05@proton.me>
+Date:   Thu Apr 11 22:08:06 2024 +0530
+
+    setup daisyui
+
+[33mcommit 344f96cb37e3c0c034b58a67a6fb443957be337d[m
+Author: vky5 <vky05@proton.me>
+Date:   Tue Apr 9 20:38:05 2024 +0530
+
+    almost completed post routes
+
+[33mcommit 3c99db08a540d4ba81e419b4902494ccaab06a4a[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 6 21:44:17 2024 +0530
+
+    footer added
+
+[33mcommit f2504c7e75c02bd706b1eda7a9e34cca5f8f6ca2[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 6 19:03:56 2024 +0530
+
+    done
+
+[33mcommit 79ecaec0814b6da292bfeccfbec6fc69963b4bec[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 6 19:03:06 2024 +0530
+
+    added comments for post
+
+[33mcommit a6c9b984acf1830145daa22977b71e70e51a8066[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 6 18:26:05 2024 +0530
+
+    comment POST & PATCH
+
+[33mcommit 59a525430a796124c076d2f1b7e073df61947c99[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 6 15:02:39 2024 +0530
+
+    added validation JWT & CM PM
+
+[33mcommit 307a3e1f5f409b89d6327f1c8e578afc2e24cc88[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 6 14:30:26 2024 +0530
+
+    added signup and login
+
+[33mcommit 686cdc0c98cbb76e7a8f1dc398b5d4dd667d3563[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 6 13:48:22 2024 +0530
+
+    Error handling done
+
+[33mcommit c6e106f73c759ca39becbcee5edc407865341f21[m
+Author: vky5 <vky05@proton.me>
+Date:   Sat Apr 6 12:46:13 2024 +0530
+
+    working on Navbar
+
+[33mcommit 4f0539cea75ca83d40c00d3ee0537b15c3cb5b70[m
+Author: vky5 <vky05@proton.me>
+Date:   Fri Apr 5 18:13:50 2024 +0530
+
+    ignore done
+
+[33mcommit 356013229ce17f17ec8cd4d50373a92767a913f1[m
+Author: vky5 <vky05@proton.me>
+Date:   Fri Apr 5 18:12:20 2024 +0530
+
+    ignore todos
+
+[33mcommit 380e4c5d801e28e0ed0677f7252ad13f9ff8acd4[m
+Author: vky5 <vky05@proton.me>
+Date:   Fri Apr 5 18:10:53 2024 +0530
+
+    basic backend setup
+
+[33mcommit c335cfe48d2d4303277b848a90ccd62e4806d93a[m
+Author: vky5 <vky05@proton.me>
+Date:   Fri Apr 5 18:01:34 2024 +0530
+
+    initial commit
