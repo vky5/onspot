@@ -12,9 +12,9 @@ function Footer() {
         <li>Blogs</li>
         <li>Liked</li>
       </ul>
-      <div className="bg-primary w-11/12 rounded-md h-10 mt-4 flex items-center justify-between">
-        <input type="text" className="h-10 w-3/4 outline-none rounded-md px-3 text-sm text-black bg-gray-300" />
-        <button className="text-white px-2">Subscribe</button>
+      <div className="bg-primary w-5/6 rounded-xl h-10 mt-4 flex items-center justify-between">
+        <input type="text" className="h-10 w-3/4 outline-none rounded-xl px-3 text-sm text-black bg-gray-300" />
+        <button className="text-white px-2 text-[13px]">Subscribe</button>
       </div>
       <div className="text-white text-[10px] mt-4">
         @2023 Copyright Reserved
