@@ -1,9 +1,6 @@
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import google from "../assets/Google.png";
-import { useEffect } from "react";
-import { FaEnvelope } from 'react-icons/fa';
 
-import { Link } from "react-router-dom";
 
 function Signup() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
