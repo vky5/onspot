@@ -18,9 +18,15 @@ function Navbar() {
 
   const toggle = () => {
     setMobileMenu(!mobileMenu);
+    if (!mobileMenu) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
   };
+
   return (
-    <div className="px-4 py-3 bg-gray-100 flex justify-between items-center">
+    <div className="px-4 py-3 bg-gray-100 flex justify-between items-center relative z-10">
       <div>
         <img src={logo} alt="logo of blacktree" />
       </div>
@@ -50,9 +56,9 @@ function Navbar() {
         <div
           className={`md:w-64 bg-primary h-full fixed top-0 right-0 transition-all duration-300 transform ${
             mobileMenu ? "translate-x-0" : "translate-x-full"
-          } w-3/4 rounded-l-3xl`}
+          } w-3/4 rounded-l-3xl z-50`}
         >
-          <div className="h-5/6 fixed bottom-0 px-3 flex flex-col justify-between w-full mb-8">
+          <div className="h-5/6 fixed bottom-0 px-3 flex flex-col justify-between w-full mb-8 overflow-y-auto">
             <div className="space-y-6">
               <div className="flex text-white space-x-4">
                 <img src={profile} />

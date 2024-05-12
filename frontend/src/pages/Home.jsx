@@ -26,8 +26,8 @@ function Home() {
           <li>System Design</li>
         </ul>
       </div>
-      <div className="ml-2 mr-2">
-        <BlogCard />
+      <div className="bg-white rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2">
+        <BlogCard heading="fjk fj joifa jjf fsos jfs jfselkjlj;sef jsfejsefsoj isfek"/>
       </div>
     </div>
   );
