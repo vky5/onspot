@@ -1,4 +1,6 @@
-import MyCarousel from "../components/MyCarousel";
+import MyCarousel from "../components/HomeComponents/MyCarousel";
+import BlogCard from "../components/BlogCard";
+
 
 function Home() {
   return (
@@ -10,12 +12,11 @@ function Home() {
           <div className="font-bold text-xl">Branching Perspectives</div>
         </div>
       </div>
-      <div>
+      <div className="pt-12"> {/*here is the css for carousel height in different screen size*/}
         <MyCarousel />
       </div>
       <div className="pt-6">
-        <div className="px-4">
-        <ul className="flex list-none space-x-7 scrollbar overflow-auto text-xs font-medium" style={{ scrollbarWidth: 'none' }}>
+        <ul className="flex px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium" style={{ scrollbarWidth: 'none' }}>
           <li>Latest</li>
           <li>Trending</li>
           <li>Blockhain</li>
@@ -24,8 +25,9 @@ function Home() {
           <li>Cyber Security</li>
           <li>System Design</li>
         </ul>
-        </div>
-        
+      </div>
+      <div className="ml-2 mr-2">
+        <BlogCard />
       </div>
     </div>
   );
