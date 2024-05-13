@@ -27,7 +27,7 @@ function Home() {
         </ul>
       </div>
       <div className="bg-white rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2">
-        <BlogCard heading="fjk fj joifa jjf fsos jfs jfselkjlj;sef jsfejsefsoj isfek"/>
+        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique"/>
       </div>
     </div>
   );
