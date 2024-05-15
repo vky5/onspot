@@ -78,16 +78,18 @@ function Signin() {
               Sign in with
             </div>
             {/* Wrap GoogleLogin component inside GoogleOAuthProvider */}
-            <GoogleOAuthProvider clientId={clientId}>
-              <GoogleLogin
-                onSuccess={handleSuccess}
-                onError={handleError}
-                render={({ onClick }) => (
-                  <button onClick={onClick} className="bg-white rounded-full p-2 mt-2">
-                    <img src={google} alt="Google" />
-                  </button>
-                )}
-              />
+
+            <GoogleOAuthProvider
+              clientId={clientId}
+              onSuccess={handleSuccess}
+              onError={handleError}
+            >
+              <button
+                onClick={handleGoogleLogin}
+                className="bg-white rounded-full p-2 mt-2"
+              >
+                <img src={google} alt="Google" />
+              </button>
             </GoogleOAuthProvider>
 
             <div className="text-[12px] text-white  text-left mt-2">
