@@ -5,10 +5,10 @@ import BlogCard from '../components/BlogCard';
 function Blogs() {
   return (
     <div className="bg-gray-100 pb-6">
-      <div className="font-bold text-[30px] ml-2 mr-2">
-        BLOGS
+      <div className="font-bold text-[30px] ml-5">
+        LEAVES
       </div>
-      <div className='pb-3 flex space-x-4 mt-2 pl-2 overflow-x-auto' style={{ scrollbarWidth: "none" }}>
+      <div className='pb-3 flex space-x-7 mt-2 pl-5 pr-5 overflow-x-auto' style={{ scrollbarWidth: "none" }}>
         <div className='flex flex-col items-center h-16 w-28'>
           <img src={profile} alt="" className="h-16 w-16" />
           <div className='text-xs'>
