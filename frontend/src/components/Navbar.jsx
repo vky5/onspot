@@ -68,19 +68,24 @@ function Navbar() {
                 </div>
               </div>
               <div className="space-y-4 flex flex-col items-center text-white text-[20px] ">
-                <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                <Link to="/" onClick={toggle} className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
                   <MdHome className="mr-2" /> {/* Icon */}
                   <span className="">Home</span> {/* Text */}
-                </div>
+                </Link>
 
-                <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                <Link
+                  to="/blogs"
+                  onClick={toggle}
+                  className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
+                >
                   <MdBook className="mr-2" /> {/* Icon */}
                   <span className="">Blogs</span> {/* Text */}
-                </div>
-                <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                </Link>
+
+                <Link to="/liked" onClick={toggle} className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
                   <FaHeart className="mr-2" /> {/* Icon */}
                   <span className="">Liked</span> {/* Text */}
-                </div>
+                </Link>
                 <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
                   <AiOutlineUser className="mr-2" /> {/* Icon */}
                   <span className="">About Us</span> {/* Text */}

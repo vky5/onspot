@@ -1,7 +1,9 @@
 function BlogTemp() {
   return (
-    <div>
-
+    <div className="ml-2 mr-2">
+      <div>
+        BLOGS
+      </div>
     </div>
   )
 }
