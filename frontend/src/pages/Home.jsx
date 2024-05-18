@@ -1,9 +1,19 @@
 import MyCarousel from "../components/HomeComponents/MyCarousel";
 import BlogCard from "../components/BlogCard";
 
+import { useContext } from "react";
+
+import { ModeContext } from "../main";
+
 function Home() {
+  const { mode } = useContext(ModeContext);
+
   return (
-    <div className="bg-gray-100 pb-6">
+    <div
+      className={`${
+        mode === "light" ? "bg-gray-100 text-priDark" : "bg-priDark text-white"
+      } duration-200 pb-6`}
+    >
       <div className="">
         <div className="flex flex-col text-center pt-6">
           <div className="text-[10px] tracking-widest font-thin">BLACKTREE</div>
@@ -31,15 +41,9 @@ function Home() {
         </ul>
       </div>
       <div className="space-y-3 mt-3">
-        <div className="bg-white rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2">
-          <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
-        </div>
-        <div className="bg-white rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2">
-          <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
-        </div>
-        <div className="bg-white rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2">
-          <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
-        </div>
+        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
+        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
+        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
       </div>
     </div>
   );

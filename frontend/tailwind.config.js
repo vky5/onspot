@@ -10,7 +10,9 @@ export default withMT({
     extend: {
       colors: {
         primary: '#02816C',
-        secondary: '#6DADA2'
+        secondary: '#6DADA2',
+        priDark: '#050301',
+        secDark:  '#424242'
       }
     },
   },

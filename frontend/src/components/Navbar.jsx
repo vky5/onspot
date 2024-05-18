@@ -2,19 +2,25 @@ import { Link } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import dark_mode from "../assets/dark_mode_button.png";
-import search from "../assets/search.png";
+
 import { CgMenuRight } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import logo_w from "../assets/logo_w.png";
 import { MdHome } from "react-icons/md";
 import { MdBook } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaSearch } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import profile from "../assets/profile.png";
+import light_mode from '../assets/light_mode.png';
+import logo_w_header from '../assets/logo_w_header.png';
+import { ModeContext } from "../main";
+
 
 function Navbar() {
   const [mobileMenu, setMobileMenu] = useState(false);
+
+  const {mode, toggleMode} = useContext(ModeContext);
 
   const toggle = () => {
     setMobileMenu(!mobileMenu);
@@ -26,13 +32,13 @@ function Navbar() {
   };
 
   return (
-    <div className="px-4 py-3 bg-gray-100 flex justify-between items-center relative z-10">
+    <div className={`px-4 py-3 bg-gray-100 flex justify-between items-center relative z-10 duration-200 ${mode==='light'? 'bg-gray-100':'bg-priDark'}`}>
       <div>
-        <img src={logo} alt="logo of blacktree" />
+        <img src={mode==='light'?logo:logo_w_header} alt="logo of blacktree" />
       </div>
       <div className="flex w-3/5 justify-around items-center">
-        <div>
-          <img src={dark_mode} />
+        <div onClick={toggleMode}>
+          <img src={mode==='light'?dark_mode:light_mode}/>
         </div>
         <div>
           <Link to="/login">
@@ -41,10 +47,10 @@ function Navbar() {
             </button>
           </Link>
         </div>
-        <div>
-          <img src={search} />
+        <div className={`${mode === 'light' ? 'text-priDark' : 'text-gray-100'} font-thin`}>
+          <FaSearch/>
         </div>
-        <div onClick={toggle} className="mobilemenu relative z-[99]">
+        <div onClick={toggle} className={`mobilemenu relative z-[99] ${mode === 'light' ? 'text-priDark' : 'text-gray-100'}`}>
           {mobileMenu ? (
             <IoMdClose className="text-2xl" />
           ) : (
