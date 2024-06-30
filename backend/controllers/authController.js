@@ -31,19 +31,21 @@ const createAndSendJWT = (user, res, responseCode)=>{
     user.password = undefined;
     res.status(responseCode).json({
         status: 'success',
-        token,
-        data: user
+        token
+        // data: user
     });
 }
 
 // create the user and save data in DB
 const signup = catchAsync (async (req, res, next) => {
+
+    console.log(req.body);
     const newUser = await UserModel.create({
-        name: req.body.name,
+        // name: req.body.name,
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        checkPassword: req.body.checkPassword
+        // checkPassword: req.body.checkPassword
     });
     
     if (!newUser){

@@ -1,5 +1,5 @@
 // necessary imports
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
@@ -22,9 +22,15 @@ import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import { getCookie } from "./utils/Cookies";
 
+// this context is for light mode / dark mode
 export const ModeContext = createContext();
 
+// this context is to check if the user is logged in or not
+export const LoggedInContext = createContext();
+
+// defining different routes in frontend
 const paths = [
   {
     path: "/",
@@ -61,6 +67,7 @@ const paths = [
 ];
 
 const AppComponent = () => {
+  // to track user is on which page
   const location = useLocation();
 
   // Define routes where Navbar and Footer should not appear
@@ -69,18 +76,38 @@ const AppComponent = () => {
   // Check if the current route is excluded
   const isExcludedRoute = excludedRoutes.includes(location.pathname);
 
+  // creating state of mode to pass in the ModeContext to track whether light mode is on or dark mode
   const [mode, setMode] = useState("dark");
-  const toggleMode = ()=>{
-    setMode((prevTheme)=>(prevTheme==='light'? 'dark': 'light'));
-  }
+
+  // this is to check if the user is logged in or not and this is done by tracking if the cookie is passed in the page or not.
+  const [isLoggedin, setLoggedin] = useState(false);
+
+  // this useEffect is to track whether user is logged in or not.
+  useEffect(() => {
+    const checkLoggedIn = () => {
+      if (getCookie("jwt")) {
+        setLoggedin(true);
+      } else {
+        setLoggedin(false);
+      }
+    };
+
+    checkLoggedIn;
+  }, []);
+
+  const toggleMode = () => {
+    setMode((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
 
   return (
     <div>
-      <ModeContext.Provider value={{ mode, toggleMode }}>
-        {!isExcludedRoute && <Navbar />}
-        <Outlet />
-        {!isExcludedRoute && <Footer />}
-      </ModeContext.Provider>
+      <LoggedInContext.Provider value={{ isLoggedin, setLoggedin }}>
+        <ModeContext.Provider value={{ mode, toggleMode }}>
+          {!isExcludedRoute && <Navbar />}
+          <Outlet />
+          {!isExcludedRoute && <Footer />}
+        </ModeContext.Provider>
+      </LoggedInContext.Provider>
     </div>
   );
 };

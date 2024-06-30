@@ -22,8 +22,9 @@ function Home() {
         </div>
       </div>
       <div className="pt-12">
-        {" "}
+        
         {/*here is the css for carousel height in different screen size*/}
+        
         <MyCarousel />
       </div>
       <div className="pt-6">
@@ -41,7 +42,7 @@ function Home() {
         </ul>
       </div>
       <div className="space-y-3 mt-3">
-        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
+        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" id="32"/>
         <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
         <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
       </div>

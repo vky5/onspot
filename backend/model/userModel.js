@@ -6,7 +6,7 @@ const crypto = require('crypto')
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Enter a Username']
+        // required: [true, 'Enter a name'] we dont need to make it mandatory since we are using username as primary form of recognization
     },
     username: {
         type: String,
@@ -26,16 +26,16 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         select: false
     },
-    checkPassword: {
-        type: String,
-        required: [true, 'Please confirm your password'],
-        validate: {
-            validator: function (el){
-                return el==this.password;
-            },
-            message: "Passwords are not the same"
-        }
-    },
+    // checkPassword: {
+    //     type: String,
+    //     required: [true, 'Please confirm your password'],
+    //     validate: {
+    //         validator: function (el){
+    //             return el==this.password;
+    //         },
+    //         message: "Passwords are not the same"
+    //     }
+    // },
     role: {
         type: String,
         enum: ['admin', 'writer', 'reader'],
@@ -44,6 +44,9 @@ const userSchema = new mongoose.Schema({
     passwordChangedAt:{
         type: Date,
         select: false
+    },
+    img: {
+        type: String
     },
     date: {
         type: Date,
@@ -68,7 +71,7 @@ userSchema.pre('save', async function(next){
     this.password = await bcrypt.hash(this.password, 12);
 
     //delete the checkpassword field
-    this.checkPassword = undefined;
+    // this.checkPassword = undefined;
     next();
 })
 

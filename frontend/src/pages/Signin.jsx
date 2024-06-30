@@ -1,38 +1,10 @@
-import email from "../assets/email.png";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import google from "../assets/Google.png";
-import { useEffect } from "react";
-import { FaEnvelope } from "react-icons/fa";
+import {GoogleOAuthProvider } from "@react-oauth/google";
+import GoogleAuthImg from "../components/AuthComponents/GoogleAuthImg";
 
 import { Link } from "react-router-dom";
 
 function Signin() {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-
-  const handleSuccess = () => {
-    console.log("Success");
-  };
-
-  const handleError = () => {
-    console.log("error");
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      const response = await GoogleLogin({
-        clientId: clientId,
-        onSuccess: handleSuccess,
-        onError: handleError,
-      });
-      if (response.success) {
-        console.log("Google authentication successful");
-      } else {
-        console.log("Google authentication failed");
-      }
-    } catch (error) {
-      console.error("Error during Google authentication:", error);
-    }
-  };
 
   return (
     <div className="bg-primary h-screen flex justify-center items-center flex-col">
@@ -81,17 +53,11 @@ function Signin() {
 
             <GoogleOAuthProvider
               clientId={clientId}
-              onSuccess={handleSuccess}
-              onError={handleError}
             >
-              <button
-                onClick={handleGoogleLogin}
-                className="bg-white rounded-full p-2 mt-2"
-              >
-                <img src={google} alt="Google" />
-              </button>
+              <GoogleAuthImg />
             </GoogleOAuthProvider>
 
+            {/* for the Sign up button */}
             <div className="text-[12px] text-white  text-left mt-2">
               <Link to="/signup">
                 <span>Don't have an account? </span>

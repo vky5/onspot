@@ -3,22 +3,23 @@ import profile from "../assets/profile.png";
 import stripText from "../utils/textStrip";
 import time from "../assets/time.png";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useContext, useEffect, useState } from "react";
 import { ModeContext } from "../main";
 
-function BlogCard({ heading, username = "username" }) {
+function BlogCard({ heading, username = "username", id}) {
   const { mode } = useContext(ModeContext);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [usePrimary, setUsePrimary] = useState(false);
 
   useEffect(() => {
     const checkLocation = () => {
-      if (location.pathname === "/liked") {
-        setUsePrimary(true);
+      if (location.pathname === "/liked") { //TODO update this condition to show primary color as background for every liked card and not just in /liked route
+        setUsePrimary(true); 
       }
     };
     checkLocation();
@@ -26,18 +27,24 @@ function BlogCard({ heading, username = "username" }) {
 
   return (
     <div
-      className={`duration-200 rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2 ${
-        usePrimary
-          ? "bg-primary"
-          : mode === "light"
-          ? "bg-white "
-          : "bg-secDark"
-      }
+      className={`duration-200 rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2 
+        ${ 
+          // this is to check if we need to use display primary color or light / dark mode
+          usePrimary
+            ? "bg-primary"
+            : mode === "light"
+            ? "bg-white "
+            : "bg-secDark"
+        }
        ${
-        mode === 'light'
-          ? 'text-black' 
-          : 'text-white' 
-      }`}
+         // this is to change the color of the text according to light or dark mode.
+         mode === "light" ? "text-black" : "text-white"
+       }`}
+
+       // this is to open a blog with particular id. We are going to gather the data of blogs like id and headings from an endpoijnt and more details like content from the particular id in the page that they have asked that for 
+       onClick={()=>{
+         navigate(`/blogs/${id}`, {state: {id}}) // thie passed object must be named 'state' any other type wont work.
+       }}
     >
       <div className={` flex pt-4 pb-4 items-center`}>
         <div className="flex-shrink-0">
@@ -69,7 +76,7 @@ function BlogCard({ heading, username = "username" }) {
 BlogCard.propTypes = {
   heading: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-  bgColor: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired
 };
 
 export default BlogCard;
