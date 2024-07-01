@@ -12,15 +12,17 @@ import { MdBook } from "react-icons/md";
 import { FaHeart, FaSearch } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import profile from "../assets/profile.png";
-import light_mode from '../assets/light_mode.png';
-import logo_w_header from '../assets/logo_w_header.png';
-import { ModeContext } from "../main";
-
+import light_mode from "../assets/light_mode.png";
+import logo_w_header from "../assets/logo_w_header.png";
+import { ModeContext, LoggedInContext } from "../main";
+import { deleteCookie } from "../utils/Cookies";
 
 function Navbar() {
+  const { isLoggedin, setLoggedin } = useContext(LoggedInContext);
+
   const [mobileMenu, setMobileMenu] = useState(false);
 
-  const {mode, toggleMode} = useContext(ModeContext);
+  const { mode, toggleMode } = useContext(ModeContext);
 
   const toggle = () => {
     setMobileMenu(!mobileMenu);
@@ -32,25 +34,53 @@ function Navbar() {
   };
 
   return (
-    <div className={`px-4 py-3 bg-gray-100 flex justify-between items-center relative z-10 duration-200 ${mode==='light'? 'bg-gray-100':'bg-priDark'}`}>
+    <div
+      className={`px-4 py-3 bg-gray-100 flex justify-between items-center relative z-10 duration-200 ${
+        mode === "light" ? "bg-gray-100" : "bg-priDark"
+      }`}
+    >
       <div>
-        <img src={mode==='light'?logo:logo_w_header} alt="logo of blacktree" />
+        <img
+          src={mode === "light" ? logo : logo_w_header}
+          alt="logo of blacktree"
+        />
       </div>
       <div className="flex w-3/5 justify-around items-center">
         <div onClick={toggleMode}>
-          <img src={mode==='light'?dark_mode:light_mode}/>
+          <img src={mode === "light" ? dark_mode : light_mode} />
         </div>
         <div>
-          <Link to="/login">
-            <button className="bg-primary text-white px-4 py-1 rounded-xl">
-              Login
+          {!isLoggedin ? (
+            <Link to="/login">
+              <button className="bg-primary text-white px-4 py-1 rounded-xl">
+                Login
+              </button>
+            </Link>
+          ) : (
+            <button
+              className="bg-primary text-white px-4 py-1 rounded-xl"
+              onClick={() => {
+                deleteCookie("jwt");
+                setLoggedin(false);
+              }}
+            >
+              Logout
             </button>
-          </Link>
+          )}
         </div>
-        <div className={`${mode === 'light' ? 'text-priDark' : 'text-gray-100'} font-thin`}>
-          <FaSearch/>
+        <div
+          className={`${
+            mode === "light" ? "text-priDark" : "text-gray-100"
+          } font-thin`}
+        >
+          <FaSearch />
         </div>
-        <div onClick={toggle} className={`mobilemenu relative z-[99] ${mode === 'light' ? 'text-priDark' : 'text-gray-100'}`}>
+        <div
+          onClick={toggle}
+          className={`mobilemenu relative z-[99] ${
+            mode === "light" ? "text-priDark" : "text-gray-100"
+          }`}
+        >
           {mobileMenu ? (
             <IoMdClose className="text-2xl" />
           ) : (
@@ -74,7 +104,11 @@ function Navbar() {
                 </div>
               </div>
               <div className="space-y-4 flex flex-col items-center text-white text-[20px] ">
-                <Link to="/" onClick={toggle} className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                <Link
+                  to="/"
+                  onClick={toggle}
+                  className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
+                >
                   <MdHome className="mr-2" /> {/* Icon */}
                   <span className="">Home</span> {/* Text */}
                 </Link>
@@ -88,7 +122,11 @@ function Navbar() {
                   <span className="">Blogs</span> {/* Text */}
                 </Link>
 
-                <Link to="/liked" onClick={toggle} className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
+                <Link
+                  to="/liked"
+                  onClick={toggle}
+                  className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
+                >
                   <FaHeart className="mr-2" /> {/* Icon */}
                   <span className="">Liked</span> {/* Text */}
                 </Link>

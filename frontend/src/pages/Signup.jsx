@@ -21,7 +21,8 @@ function Signup() {
   const setSignupRequest = async (userData) =>{
     try {
       const res = await axios.post(backend+'/auth/signup', userData);
-      setCookie("jwt", res.token, expireIn || 90);
+      console.log(res.data.token);
+      setCookie("jwt", res.data.token, expireIn || 90);
       setLoggedin(true);
       navigate('/');
 
@@ -30,7 +31,7 @@ function Signup() {
     }
   }
 
-
+  
   // state to track changes made in fields of username password and email...
   const [userinfo, setUserInfo] = useState({
     email: "",
@@ -39,6 +40,7 @@ function Signup() {
     name: "",
     img: "" // check what is the name of image in googleoauth response
   })
+  
 
   // to check if the state is updated in google oauth or not...
   const [updated, setUpdated] = useState(false);
@@ -47,6 +49,7 @@ function Signup() {
     const checkerFunc = ()=>{
       if (updated){
         setSignupRequest(userinfo);
+        setUpdated(false);
       }
     }
 
@@ -77,7 +80,7 @@ function Signup() {
             className="h-12 rounded-md bg-secondary placeholder:text-center placeholder-gray-300 w-full text-white text-sm px-3 outline-none"
             placeholder="Enter your Email"
             onChange={()=>{
-              setUserInfo({...userinfo, email: event.target.email})
+              setUserInfo({...userinfo, email: event.target.value})
             }}
           />
         </div>
@@ -88,7 +91,7 @@ function Signup() {
             className="h-12 rounded-md bg-secondary placeholder-gray-300 placeholder:text-center w-full text-white text-sm px-3 outline-none"
             placeholder="Enter your Password"
             onChange={()=>{
-              setUserInfo({...userinfo, password: event.target.password})
+              setUserInfo({...userinfo, password: event.target.value})
             }}
           />
         </div>
@@ -96,7 +99,7 @@ function Signup() {
         <div>
           
           <div>
-            <button className="bg-white text-xl text-primary w-full mt-8 pt-3 pb-3 rounded-3xl" onClick={setSignupRequest}>
+            <button className="bg-white text-xl text-primary w-full mt-8 pt-3 pb-3 rounded-3xl" onClick={()=>setSignupRequest(userinfo)}>
               Sign up
             </button>
             <div className="text-white w-full text-center mt-3 text-xs">

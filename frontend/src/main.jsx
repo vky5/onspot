@@ -86,13 +86,14 @@ const AppComponent = () => {
   useEffect(() => {
     const checkLoggedIn = () => {
       if (getCookie("jwt")) {
+
         setLoggedin(true);
       } else {
         setLoggedin(false);
       }
     };
 
-    checkLoggedIn;
+    checkLoggedIn();
   }, []);
 
   const toggleMode = () => {

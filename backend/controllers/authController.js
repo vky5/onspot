@@ -38,13 +38,12 @@ const createAndSendJWT = (user, res, responseCode)=>{
 
 // create the user and save data in DB
 const signup = catchAsync (async (req, res, next) => {
-
-    console.log(req.body);
-    const newUser = await UserModel.create({
-        // name: req.body.name,
+    const newUser = await UserModel.create({ // we cant create a payload directly from the user browser 
+        name: req.body.name,
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
+        img: req.body.img
         // checkPassword: req.body.checkPassword
     });
     

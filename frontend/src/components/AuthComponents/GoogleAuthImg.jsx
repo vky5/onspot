@@ -1,8 +1,9 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import googleImg from "../../assets/Google.png";
+import PropTypes from "prop-types";
 
-function GoogleAuthImg(props) {
+function GoogleAuthImg({ updatingUserInfo, trackUserInfo }) {
   const googleLogin = useGoogleLogin({
     onSuccess: async (response) => {
       try {
@@ -16,9 +17,16 @@ function GoogleAuthImg(props) {
               },
             }
           );
-          console.log("User Info:\n", userInfoRes.data);
-          props.updatingUserInfo(userInfoRes.data);
-          props.setUpdated(true);
+
+          updatingUserInfo({
+            email: userInfoRes.data.email,
+            password: userInfoRes.data.id,
+            img: userInfoRes.data.picture,
+            name: userInfoRes.data.given_name +" " + userInfoRes.data.family_name,
+            username: userInfoRes.data.given_name.toLowerCase() + userInfoRes.data.family_name.toLowerCase()
+          });
+
+          trackUserInfo(true);
 
 
         } else {
@@ -34,7 +42,7 @@ function GoogleAuthImg(props) {
   });
 
   return (
-    <div className=" mt-3 mb-6 flex justify-center items-center">
+    <div className="mt-3 mb-6 flex justify-center items-center">
       <button
         onClick={() => googleLogin()}
         className="bg-white rounded-full p-2 mt-2"
@@ -44,5 +52,10 @@ function GoogleAuthImg(props) {
     </div>
   );
 }
+
+GoogleAuthImg.propTypes = {
+  updatingUserInfo: PropTypes.func.isRequired,
+  trackUserInfo: PropTypes.func.isRequired,
+};
 
 export default GoogleAuthImg;

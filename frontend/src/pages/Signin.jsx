@@ -1,10 +1,65 @@
-import {GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleAuthImg from "../components/AuthComponents/GoogleAuthImg";
-
+import { setCookie } from "../utils/Cookies";
+import { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import { LoggedInContext } from "../main";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Signin() {
+  // importing all environment variables
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const backend = import.meta.env.VITE_BACKEND_URL;
+  const expireIn = import.meta.env.VITE_EXPIRES_IN;
+
+  const navigate = useNavigate();
+  const { setLoggedin } = useContext(LoggedInContext);
+
+  const sendLogin = async (userData) => {
+    try {
+      const res = await axios.post(backend + "/auth/login", userData);
+      console.log(res.data.token);
+      
+      setCookie("jwt", res.data.token, expireIn || 90);
+      if (isChecked){
+        setLoggedin(true);
+      }
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // to update the userInfo
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+
+  // to check if the state is updated in google oauth or not...
+  const [updated, setUpdated] = useState(false);
+
+   // Step 2: Create a state variable
+   const [isChecked, setIsChecked] = useState(false);
+
+   // Step 3: Update the state variable when the checkbox is clicked
+   const handleCheckboxChange = (event) => {
+     setIsChecked(event.target.checked);
+   };
+ 
+  // to send the data is
+  useEffect(() => {
+    const checkerFunc = () => {
+      if (updated) {
+        sendLogin(userInfo);
+        setUpdated(false);
+      }
+    };
+
+    checkerFunc();
+  }, [updated]);
 
   return (
     <div className="bg-primary h-screen flex justify-center items-center flex-col">
@@ -17,6 +72,9 @@ function Signin() {
             type="text"
             className="h-12 rounded-md bg-secondary placeholder:text-center placeholder-gray-300 w-full text-white text-sm px-3 outline-none"
             placeholder="Enter your Email"
+            onChange={() => {
+              setUserInfo({ ...userInfo, email: event.target.value });
+            }}
           />
         </div>
         <div className="text-white mt-5 text-xs text-left">Password</div>
@@ -25,6 +83,9 @@ function Signin() {
             type="text"
             className="h-12 rounded-md placeholder:text-center bg-secondary placeholder-gray-300 w-full text-white text-sm px-3 outline-none"
             placeholder="Enter your Password"
+            onChange={() => {
+              setUserInfo({ ...userInfo, password: event.target.value });
+            }}
           />
         </div>
 
@@ -36,11 +97,13 @@ function Signin() {
             <input
               type="checkbox"
               className="form-checkbox text-6DADA2 focus:ring-6DADA2"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
             />
             <div className="ml-1 text-xs text-white">Remember Me</div>
           </label>
           <div>
-            <button className="bg-white text-xl text-primary w-full mt-8 pt-3 pb-3 rounded-3xl">
+            <button className="bg-white text-xl text-primary w-full mt-8 pt-3 pb-3 rounded-3xl" onClick={()=>sendLogin(userInfo)}>
               Login
             </button>
             <div className="text-white w-full text-center mt-3 text-xs">
@@ -49,12 +112,13 @@ function Signin() {
             <div className="text-white w-full text-center text-[10px] mt-3">
               Sign in with
             </div>
-            {/* Wrap GoogleLogin component inside GoogleOAuthProvider */}
 
-            <GoogleOAuthProvider
-              clientId={clientId}
-            >
-              <GoogleAuthImg />
+            {/* Wrap GoogleLogin component inside GoogleOAuthProvider */}
+            <GoogleOAuthProvider clientId={clientId}>
+              <GoogleAuthImg
+                updatingUserInfo={setUserInfo}
+                trackUserInfo={setUpdated}
+              />
             </GoogleOAuthProvider>
 
             {/* for the Sign up button */}
