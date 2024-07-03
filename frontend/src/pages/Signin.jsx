@@ -3,9 +3,10 @@ import GoogleAuthImg from "../components/AuthComponents/GoogleAuthImg";
 import { setCookie } from "../utils/Cookies";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { LoggedInContext } from "../main";
+import { LoggedInContext, UserContext } from "../main";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { vkyreq } from "../utils/vkyreq";
 
 function Signin() {
   // importing all environment variables
@@ -16,6 +17,8 @@ function Signin() {
   const navigate = useNavigate();
   const { setLoggedin } = useContext(LoggedInContext);
 
+  const {setUserData} = useContext(UserContext);
+
   const sendLogin = async (userData) => {
     try {
       const res = await axios.post(backend + "/auth/login", userData);
@@ -23,6 +26,9 @@ function Signin() {
       
       setCookie("jwt", res.data.token, JWTexpireIn || 90);
       setLoggedin(true);
+      const userDetailInfo = await vkyreq('get', '/users/info');
+      setUserData(userDetailInfo.data.user)
+
       navigate("/");
 
     } catch (error) {

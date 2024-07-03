@@ -4,8 +4,8 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { setCookie } from "../utils/Cookies";
 import { useNavigate } from "react-router-dom";
-import { LoggedInContext } from "../main";
-
+import { LoggedInContext, UserContext } from "../main";
+import { vkyreq } from "../utils/vkyreq";
 
 function Signup() {
   // importing env variables
@@ -17,6 +17,8 @@ function Signup() {
 
   const {setLoggedin} = useContext(LoggedInContext);
 
+  const {setUserData} = useContext(UserContext);
+
   // sending signup request to backend
   const setSignupRequest = async (userData) =>{
     try {
@@ -24,6 +26,8 @@ function Signup() {
       console.log(res.data.token);
       setCookie("jwt", res.data.token, JWTexpireIn || 90);
       setLoggedin(true);
+      const userDetailInfo = await vkyreq('get', '/users/info');
+      setUserData(userDetailInfo.data.user)
       navigate('/');
 
     } catch (error) {
