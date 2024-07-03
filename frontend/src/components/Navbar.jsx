@@ -14,7 +14,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import profile from "../assets/profile.png";
 import light_mode from "../assets/light_mode.png";
 import logo_w_header from "../assets/logo_w_header.png";
-import { ModeContext, LoggedInContext } from "../main";
+import { ModeContext, LoggedInContext, UserContext } from "../main";
 import { deleteCookie } from "../utils/Cookies";
 
 function Navbar() {
@@ -23,6 +23,8 @@ function Navbar() {
   const [mobileMenu, setMobileMenu] = useState(false);
 
   const { mode, toggleMode } = useContext(ModeContext);
+
+  const { userData } = useContext(UserContext);
 
   const toggle = () => {
     setMobileMenu(!mobileMenu);
@@ -40,10 +42,12 @@ function Navbar() {
       }`}
     >
       <div>
-        <img
-          src={mode === "light" ? logo : logo_w_header}
-          alt="logo of blacktree"
-        />
+        <Link to="/">
+          <img
+            src={mode === "light" ? logo : logo_w_header}
+            alt="logo of blacktree"
+          />
+        </Link>
       </div>
       <div className="flex w-3/5 justify-around items-center">
         <div onClick={toggleMode}>
@@ -96,13 +100,33 @@ function Navbar() {
         >
           <div className="h-5/6 fixed bottom-0 px-3 flex flex-col justify-between w-full mb-8 overflow-y-auto">
             <div className="space-y-6">
-              <div className="flex text-white space-x-4">
-                <img src={profile} />
+
+              {/* used flex and items-center to align everything in one line */}
+              <div className="flex items-center text-white space-x-4">
+
+
+                {/* this is for the profile picture */}
+                <div className="flex justify-center items-center">
+                  <div className="w-20 h-20 rounded-full overflow-hidden">
+                    <img
+                      src={
+                        userData.img === ""
+                          ? profile
+                          : userData.img
+                      }
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* for username and email */}
                 <div>
-                  <div className="text-xl">Pikachu Poke</div>
-                  <div className="text-xs">pikachu@gmail.com</div>
+                  <div className="text-xl">{userData.username}</div>
+                  <div className="text-xs">{userData.email}</div>
                 </div>
               </div>
+
               <div className="space-y-4 flex flex-col items-center text-white text-[20px] ">
                 <Link
                   to="/"
@@ -123,12 +147,12 @@ function Navbar() {
                 </Link>
 
                 <Link
-                  to="/liked"
+                  to="/profile"
                   onClick={toggle}
                   className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
                 >
-                  <FaHeart className="mr-2" /> {/* Icon */}
-                  <span className="">Liked</span> {/* Text */}
+                  <FaHeart className="mr-2" />
+                  <span className="">Profile</span>
                 </Link>
                 <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
                   <AiOutlineUser className="mr-2" /> {/* Icon */}

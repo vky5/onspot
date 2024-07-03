@@ -9,7 +9,9 @@ import {
   RouterProvider,
   Outlet,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
+import { vkyreq } from "./utils/vkyreq";
 
 // Importing components
 import Navbar from "./components/Navbar";
@@ -17,18 +19,20 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Blogs from "./pages/Blogs";
 import BlogTemp from "./pages/BlogTemp";
-import Liked from "./pages/Liked";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import { getCookie } from "./utils/Cookies";
+import { deleteCookie, getCookie } from "./utils/Cookies";
 
 // this context is for light mode / dark mode
 export const ModeContext = createContext();
 
 // this context is to check if the user is logged in or not
 export const LoggedInContext = createContext();
+
+// this context is for basic user info like his name email profile and username...
+export const UserContext = createContext();
 
 // defining different routes in frontend
 const paths = [
@@ -44,10 +48,10 @@ const paths = [
     path: "/blogs/:id",
     element: <BlogTemp />,
   },
-  {
-    path: "/liked",
-    element: <Liked />,
-  },
+  // {
+  //   path: "/liked",
+  //   element: <Liked />,
+  // },
   {
     path: "/about",
     element: <About />,
@@ -69,7 +73,7 @@ const paths = [
 const AppComponent = () => {
   // to track user is on which page
   const location = useLocation();
-
+  const navigate = useNavigate();
   // Define routes where Navbar and Footer should not appear
   const excludedRoutes = ["/login", "/signup"];
 
@@ -82,14 +86,29 @@ const AppComponent = () => {
   // this is to check if the user is logged in or not and this is done by tracking if the cookie is passed in the page or not.
   const [isLoggedin, setLoggedin] = useState(false);
 
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    img: "",
+    username: "",
+  });
+
   // this useEffect is to track whether user is logged in or not.
   useEffect(() => {
-    const checkLoggedIn = () => {
-      if (getCookie("jwt")) {
-
-        setLoggedin(true);
-      } else {
+    const checkLoggedIn = async () => {
+      try {
+        if (getCookie("jwt")) {
+          setLoggedin(true);
+          // if the user exists get their data from backend and update it in useState
+          const res = await vkyreq("get", "/users/info");
+          setUserData(res.data.user);
+        } else {
+          setLoggedin(false);
+        }
+      } catch (error) {
         setLoggedin(false);
+        deleteCookie("jwt");
+        navigate("/");
       }
     };
 
@@ -102,13 +121,15 @@ const AppComponent = () => {
 
   return (
     <div>
-      <LoggedInContext.Provider value={{ isLoggedin, setLoggedin }}>
-        <ModeContext.Provider value={{ mode, toggleMode }}>
-          {!isExcludedRoute && <Navbar />}
-          <Outlet />
-          {!isExcludedRoute && <Footer />}
-        </ModeContext.Provider>
-      </LoggedInContext.Provider>
+      <UserContext.Provider value={{ userData, setUserData }}>
+        <LoggedInContext.Provider value={{ isLoggedin, setLoggedin }}>
+          <ModeContext.Provider value={{ mode, toggleMode }}>
+            {!isExcludedRoute && <Navbar />}
+            <Outlet />
+            {!isExcludedRoute && <Footer />}
+          </ModeContext.Provider>
+        </LoggedInContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 };

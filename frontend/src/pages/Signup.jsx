@@ -11,7 +11,7 @@ function Signup() {
   // importing env variables
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const backend = import.meta.env.VITE_BACKEND_URL;
-  const expireIn = import.meta.env.VITE_EXPIRES_IN;
+  const JWTexpireIn = import.meta.env.VITE_JWT_EXPIRES_IN;
 
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ function Signup() {
     try {
       const res = await axios.post(backend+'/auth/signup', userData);
       console.log(res.data.token);
-      setCookie("jwt", res.data.token, expireIn || 90);
+      setCookie("jwt", res.data.token, JWTexpireIn || 90);
       setLoggedin(true);
       navigate('/');
 

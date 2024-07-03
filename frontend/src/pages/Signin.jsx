@@ -10,8 +10,8 @@ import { Link } from "react-router-dom";
 function Signin() {
   // importing all environment variables
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  const backend = import.meta.env.VITE_BACKEND_URL;
-  const expireIn = import.meta.env.VITE_EXPIRES_IN;
+  const backend  = import.meta.env.VITE_BACKEND_URL;
+  const JWTexpireIn = import.meta.env.VITE_JWT_EXPIRES_IN;
 
   const navigate = useNavigate();
   const { setLoggedin } = useContext(LoggedInContext);
@@ -21,12 +21,10 @@ function Signin() {
       const res = await axios.post(backend + "/auth/login", userData);
       console.log(res.data.token);
       
-      setCookie("jwt", res.data.token, expireIn || 90);
-      if (isChecked){
-        setLoggedin(true);
-      }
-
+      setCookie("jwt", res.data.token, JWTexpireIn || 90);
+      setLoggedin(true);
       navigate("/");
+
     } catch (error) {
       console.log(error);
     }
@@ -41,13 +39,13 @@ function Signin() {
   // to check if the state is updated in google oauth or not...
   const [updated, setUpdated] = useState(false);
 
-   // Step 2: Create a state variable
-   const [isChecked, setIsChecked] = useState(false);
+  //  // Step 2: Create a state variable
+  //  const [isChecked, setIsChecked] = useState(false);
 
-   // Step 3: Update the state variable when the checkbox is clicked
-   const handleCheckboxChange = (event) => {
-     setIsChecked(event.target.checked);
-   };
+  //  // Step 3: Update the state variable when the checkbox is clicked
+  //  const handleCheckboxChange = (event) => {
+  //    setIsChecked(event.target.checked);
+  //  };
  
   // to send the data is
   useEffect(() => {
@@ -93,7 +91,8 @@ function Signin() {
           Forget Password?
         </div>
         <div>
-          <label className="flex mt-3">
+          
+          {/* <label className="flex mt-3">
             <input
               type="checkbox"
               className="form-checkbox text-6DADA2 focus:ring-6DADA2"
@@ -102,7 +101,10 @@ function Signin() {
             />
             <div className="ml-1 text-xs text-white">Remember Me</div>
           </label>
-          <div>
+          */}
+
+
+          <div> 
             <button className="bg-white text-xl text-primary w-full mt-8 pt-3 pb-3 rounded-3xl" onClick={()=>sendLogin(userInfo)}>
               Login
             </button>

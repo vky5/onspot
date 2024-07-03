@@ -64,9 +64,13 @@ const login = catchAsync(async (req, res, next)=>{
     }
 
     const findUser = await UserModel.findOne({email: email}).select('+password');
+    if (!findUser){
+        return next(new AppError('Incorrect email or password', 401));
+    }
     const ans = await findUser.correctPassword(password, findUser.password); // this returns a promise and we need to await
+    // here it is giving us error that we are trying to find the password on a null object therefore we need to resolve if we found user or not
 
-    if (!findUser || !ans){
+    if (!ans){
         return next(new AppError('Incorrect email or password', 401)) // unauthorized)
     }
     

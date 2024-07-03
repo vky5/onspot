@@ -14,4 +14,10 @@ router.delete('/deleteme',
     userController.deleteUser
 )
 
+
+router.get('/info/:username?', 
+    authController.validateJWT,
+    userController.getUserData
+)
+
 module.exports = router;
