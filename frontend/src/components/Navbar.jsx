@@ -107,7 +107,7 @@ function Navbar() {
 
                 {/* this is for the profile picture */}
                 <div className="flex justify-center items-center">
-                  <div className="w-20 h-20 rounded-full overflow-hidden">
+                  <div className="w-16 h-16 rounded-full overflow-hidden">
                     <img
                       src={
                         userData.img === ""

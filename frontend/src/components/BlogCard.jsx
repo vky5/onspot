@@ -1,14 +1,13 @@
 import PropTypes from "prop-types";
 import profile from "../assets/profile.png";
 import stripText from "../utils/textStrip";
-import time from "../assets/time.png";
-
+import { IoHeartSharp } from 'react-icons/io5';
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useContext, useEffect, useState } from "react";
 import { ModeContext } from "../main";
 
-function BlogCard({ heading, username = "username", id}) {
+function BlogCard({ heading, username, id, like=0}) {
   const { mode } = useContext(ModeContext);
 
   const location = useLocation();
@@ -64,8 +63,8 @@ function BlogCard({ heading, username = "username", id}) {
           >
             <img src={profile} alt="" className="h-6 w-6 rounded-full" />
             <span className="text-xs">{username}</span>
-            <img src={time} alt="" className="h-6 w-6 rounded-full" />
-            <span className="text-xs">43 mins</span>
+            <IoHeartSharp className="h-6 w-6 rounded-full text-primary" />
+            <span className="text-xs">{like}</span>
           </div>
         </div>
       </div>
@@ -76,7 +75,8 @@ function BlogCard({ heading, username = "username", id}) {
 BlogCard.propTypes = {
   heading: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  like: PropTypes.string
 };
 
 export default BlogCard;

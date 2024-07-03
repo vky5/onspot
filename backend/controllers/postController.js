@@ -106,16 +106,23 @@ const getAllWriterPosts = catchAsync(async (req, res, next)=>{
 const getAllPosts = catchAsync(async (req, res, next)=>{
     const features = new APIFeatures(PostModel, req.query)
                                                         .finding()
-                                                        .sotring()
+                                                        .sorting()
                                                         .filtering()
                                                         .pagination();
 
-    const postsAfterQueries = await features.query;
+    const postsAfterQueries = await features.query; // this is an array of posts
+    
+    const formattedPosts = postsAfterQueries.map(post=>({
+        heading: post.heading,
+        like: post.like,
+        generatedId: post.generatedId,
+        username: post.username
+    }));
 
     res.status(200).json({
         status: 'success',
         result: postsAfterQueries.length,
-        posts: postsAfterQueries
+        posts: formattedPosts
     })
 
 })

@@ -18,7 +18,7 @@ class APIFeatures{
         return this;
     }
 
-    sotring(){
+    sorting(){
         if (this.queryString.sort){
             const sortBy = this.queryString.sort.split(',').join(' ');
             this.query = this.query.sort(sortBy);
