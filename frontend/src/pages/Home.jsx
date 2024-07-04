@@ -10,14 +10,22 @@ function Home() {
   const { mode } = useContext(ModeContext);
 
   const [blogData, setBlogData] = useState([]);
+  const [blogsInCarousel, setBlogsInCarousel] = useState([]);
 
-  useEffect(()=>{
+  const [loading, setIsLoading] = useState(true);
+
+  useEffect(() => {
     const getBlogs = async () => {
-      const res = await vkyreq('get', '/posts');
+      const res = await vkyreq("get", "/posts");
       setBlogData(res.data.posts);
-    }
+    };
     getBlogs();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    setBlogsInCarousel(blogData.slice(0, 5));
+    setTimeout(() => setIsLoading(false), 100);
+  }, [blogData]);
 
   return (
     <div
@@ -33,8 +41,21 @@ function Home() {
         </div>
       </div>
       <div className="pt-12">
-        <MyCarousel />
+        {/* {blogsInCarousel.map(blogInfo => (
+          <MyCarousel 
+            imgHome="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80" 
+            heading={blogInfo.heading} 
+            key={blogInfo.id} 
+          />
+        ))} */}
+
+        {loading ? (
+          <h1>create a loading screen idiot</h1>
+        ) : (
+          <MyCarousel list={blogsInCarousel} />
+        )}
       </div>
+
       <div className="pt-6">
         <ul
           className="flex px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium"
@@ -50,10 +71,15 @@ function Home() {
         </ul>
       </div>
 
-
       <div className="space-y-3 mt-3">
-        {blogData.map(blogInfo => (
-          <BlogCard key={blogInfo.generatedId} id={blogInfo.generatedId} heading={blogInfo.heading} username={blogInfo.username} like={blogInfo.like}/>
+        {blogData.map((blogInfo) => (
+          <BlogCard
+            key={blogInfo.generatedId}
+            id={blogInfo.generatedId}
+            heading={blogInfo.heading}
+            username={blogInfo.username}
+            like={blogInfo.like}
+          />
         ))}
       </div>
     </div>

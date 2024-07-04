@@ -14,7 +14,7 @@ function BlogTemp() {
   return (
     <div className={`${mode==='light'?'text-black bg-white': 'text-white bg-black'}`}>
       <div className="ml-2 mr-2 ">
-  
+        
       </div>
     </div>
   )

@@ -75,8 +75,8 @@ function BlogCard({ heading, username, id, like=0}) {
 BlogCard.propTypes = {
   heading: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  like: PropTypes.string
+  id: PropTypes.number.isRequired,
+  like: PropTypes.number
 };
 
 export default BlogCard;
