@@ -23,7 +23,7 @@ import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import { deleteCookie, getCookie } from "./utils/Cookies";
+import { deleteCookie, getCookie, setCookie } from "./utils/Cookies";
 
 // this context is for light mode / dark mode
 export const ModeContext = createContext();
@@ -105,6 +105,14 @@ const AppComponent = () => {
         } else {
           setLoggedin(false);
         }
+
+        if (getCookie("theme")){
+          setMode(getCookie("theme"));
+        }else{
+          setMode("dark");
+          setCookie("theme", mode);
+        }
+
       } catch (error) {
         setLoggedin(false);
         deleteCookie("jwt");
@@ -117,6 +125,7 @@ const AppComponent = () => {
 
   const toggleMode = () => {
     setMode((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    setCookie("theme", mode)
   };
 
   return (

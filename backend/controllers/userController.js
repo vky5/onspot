@@ -70,7 +70,7 @@ const getAllWriter = catchAsync(async(req, res, next)=>{
     res.status(200).json({
         status: 'success',
         results: usersList.length,
-        data: usersList
+        writers: usersList
     })
 
 })
