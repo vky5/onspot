@@ -1,7 +1,7 @@
 const catchAsync = require("../utils/catchAsync");
 const UserModel = require('../model/userModel');
 const AppError = require("../utils/appError");
-
+const formatRes = require('../utils/formatRes');
 
 // this is to protect from auto binding in which a user might update their role by submitting a post request of {role:admin} in payload
 // it checks for the allowed field and only lets user update those field
@@ -62,4 +62,17 @@ const getUserData =catchAsync( async (req, res, next)=>{
     })   
 })
 
-module.exports = {updateUser, deleteUser, getUserData};
+// to get the list of all famous writer....
+const getAllWriter = catchAsync(async(req, res, next)=>{
+    const users = await UserModel.find({role:'writer'});
+    const usersList = formatRes(users, 'username', 'img');
+
+    res.status(200).json({
+        status: 'success',
+        results: usersList.length,
+        data: usersList
+    })
+
+})
+
+module.exports = {updateUser, deleteUser, getUserData, getAllWriter};

@@ -4,6 +4,8 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
+router.get('/', userController.getAllWriter)
+
 router.patch('/updateme', 
     authController.validateJWT,
     userController.updateUser
@@ -15,7 +17,7 @@ router.delete('/deleteme',
 )
 
 
-router.get('/info/:username?', 
+router.get('/info/:username?',
     authController.validateJWT,
     userController.getUserData
 )
