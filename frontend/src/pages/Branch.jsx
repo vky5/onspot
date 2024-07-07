@@ -50,7 +50,7 @@ function Branch() {
         <div className="mb-4 relative">
           <textarea
             placeholder="Branch out your ideas..."
-            className={`w-full h-96 p-2 rounded-md focus:outline-none ${
+            className={`w-full h-96 p-2 ml-4 rounded-md focus:outline-none ${
               mode === "light" ? "bg-gray-100" : "bg-black"
             }`}
             value={content}

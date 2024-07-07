@@ -34,7 +34,7 @@ function ToggleButton({ position }) {
     <div
       ref={buttonRef}
       className="absolute"
-      style={{ top: position, left: -30 }} // Adjust `left` as needed
+      style={{ top: position, left: -20 }} // Adjust `left` as needed
     >
       <button
         className="border-2 border-primary rounded-full w-8 h-8 flex items-center justify-center focus:outline-none transition-transform duration-300 ease-in-out"
