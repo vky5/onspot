@@ -9,11 +9,14 @@ function Blogs() {
   const { mode } = useContext(ModeContext);
 
   const [writerList, setWriterList] = useState([]);
+  const [blogData, setBlogData] = useState([]);
 
   useEffect(() => {
     const getWriters = async () => {
       const res = await vkyreq("get", "/users");
+      const res2 = await vkyreq("get", "/posts");
       setWriterList(res.data.writers);
+      setBlogData(res2.data.posts);
     };
 
     getWriters();
@@ -48,11 +51,15 @@ function Blogs() {
         ))}
       </div>
       <div className="space-y-3 mt-3">
-        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
-
-        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
-
-        <BlogCard heading="This is the introductory blog post and are going to build something unique what we are trying to build is so unique that it is unique" />
+      {blogData.map((blogInfo) => (
+          <BlogCard
+            key={blogInfo.generatedId}
+            id={blogInfo.generatedId}
+            heading={blogInfo.heading}
+            username={blogInfo.username}
+            like={blogInfo.like}
+          />
+        ))}
       </div>
     </div>
   );

@@ -23,6 +23,7 @@ import About from "./pages/About";
 import Profile from "./pages/Profile";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import Branch from "./pages/Branch";
 import { deleteCookie, getCookie, setCookie } from "./utils/Cookies";
 
 // this context is for light mode / dark mode
@@ -68,6 +69,10 @@ const paths = [
     path: "/signup",
     element: <Signup />,
   },
+  {
+    path: "/branch",
+    element: <Branch/>
+  }
 ];
 
 const AppComponent = () => {

@@ -122,6 +122,10 @@ const getAllPosts = catchAsync(async (req, res, next)=>{
 
 })
 
+// to 
 
+const sendLikedPosts = catchAsync(async(req, res, next)=>{
+    
+})
 
 module.exports = { postBlog, updateBlog, getBlogByParams, deleteBlog, getAllWriterPosts , getAllPosts};

@@ -9,8 +9,7 @@ import { useState, useContext } from "react";
 import logo_w from "../assets/logo_w.png";
 import { MdHome } from "react-icons/md";
 import { MdBook } from "react-icons/md";
-import { FaHeart, FaSearch } from "react-icons/fa";
-import { AiOutlineUser } from "react-icons/ai";
+import { FaHeart, FaSearch, FaCog, FaPencilAlt } from "react-icons/fa";
 import profile from "../assets/profile.png";
 import light_mode from "../assets/light_mode.png";
 import logo_w_header from "../assets/logo_w_header.png";
@@ -100,20 +99,13 @@ function Navbar() {
         >
           <div className="h-5/6 fixed bottom-0 px-3 flex flex-col justify-between w-full mb-8 overflow-y-auto">
             <div className="space-y-6">
-
               {/* used flex and items-center to align everything in one line */}
               <div className="flex items-center text-white space-x-4">
-
-
                 {/* this is for the profile picture */}
                 <div className="flex justify-center items-center">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
                     <img
-                      src={
-                        userData.img === ""
-                          ? profile
-                          : userData.img
-                      }
+                      src={userData.img === "" ? profile : userData.img}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />
@@ -154,9 +146,17 @@ function Navbar() {
                   <FaHeart className="mr-2" />
                   <span className="">Profile</span>
                 </Link>
+                <Link
+                  to="/branch"
+                  onClick={toggle}
+                  className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
+                >
+                  <FaPencilAlt className="mr-2" />
+                  <span className="">Branch</span>
+                </Link>
                 <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
-                  <AiOutlineUser className="mr-2" /> {/* Icon */}
-                  <span className="">About Us</span> {/* Text */}
+                  <FaCog className="mr-2" /> {/* Icon */}
+                  <span className="">Settings</span> {/* Text */}
                 </div>
               </div>
             </div>
