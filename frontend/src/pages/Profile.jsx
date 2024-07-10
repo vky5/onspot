@@ -46,14 +46,14 @@ function Profile() {
       </div>
       <div className="flex justify-evenly ml-5 mr-5">
         <div
-          className={`font-bold text-xl w-1/2 rounded-xl flex justify-center items-center ${
+          className={`font-bold text-lg w-1/2 rounded-xl flex justify-center items-center ${
             !active ? "bg-primary text-gray-100" : "text-gray-800"
           }`}
         >
           Liked
         </div>
         <div
-          className={`text-xl w-1/2 rounded-xl font-bold flex justify-center items-center p-2 
+          className={`text-lg w-1/2 rounded-xl font-bold flex justify-center items-center p-2 
          ${active ? "bg-primary text-gray-100" : "text-gray-800"}`}
         >
           Published
