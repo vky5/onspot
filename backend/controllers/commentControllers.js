@@ -4,13 +4,16 @@ const catchAsync = require("../utils/catchAsync");
 const factory = require('./handlerFactory');
 
 
+// const postComment = factory.createOne(CommentModel, {
+//   text
+// })
 const postComment = catchAsync(async (req, res, next) => {
   let blogid = req.params.blogid;
   if (!req.params.blogid) blogid = req.body.blogid;
   const addedComment = await CommentModel.create({
     text: req.body.text,
-    user: req.user._id, // get the user from request object
-    post: blogid,
+    user: req.user._id, // get the user from request object not from the body for security purposes
+    post: blogid
   });
 
   if (!addedComment) {
@@ -23,47 +26,9 @@ const postComment = catchAsync(async (req, res, next) => {
   });
 });
 
-const updateComment = catchAsync(async (req, res, next) => {
-  const updateComment = await CommentModel.findByIdAndUpdate(
-    req.params.commentid,
-    { text: req.body.text },
-    { runValidators: true, new: true }
-  );
 
-  if (!updateComment) return next(new AppError("No comment found", 400));
-  if (updateComment.user !== req.user._id && req.user.role !== "admin")
-    return next(
-      new AppError("You are not authorized to make these changes", 403)
-    );
-
-  res.status(200).json({
-    status: "success",
-    comment: updateComment,
-  });
-});
-
-
-// const deleteComment = factory.deleteOne(CommentModel, 'commentid');
-
-
-const deleteComment = catchAsync(async (req, res, next) => {
-  const deleteComment = await CommentModel.findByIdAndDelete(
-    req.params.commentid
-  );
-
-  if (!deleteComment) {
-    return next(new AppError("No comment found", 400));
-  }
-  if (updateComment.user !== req.user._id && req.user.role !== "admin")
-    return next(
-      new AppError("You are not authorized to make these changes", 403)
-    );
-
-  res.status(204).json({
-    status: "success",
-    deletedComment: deleteComment,
-  });
-});
+const updateComment = factory.updateOne(CommentModel, 'commentid'); // to update the comment from commentid
+const deleteComment = factory.deleteOne(CommentModel, 'commentid'); // to delete comment from commentid 
 
 const getCommentsForUser = catchAsync(async (req, res, next) => {
   const allComments = await CommentModel.find({

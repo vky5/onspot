@@ -34,18 +34,18 @@ const updateOne = (Model, updateParams) =>
       return next(new AppError("No document found", 404));
     }
 
-    if (
-      doc.user.username !== req.user.username &&
-      req.user.role !== "admin"
-    ) {
+    if (doc.user.username !== req.user.username && req.user.role !== "admin") {
       return next(
         new AppError("You are not authorized to update this document", 403)
       );
     }
 
+    if (req.body["user"]) delete req.body["user"];
+    // this is to prevent user from updating the comment or post username by their own. Example by directly passing someone else's monoogse Schema Id they can make it appear as if someone elsee created it
+
     // Update the post
     const updatedDoc = await Model.findByIdAndUpdate(
-      req.params[updateParams] , // Filter
+      req.params[updateParams], // Filter
       req.body, // Updated data
       { new: true, runValidators: true } // Options: return updated document and run validators
     );
@@ -59,5 +59,26 @@ const updateOne = (Model, updateParams) =>
       data: updatedDoc, // Sending the updated document back
     });
   });
+
+// can be created but will make it more difficult for someone else to see the different security implementations 
+
+// const createOne = (Model, createParams, ...body) =>
+//   catchAsync(async (req, res, next) => {
+//     const filter = {...req.body};
+
+//     if (filter['user'] || filter([]))
+//     const doc = await Model.create(filter);
+
+//     if (!doc) {
+//       return next(new AppError("Something Unexpected happened", 500));
+//     }
+
+//     res.status(201).json({
+//       status: "success",
+//       data: {
+//         data: doc
+//       },
+//     });
+//   });
 
 module.exports = { deleteOne, updateOne };
