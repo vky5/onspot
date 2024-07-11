@@ -1,5 +1,6 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const APIFeatures = require("../utils/apiFeatures");
 
 const deleteOne = (Model, delParams) =>
   catchAsync(async (req, res, next) => {
@@ -60,25 +61,48 @@ const updateOne = (Model, updateParams) =>
     });
   });
 
-// can be created but will make it more difficult for someone else to see the different security implementations 
+const getOne = (Model, getParams, select, popOptions) =>
+  catchAsync(async (req, res, next) => {
+    let query = Model.findById(req.params[getParams]);
+    if (popOptions) query.populate(popOptions);
+    if (select) query.select(select);
 
-// const createOne = (Model, createParams, ...body) =>
-//   catchAsync(async (req, res, next) => {
-//     const filter = {...req.body};
+    const doc = await query;
 
-//     if (filter['user'] || filter([]))
-//     const doc = await Model.create(filter);
+    if (!doc) {
+      return next(new AppError("No document found", 404));
+    }
 
-//     if (!doc) {
-//       return next(new AppError("Something Unexpected happened", 500));
-//     }
+    res.status(200).json({
+      status: "success",
+      data: {
+        data: doc,
+      },
+    });
+  });
 
-//     res.status(201).json({
-//       status: "success",
-//       data: {
-//         data: doc
-//       },
-//     });
-//   });
+const getAll = (Model) =>
+  catchAsync(async (req, res, next) => {
+    let filter = {};
+    if (req.params["blogid"]) filter = { post: req.params["blogid"] };
+    const features = new APIFeatures(
+      Model,
+      req.query.find({
+        post: req.params[paramsId],
+      })
+    )
+      .finding()
+      .sorting()
+      .filtering()
+      .pagination();
 
-module.exports = { deleteOne, updateOne };
+    const docAfterQueries = await features.query; // this is an array of document
+
+    res.status(200).json({
+      status: "success",
+      result: docAfterQueries.length,
+      posts: docAfterQueries,
+    });
+  });
+
+module.exports = { deleteOne, updateOne, getOne, getAll };

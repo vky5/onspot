@@ -2,7 +2,7 @@ const catchAsync = require("../utils/catchAsync");
 const UserModel = require('../model/userModel');
 const AppError = require("../utils/appError");
 const formatRes = require('../utils/formatRes');
-
+const factory = require('./handlerFactory')
 // this is to protect from auto binding in which a user might update their role by submitting a post request of {role:admin} in payload
 // it checks for the allowed field and only lets user update those field
 const filterObj = (obj, ...allowedFields)=>{
@@ -48,31 +48,23 @@ const deleteUser = catchAsync(async (req, res, next)=>{
 })
 
 
+const meEndpoint = (req, res, next)=>{
+    req.params.user = req.user._id
+}
+
 // to get the info about a user from jwt that they send along with this request or about other user but you need to login first to view the user's info
-const getUserData =catchAsync( async (req, res, next)=>{
-    let userData = req.user;
-
-    if (req.params.username){
-        userData = await UserModel.findOne({username: req.params.username});
-    }
-
-    res.status(200).send({
-        status: 'success',
-        user: userData
-    })   
-})
+const getUserData = factory.getOne(UserModel, 'user', 'img username name');
 
 // to get the list of all famous writer....
 const getAllWriter = catchAsync(async(req, res, next)=>{
     const users = await UserModel.find({role:'writer'});
-    const usersList = formatRes(users, 'username', 'img'); // STUPID: U could have used select in the query
+    // const usersList = formatRes(users, 'username', 'img'); // STUPID: U could have used select in the query
 
     res.status(200).json({
         status: 'success',
-        results: usersList.length,
-        writers: usersList
+        results: users.length,
+        writers: users
     })
-
 })
 
-module.exports = {updateUser, deleteUser, getUserData, getAllWriter};
+module.exports = {updateUser, deleteUser, getUserData, getAllWriter, meEndpoint};

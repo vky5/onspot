@@ -32,7 +32,9 @@ DELETE api/v1/comments/:commentid
 
 router 
     .route('/')
-    .get(commentControllers.getCommentForPost)
+    .get(commentControllers.transferToParams,
+        commentControllers.getCommentForPost
+    )
     .post(
         authController.validateJWT,
         commentControllers.postComment
