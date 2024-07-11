@@ -1,6 +1,8 @@
 const CommentModel = require("../model/commentModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const factory = require('./handlerFactory');
+
 
 const postComment = catchAsync(async (req, res, next) => {
   let blogid = req.params.blogid;
@@ -40,6 +42,10 @@ const updateComment = catchAsync(async (req, res, next) => {
   });
 });
 
+
+// const deleteComment = factory.deleteOne(CommentModel, 'commentid');
+
+
 const deleteComment = catchAsync(async (req, res, next) => {
   const deleteComment = await CommentModel.findByIdAndDelete(
     req.params.commentid
@@ -53,7 +59,7 @@ const deleteComment = catchAsync(async (req, res, next) => {
       new AppError("You are not authorized to make these changes", 403)
     );
 
-  res.status(200).json({
+  res.status(204).json({
     status: "success",
     deletedComment: deleteComment,
   });
@@ -70,12 +76,14 @@ const getCommentsForUser = catchAsync(async (req, res, next) => {
   });
 });
 
+
+// if we do not pass anything in params or body then we will get all comments
 const getCommentForPost = catchAsync(async (req, res, next) => {
   let blogid = req.params.blogid;
   if (!blogid) blogid = req.body.blogid;
 
   const allComments = await CommentModel.find({
-    blog: blogid,
+    post: blogid,
   });
 
   res.status(200).json({
@@ -103,4 +111,3 @@ module.exports = {
   getParticularComment,
 };
 
-// the beautiful thing about this is you will only have access to mongoDB ids of comments for your own comments

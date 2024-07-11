@@ -65,7 +65,7 @@ const getUserData =catchAsync( async (req, res, next)=>{
 // to get the list of all famous writer....
 const getAllWriter = catchAsync(async(req, res, next)=>{
     const users = await UserModel.find({role:'writer'});
-    const usersList = formatRes(users, 'username', 'img');
+    const usersList = formatRes(users, 'username', 'img'); // STUPID: U could have used select in the query
 
     res.status(200).json({
         status: 'success',

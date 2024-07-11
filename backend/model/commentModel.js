@@ -24,6 +24,10 @@ const commentSchema = new mongoose.Schema({
     toObject: {virtuals: true}
 });
 
+
+// A unique problem has arised since it will populate the comment anywhere it finds a find function like handler factory for deleteOne it will populate user without its id.
+// now we can handle this situation easily since we are populating username by checking uniqueness of username
+
 commentSchema.pre(/^find/, function(next){
     // this.populate({
     //     path: 'user',
@@ -35,7 +39,7 @@ commentSchema.pre(/^find/, function(next){
 
     this.populate({
         path: 'user',
-        select: 'username -_id'
+        select: 'username'
     })
 
     next();

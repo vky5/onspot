@@ -2,7 +2,9 @@ const PostModel = require("../model/postModel");
 const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
-const formatRes = require('../utils/formatRes');
+const factory = require('./handlerFactory');
+//const formatRes = require('../utils/formatRes');
+
 
 // to get a blog no authentication required
 const getBlogByParams = catchAsync(async (req, res, next)=>{
@@ -21,7 +23,7 @@ const getBlogByParams = catchAsync(async (req, res, next)=>{
 const postBlog = catchAsync(async (req, res, next) => {
     const newPost = await PostModel.create({
         heading: req.body.heading,
-        username: req.user.username,
+        user: req.user._id,
         body: req.body.body
     });
 
@@ -33,6 +35,7 @@ const postBlog = catchAsync(async (req, res, next) => {
 
 
 // to patch a blog uses params to search for blog
+// const updateBlog = factory.updateOne(PostModel, 'blogid')
 const updateBlog = catchAsync(async (req, res, next) => {
     const postToUpdate = await PostModel.findOne({
         generatedId: req.params.blogid
@@ -66,10 +69,9 @@ const updateBlog = catchAsync(async (req, res, next) => {
 
 
 // to delete a blog from params
+// const deleteBlog = factory.deleteOne(PostModel, 'blogid');
 const deleteBlog = catchAsync(async (req, res, next) => {
-    const postToDelete = await PostModel.findOne({
-        generatedId: req.params.blogid
-    });
+    const postToDelete = await PostModel.findById(req.params.blogid);
 
     if (!postToDelete) {
         return next(new AppError('Blog not found', 404));
