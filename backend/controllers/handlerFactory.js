@@ -81,27 +81,24 @@ const getOne = (Model, getParams, select, popOptions) =>
     });
   });
 
-const getAll = (Model) =>
+const getAll = (Model, options = {}) =>
   catchAsync(async (req, res, next) => {
-    let filter = {};
-    if (req.params["blogid"]) filter = { post: req.params["blogid"] };
-    const features = new APIFeatures(
-      Model,
-      req.query.find({
-        post: req.params[paramsId],
-      })
-    )
+    let filter = options;
+    if (req.query["blogid"]) {  // Use req.query to access query parameters
+      filter = { post: req.query["blogid"] };
+    }
+
+    const features = new APIFeatures(Model.find(filter), req.query)
       .finding()
       .sorting()
       .filtering()
       .pagination();
-
     const docAfterQueries = await features.query; // this is an array of document
 
     res.status(200).json({
       status: "success",
       result: docAfterQueries.length,
-      posts: docAfterQueries,
+      data: docAfterQueries,
     });
   });
 

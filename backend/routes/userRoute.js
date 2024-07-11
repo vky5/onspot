@@ -16,8 +16,12 @@ router.delete('/deleteme',
     userController.deleteUser
 )
 
+router.get('/me', 
+    userController.meEndpoint,
+    userController.getUserDataForMe
+)
 
-router.get('/info/:user?',
+router.get('/:user',
     authController.validateJWT,
     userController.getUserData
 )
