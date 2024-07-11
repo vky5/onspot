@@ -3,10 +3,12 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 const postComment = catchAsync(async (req, res, next)=>{
+    let blogid = req.params.blogid;
+    if (!req.params.blogid) blogid = req.body.blogid;
     const addedComment = await CommentModel.create({
         text: req.body.text,
-        username: req.user.username, // get the user from request object
-        postId: req.params.blogid
+        user: req.user._id, // get the user from request object
+        post: blogid
     });
 
     if (!addedComment){ return next(new AppError('Something Unexpected happened', 500))};
@@ -19,13 +21,13 @@ const postComment = catchAsync(async (req, res, next)=>{
 
 const updateComment = catchAsync(async (req, res, next) => {
     const updateComment = await CommentModel.findByIdAndUpdate(
-        req.params.commentid, 
+        req.params.commentid,
         { text: req.body.text }, 
-        { runValidators: true, new: true } 
+        { runValidators: true, new: true }
     );
 
     if (!updateComment) return next(new AppError('No comment found', 400));
-    if (updateComment.username!==req.user.username && req.user.role!=='admin') return next(new AppError('You are not authorized to make these changes', 403))
+    if (updateComment.user!==req.user._id && req.user.role!=='admin') return next(new AppError('You are not authorized to make these changes', 403))
 
     res.status(200).json({
         status: 'success',
@@ -40,7 +42,7 @@ const deleteComment = catchAsync(async (req, res, next)=>{
     if (!deleteComment){
         return next(new AppError('No comment found', 400));
     }
-    if (updateComment.username!==req.user.username && req.user.role!=='admin') return next(new AppError('You are not authorized to make these changes', 403))
+    if (updateComment.user!==req.user._id && req.user.role!=='admin') return next(new AppError('You are not authorized to make these changes', 403))
 
     res.status(200).json({
         status: 'success',
@@ -49,15 +51,9 @@ const deleteComment = catchAsync(async (req, res, next)=>{
 })
 
 const getCommentsForUser = catchAsync(async (req, res, next)=>{
-    const allComments = await CommentModel.aggregate([
-        {
-            $match: {username : req.user.username}
-        },{
-            $project: {
-                text: 1
-            }
-        }
-    ])
+    const allComments = await CommentModel.find({
+        user: req.user._id
+    });
 
     res.status(200).json({
         status: 'success',
@@ -66,9 +62,12 @@ const getCommentsForUser = catchAsync(async (req, res, next)=>{
 })
 
 const getCommentForPost = catchAsync(async (req, res, next) => {
+    let blogid = req.params.blogid;
+    if (!blogid) blogid = req.body.blogid;
+    
     const allComments = await CommentModel.aggregate([
         {
-            $match: { postId: req.params.blogid } 
+            $match: { post: blogid } 
         },
         {
             $lookup: {
@@ -100,6 +99,17 @@ const getCommentForPost = catchAsync(async (req, res, next) => {
 });
 
 
-module.exports = {postComment, updateComment, deleteComment, getCommentsForUser, getCommentForPost};
+
+const getParticularComment = catchAsync(async (req, res, next)=>{
+    const getComment = await CommentModel.findById(req.params.commentid);
+
+    if (!getComment) return next(new AppError('No Comment found', 400));
+    res.status(200).json({
+        status: 'success',
+        comment: getComment
+    })
+})
+
+module.exports = {postComment, updateComment, deleteComment, getCommentsForUser, getCommentForPost, getParticularComment};
 
 // the beautiful thing about this is you will only have access to mongoDB ids of comments for your own comments

@@ -1,8 +1,11 @@
 const express = require('express')
+const commentRoute = require('../routes/commentRoutes');
 const authController = require('../controllers/authController')
 const postController = require('../controllers/postController')
 
 const router = express.Router();
+
+router.use('/:blogid/comments', commentRoute)
 
 router // this is to post and get all post and I am going to implement pagination and other API features here
     .route('/')
@@ -35,7 +38,6 @@ router // this is to get info about a blog or patch blog only admin and original
         authController.restrictsTo('admin', 'writer'),
         postController.deleteBlog
     )
-
 
 
 module.exports = router;

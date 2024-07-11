@@ -6,9 +6,10 @@ const formatRes = require('../utils/formatRes');
 
 // to get a blog no authentication required
 const getBlogByParams = catchAsync(async (req, res, next)=>{
-    const blog = await PostModel.findOne({
-        generatedId: req.params.blogid
-    })
+    const blog = await PostModel.findById(req.params.blogid).populate({ // we do need to populate the comment for the 
+        path: 'comments',
+        select: "text"
+    });
 
     res.status(200).json({
         status: 'success',
@@ -112,12 +113,12 @@ const getAllPosts = catchAsync(async (req, res, next)=>{
 
     const postsAfterQueries = await features.query; // this is an array of posts
     
-    const formattedPosts = formatRes(postsAfterQueries, 'heading', 'like', 'generatedId', 'username');
+    // const formattedPosts = formatRes(postsAfterQueries, 'heading', 'like', 'generatedId', 'username');
 
     res.status(200).json({
         status: 'success',
         result: postsAfterQueries.length,
-        posts: formattedPosts
+        posts: postsAfterQueries
     })
 
 })

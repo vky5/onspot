@@ -7,22 +7,26 @@ import { vkyreq } from "../utils/vkyreq";
 function Profile() {
   const { mode } = useContext(ModeContext);
   const { userData } = useContext(UserContext);
-  const [active, setActive] = useState(1);
-
+  const [active, setActive] = useState(0);
   const [blogData, setBlogData] = useState([]);
 
-  useEffect(()=>{
-    const callingBlogs = async ()=>{
-      const res = await vkyreq('')
+  useEffect(() => {
+    const callingBlogs = async () => {
+      const res = await vkyreq('');
+      // Assuming res.data contains the blog data
+      setBlogData(res.data);
     }
-    callingBlogs
-  }, [active])
+    callingBlogs();
+  }, [active]);
 
   return (
     <div
       className={`${
         mode === "light" ? "bg-gray-100 text-black" : "bg-priDark text-white"
       } duration-200 pb-6`}
+      style={{
+        transition: "background-color 0.3s, color 0.3s",
+      }}
     >
       <div className="flex items-center p-5">
         <div className="w-14 h-14 rounded-full">
@@ -46,22 +50,32 @@ function Profile() {
       </div>
       <div className="flex justify-evenly ml-5 mr-5">
         <div
-          className={`font-bold text-lg w-1/2 rounded-xl flex justify-center items-center ${
+          className={`font-bold text-base w-24 rounded-xl flex justify-center items-center ${
             !active ? "bg-primary text-gray-100" : "text-gray-800"
           }`}
+          onClick={() => setActive(0)}
+          style={{
+            transition: "background-color 0.3s, color 0.3s",
+            cursor: "pointer",
+          }}
         >
           Liked
         </div>
         <div
-          className={`text-lg w-1/2 rounded-xl font-bold flex justify-center items-center p-2 
+          className={`text-base w-24 rounded-xl font-bold flex justify-center items-center p-2 
          ${active ? "bg-primary text-gray-100" : "text-gray-800"}`}
+          onClick={() => setActive(1)}
+          style={{
+            transition: "background-color 0.3s, color 0.3s",
+            cursor: "pointer",
+          }}
         >
           Published
         </div>
       </div>
 
       <div className="space-y-3 mt-3">
-      {blogData.map((blogInfo) => (
+        {blogData.map((blogInfo) => (
           <BlogCard
             key={blogInfo.generatedId}
             id={blogInfo.generatedId}

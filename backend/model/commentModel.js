@@ -5,22 +5,45 @@ const commentSchema = new mongoose.Schema({
         type: String, 
         required: [true, 'Comment can not be blank']
     },
-    username: {
-        type: String,
-        required: [true, 'not a valid username']
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "UserData",
+        required: [true, "Must be written by a user"]
     },
-    postId: {
-        type: String,
-        required: [true, 'must have a postid']
+    post: {
+        type: mongoose.Schema.ObjectId,
+        ref: "PostModel",
+        required: [true, "Comment must belong to a post"]
     },
     date: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     }
+}, {
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
 });
 
+commentSchema.pre(/^find/, function(next){
+    // this.populate({
+    //     path: 'user',
+    //     select: 'username'
+    // }).populate({
+    //     path: 'post',
+    //     select: "generatedId heading username"
+    // })
 
+    this.populate({
+        path: 'user',
+        select: 'username -_id'
+    })
+
+    next();
+})
 
 const CommentModel = mongoose.model('CommentModel', commentSchema);
 
 module.exports = CommentModel;
+
+
+// this should have two references the post it is the comment of and the user who rote that comment
