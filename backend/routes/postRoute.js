@@ -26,7 +26,7 @@ router // this route is to get all blogs from a particular writer
 
 
 router // this is to get info about a blog or patch blog only admin and original writer can make changes in a blog
-    .route('/info/:blogid')
+    .route('/:blogid/info')
     .get(
         postController.getBlogByParams
     )
