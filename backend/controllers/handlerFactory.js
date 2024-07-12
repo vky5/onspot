@@ -75,9 +75,7 @@ const getOne = (Model, getParams, select, popOptions) =>
 
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc,
-      },
+      data:  doc,
     });
   });
 

@@ -7,12 +7,12 @@ const factory = require('./handlerFactory');
 const getAllLikedPostsByUser = catchAsync(async (req, res, next)=>{
     const getLikedPosts = await userModel.findById(req.user._id).populate({
         path: 'likedPosts',
-        select: ''
+        select: 'like _id heading user'
     }).select('likedPosts');
 
     res.status(200).json({
         status: 'success',
-        getLikedPosts
+        data: getLikedPosts
     })
 })
 

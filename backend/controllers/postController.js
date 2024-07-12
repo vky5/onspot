@@ -28,21 +28,23 @@ const postBlog = catchAsync(async (req, res, next) => {
 
 // get all the blogs written by a writer using their id. 
 const getAllWriterPosts = catchAsync(async (req, res, next) => {
-  const posts = await PostModel.find({ author: mongoose.Types.ObjectId(req.params.user) });
+  const posts = await PostModel.find({ user: req.params.user });
 
-    if (!posts || posts.length === 0) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'No blogs found for this writer.',
-      });
-    }
-
-    res.status(200).json({
+  if (posts.length === 0) {
+    return res.status(200).json({
       status: 'success',
-      result: post.length,
-      data: posts
+      result: 0,
+      data: []
     });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    result: posts.length,
+    data: posts
+  });
 });
+
 
 
 

@@ -16,7 +16,7 @@ function Blogs() {
       const res = await vkyreq("get", "/users");
       const res2 = await vkyreq("get", "/posts");
       setWriterList(res.data.writers);
-      setBlogData(res2.data.posts);
+      setBlogData(res2.data.data);
     };
 
     getWriters();
@@ -56,7 +56,7 @@ function Blogs() {
             key={blogInfo.generatedId}
             id={blogInfo.generatedId}
             heading={blogInfo.heading}
-            username={blogInfo.username}
+            user={blogInfo.user}
             like={blogInfo.like}
           />
         ))}

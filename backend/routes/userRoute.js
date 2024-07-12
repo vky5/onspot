@@ -20,6 +20,7 @@ router.delete('/deleteme',
 )
 
 router.get('/me', 
+    authController.validateJWT,
     userController.meEndpoint,
     userController.getUserDataForMe
 )

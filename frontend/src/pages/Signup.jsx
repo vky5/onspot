@@ -26,8 +26,8 @@ function Signup() {
       console.log(res.data.token);
       setCookie("jwt", res.data.token, JWTexpireIn || 90);
       setLoggedin(true);
-      const userDetailInfo = await vkyreq('get', '/users/info');
-      setUserData(userDetailInfo.data.user)
+      const userDetailInfo = await vkyreq('get', '/users/me');
+      setUserData(userDetailInfo.data.data)
       navigate('/');
 
     } catch (error) {

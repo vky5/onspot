@@ -16,8 +16,12 @@ function Home() {
 
   useEffect(() => {
     const getBlogs = async () => {
-      const res = await vkyreq("get", "/posts");
-      setBlogData(res.data.posts);
+      try{
+        const res = await vkyreq("get", "/posts");
+        setBlogData(res.data.data);
+      }catch(error){
+        console.log('error', error);
+      }
     };
     getBlogs();
   }, []);
@@ -74,10 +78,10 @@ function Home() {
       <div className="space-y-3 mt-3">
         {blogData.map((blogInfo) => (
           <BlogCard
-            key={blogInfo.generatedId}
-            id={blogInfo.generatedId}
+            key={blogInfo._id}
+            id={blogInfo._id}
             heading={blogInfo.heading}
-            username={blogInfo.username}
+            user={blogInfo.user}
             like={blogInfo.like}
           />
         ))}

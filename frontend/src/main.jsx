@@ -105,8 +105,8 @@ const AppComponent = () => {
         if (getCookie("jwt")) {
           setLoggedin(true);
           // if the user exists get their data from backend and update it in useState
-          const res = await vkyreq("get", "/users/info");
-          setUserData(res.data.user);
+          const res = await vkyreq("get", "/users/me");
+          setUserData(res.data.data);
         } else {
           setLoggedin(false);
         }

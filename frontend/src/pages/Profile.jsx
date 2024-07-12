@@ -12,13 +12,25 @@ function Profile() {
 
   useEffect(() => {
     const callingBlogs = async () => {
-      const res = await vkyreq('');
-      // Assuming res.data contains the blog data
-      setBlogData(res.data);
-    }
-    callingBlogs();
+      try {
+  
+      if (!active) {
+        const res = await vkyreq('GET', '/users/likes');
+        setBlogData(res.data.data.likedPosts);
+      } else {
+        const res = await vkyreq('GET', '/posts/myposts');
+        setBlogData(res.data.data);
+      }
+  
+      } catch (error) {
+        console.error('Error fetching blog data:', error);
+      }
+    };
+  
+    callingBlogs(); // Call the function inside useEffect
+  
   }, [active]);
-
+  
   return (
     <div
       className={`${
@@ -77,10 +89,10 @@ function Profile() {
       <div className="space-y-3 mt-3">
         {blogData.map((blogInfo) => (
           <BlogCard
-            key={blogInfo.generatedId}
-            id={blogInfo.generatedId}
+            key={blogInfo._id}
+            id={blogInfo._id}
             heading={blogInfo.heading}
-            username={blogInfo.username}
+            user={blogInfo.user}
             like={blogInfo.like}
           />
         ))}
