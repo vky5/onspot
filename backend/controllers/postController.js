@@ -38,8 +38,10 @@ const getAllWriterPosts = catchAsync(async (req, res, next) => {
 
 
 
-// to
-const sendLikedPosts = catchAsync(async (req, res, next) => {});
+// to post a like to a blog
+const LikeAPost = catchAsync(async (req, res, next) => {
+  // const 
+});
 
 
 module.exports = {

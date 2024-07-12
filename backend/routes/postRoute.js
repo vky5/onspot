@@ -1,11 +1,13 @@
 const express = require('express')
 const commentRoute = require('../routes/commentRoutes');
+const likeRoute = require('../routes/likeRoute');
 const authController = require('../controllers/authController')
 const postController = require('../controllers/postController')
 
 const router = express.Router();
 
-router.use('/:blogid/comments', commentRoute)
+router.use('/:blogid/comments', commentRoute);
+router.use('/:blogid/likes', likeRoute);
 
 router // this is to post and get all post and I am going to implement pagination and other API features here
     .route('/')
@@ -24,7 +26,7 @@ router // this route is to get all blogs from a particular writer
 
 
 router // this is to get info about a blog or patch blog only admin and original writer can make changes in a blog
-    .route('/:blogid')
+    .route('/info/:blogid')
     .get(
         postController.getBlogByParams
     )

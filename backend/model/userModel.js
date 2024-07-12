@@ -26,16 +26,6 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         select: false
     },
-    // checkPassword: {
-    //     type: String,
-    //     required: [true, 'Please confirm your password'],
-    //     validate: {
-    //         validator: function (el){
-    //             return el==this.password;
-    //         },
-    //         message: "Passwords are not the same"
-    //     }
-    // },
     role: {
         type: String,
         enum: ['admin', 'writer', 'reader'],
@@ -52,6 +42,12 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    likedPosts: [
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: "PostModel"
+        }
+    ],
     passwordResetToken: String,
     passwordResetExpires: Date,
     active: {
@@ -70,8 +66,6 @@ userSchema.pre('save', async function(next){
     //hash the password
     this.password = await bcrypt.hash(this.password, 12);
 
-    //delete the checkpassword field
-    // this.checkPassword = undefined;
     next();
 })
 

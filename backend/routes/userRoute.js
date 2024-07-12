@@ -1,8 +1,11 @@
 const express = require('express')
+const likeRoute = require('../routes/likeRoute');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 
 const router = express.Router();
+
+router.use('/likes', likeRoute);
 
 router.get('/', userController.getAllWriter)
 
