@@ -49,7 +49,9 @@ function Navbar() {
               src={mode === "light" ? logo : logo_w_header}
               alt="logo of blacktree"
             />
-            <div className="hidden md:block ml-2">BLACKTREE</div>
+            <div className={`hidden md:block ml-2 ${
+              mode === 'light'? 'text-black': 'text-gray-100'
+            }`}>BLACKTREE</div>
           </div>
         </Link>
       </div>

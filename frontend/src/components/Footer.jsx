@@ -3,9 +3,9 @@ import logo_w from "../assets/logo_w.png";
 function Footer() {
   return (
     <div className="bg-black text-white pt-5 pb-5 flex flex-col items-center">
-      <div className="flex flex-col items-center justify-between w-4/5 max-w-6xl md:flex-row md:justify-between">
+      <div className="flex flex-col items-center justify-between w-full max-w-6xl md:flex-row md:justify-between">
         <div className="flex items-center justify-center md:justify-start md:w-auto">
-          <img src={logo_w} alt="Logo" className="w-14" />
+          <img src={logo_w} alt="Logo" className="w-20" />  {/* Increased size */}
           <div className="text-white text-sm pt-3 ml-2">BLACKTREE</div>
         </div>
         <div className="bg-primary w-full md:w-1/3 rounded-xl h-10 mt-4 flex items-center justify-between md:mt-0">

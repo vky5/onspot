@@ -37,7 +37,7 @@ function Home() {
         mode === "light" ? "bg-gray-100 text-priDark" : "bg-priDark text-white"
       } duration-200 pb-6`}
     >
-      <div className="">
+      <div className="md:hidden">
         <div className="flex flex-col text-center pt-6">
           <div className="text-[10px] tracking-widest font-thin">BLACKTREE</div>
           <div className="font-bold text-xl mt-2">Unveiling Stories</div>
@@ -45,14 +45,6 @@ function Home() {
         </div>
       </div>
       <div className="pt-12">
-        {/* {blogsInCarousel.map(blogInfo => (
-          <MyCarousel 
-            imgHome="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80" 
-            heading={blogInfo.heading} 
-            key={blogInfo.id} 
-          />
-        ))} */}
-
         {loading ? (
           <h1>create a loading screen idiot</h1>
         ) : (
