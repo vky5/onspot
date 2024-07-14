@@ -44,7 +44,6 @@ function MyCarousel({ list }) {
 MyCarousel.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.shape({
-      generatedId: PropTypes.number.isRequired,
       heading: PropTypes.string.isRequired,
       img: PropTypes.string,
     })

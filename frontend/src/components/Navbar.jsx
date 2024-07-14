@@ -38,20 +38,50 @@ function Navbar() {
     <div
       className={`px-4 py-3 bg-gray-100 flex justify-between items-center relative z-10 duration-200 ${
         mode === "light" ? "bg-gray-100" : "bg-priDark"
-      }`}
+      }
+      md:pl-10 md:pr-10 md:pt-7 
+      `}
     >
-      <div>
+      <div className="">
         <Link to="/">
-          <img
-            src={mode === "light" ? logo : logo_w_header}
-            alt="logo of blacktree"
-          />
+          <div className="flex justify-center items-center">
+            <img
+              src={mode === "light" ? logo : logo_w_header}
+              alt="logo of blacktree"
+            />
+            <div className="hidden md:block ml-2">BLACKTREE</div>
+          </div>
         </Link>
       </div>
-      <div className="flex w-3/5 justify-around items-center">
-        <div onClick={toggleMode}>
+
+      {/* This div is for everything other than the BLACKTREE logo */}
+      <div className="flex w-3/5 justify-evenly items-center md:w-4/5 ">
+        <div onClick={toggleMode} className="ml-3">
           <img src={mode === "light" ? dark_mode : light_mode} />
         </div>
+
+        {/* Long Menu on Navbar to be appeared only on bigger screen than mobile */}
+        <div className="hidden md:flex w-full justify-around items-center lg:pr-10 md:pr-4">
+          <div className={`flex justify-evenly w-3/4 items-center sm:text-xm md:text-xm lg:text-l ${
+            mode === "light" ? "bg-gray-100 text-priDark" : "bg-priDark text-gray-100"
+          } duration-200`}>
+            <div>HOME</div>
+            <div>BLOGS</div>
+            <div>PROFILE</div>
+            <div>BRANCH</div>
+          </div>
+          <div className="flex w-1/4 relative">
+            <input
+              type="text"
+              // placeholder="Search..."
+              className="w-full py-2 pl-4 pr-10 bg-gray-500 bg-opacity-50 backdrop-blur-lg rounded-full text-base text-black focus:outline-none"
+            />
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black">
+              <FaSearch />
+            </div>
+          </div>
+        </div>
+
         <div>
           {!isLoggedin ? (
             <Link to="/login">
@@ -72,7 +102,7 @@ function Navbar() {
           )}
         </div>
         <div
-          className={`${
+          className={`md:hidden ${
             mode === "light" ? "text-priDark" : "text-gray-100"
           } font-thin`}
         >
@@ -82,7 +112,7 @@ function Navbar() {
           onClick={toggle}
           className={`mobilemenu relative z-[99] ${
             mode === "light" ? "text-priDark" : "text-gray-100"
-          }`}
+          } md:hidden`}
         >
           {mobileMenu ? (
             <IoMdClose className="text-2xl" />

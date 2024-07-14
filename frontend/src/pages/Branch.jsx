@@ -1,33 +1,17 @@
 import { HiArrowLeft } from "react-icons/hi";
-import { useContext, useState, useRef, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ModeContext } from "../main";
-import ToggleButton from "../components/Branch/ToggleButton";
+import TipTapEditor from "../components/Branch/TipTapEditor";
 
 function Branch() {
   const navigate = useNavigate();
   const { mode } = useContext(ModeContext);
-  const [heading, setHeading] = useState('');
-  const [content, setContent] = useState('');
-  const [cursorPosition, setCursorPosition] = useState(0);
-  const textAreaRef = useRef(null);
-  const hiddenSpanRef = useRef(null);
+  const [heading, setHeading] = useState("");
 
-  const handleTextAreaInput = (event) => {
-    const textArea = event.target;
-    const { selectionStart, value } = textArea;
-    const textBeforeCursor = value.substring(0, selectionStart);
-    const linesBeforeCursor = textBeforeCursor.split('\n'); // this will have different texts separated in the text area in form of an array
-    const lineNumber = linesBeforeCursor.length; // simply finding the length of above array
-    const lineHeight = parseInt(window.getComputedStyle(textArea).lineHeight, 10); // this is used to calculuate the lineHeight property of the textArea, 
-    const cursorY = (lineNumber - 1) * lineHeight; // this is first converted from 1 based cursor position to 0 based cursor position and then multiplied by lineHeight to find the px that in vertical position
-    setCursorPosition(cursorY);
-    console.log(window.getComputedStyle(textArea).width)
-  };
-
-  useEffect(()=>{
-    console.log(window.getComputedStyle(hiddenSpanRef.current).width)
-  }, [])
+  const handleChange = (newContent) =>{
+    setCon
+  }
 
   return (
     <div
@@ -47,28 +31,17 @@ function Branch() {
             type="text"
             placeholder="Branch heading..."
             className={`w-full p-2 rounded-md focus:outline-none transition-colors duration-200 ${
-              mode === "light" ? "bg-gray-100 text-black" : "bg-black text-white"
+              mode === "light"
+                ? "bg-gray-100 text-black"
+                : "bg-black text-white"
             }`}
             value={heading}
             onChange={(e) => setHeading(e.target.value)}
           />
         </div>
         <div className="mb-4 relative">
-          <textarea
-            placeholder="Branch out your ideas..."
-            className={`w-full h-96 p-2 ml-4 rounded-md focus:outline-none transition-colors duration-200 ${
-              mode === "light" ? "bg-gray-100 text-black" : "bg-black text-white"
-            }`}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            onInput={handleTextAreaInput}
-            ref={textAreaRef}
-            style={{ lineHeight: '24px' }} // height of each line of the text in the text area
-          />
-          <ToggleButton position={cursorPosition} />
+          <TipTapEditor />
         </div>
-
-        <span ref={hiddenSpanRef} className="bg-primary whitespace-nowrap">this is a span and i</span>
       </div>
     </div>
   );

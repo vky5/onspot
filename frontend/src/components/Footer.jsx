@@ -2,22 +2,22 @@ import logo_w from "../assets/logo_w.png";
 
 function Footer() {
   return (
-    <div className="bg-black text-white flex flex-col items-center justify-center pt-5 pb-5">
-      <div className="w-14">
-        <img src={logo_w} alt="Logo" />
+    <div className="bg-black text-white pt-5 pb-5 flex flex-col items-center">
+      <div className="flex flex-col items-center justify-between w-4/5 max-w-6xl md:flex-row md:justify-between">
+        <div className="flex items-center justify-center md:justify-start md:w-auto">
+          <img src={logo_w} alt="Logo" className="w-14" />
+          <div className="text-white text-sm pt-3 ml-2">BLACKTREE</div>
+        </div>
+        <div className="bg-primary w-full md:w-1/3 rounded-xl h-10 mt-4 flex items-center justify-between md:mt-0">
+          <input
+            type="text"
+            className="h-10 w-3/4 outline-none rounded-xl px-3 text-sm text-black bg-gray-300"
+          />
+          <button className="text-white px-2 text-[13px]">Subscribe</button>
+        </div>
       </div>
-      <div className="text-white text-sm pt-3">BLACKTREE</div>
-      <ul className="flex pt-8 text-white list-none space-x-5">
-        <li>Search</li>
-        <li>Blogs</li>
-        <li>Liked</li>
-      </ul>
-      <div className="bg-primary w-5/6 rounded-xl h-10 mt-4 flex items-center justify-between">
-        <input type="text" className="h-10 w-3/4 outline-none rounded-xl px-3 text-sm text-black bg-gray-300" />
-        <button className="text-white px-2 text-[13px]">Subscribe</button>
-      </div>
-      <div className="text-white text-[10px] mt-4">
-        @2023 Copyright Reserved
+      <div className="text-white text-[10px] mt-4 text-center">
+        ©2023 Copyright Reserved
       </div>
     </div>
   );
