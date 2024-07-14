@@ -14,7 +14,7 @@ function CardCarousel({ img, heading, id }) {
         <img
           src={img}
           className="h-full w-full object-cover"
-          alt="Carousel Slide"
+          alt="Image failed to load."
         />
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute bottom-0 left-0 p-4 text-white w-5/6">

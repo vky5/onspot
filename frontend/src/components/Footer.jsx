@@ -3,7 +3,7 @@ import logo_w from "../assets/logo_w.png";
 function Footer() {
   return (
     <div className="bg-black text-white pt-5 pb-5 flex flex-col items-center">
-      <div className="flex flex-col items-center justify-between w-full max-w-6xl md:flex-row md:justify-between">
+      <div className="flex flex-col items-center justify-between w-3/4 max-w-6xl md:flex-row md:justify-between">
         <div className="flex items-center justify-center md:justify-start md:w-auto">
           <img src={logo_w} alt="Logo" className="w-20" />  {/* Increased size */}
           <div className="text-white text-sm pt-3 ml-2">BLACKTREE</div>
