@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import profile from "../assets/profile.png";
 import stripText from "../utils/textStrip";
-import { IoHeartSharp } from 'react-icons/io5';
+import { IoHeartSharp } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useContext, useEffect, useState } from "react";
@@ -26,8 +26,14 @@ function BlogCard({ heading, user, id, like = 0 }) {
 
   return (
     <div
-      className={`duration-200 rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2 
-        ${usePrimary ? "bg-primary" : mode === "light" ? "bg-white" : "bg-secDark"}
+      className={`duration-200 rounded-lg overflow-hidden shadow-md pl-3 pr-3 ml-2 mr-2 md:ml-10 md:mr-10
+        ${
+          usePrimary
+            ? "bg-primary"
+            : mode === "light"
+            ? "bg-white"
+            : "bg-secDark"
+        }
        ${mode === "light" ? "text-black" : "text-white"}`}
       onClick={() => {
         navigate(`/blogs/${id}`, { state: { id } });
@@ -41,15 +47,28 @@ function BlogCard({ heading, user, id, like = 0 }) {
             className="rounded-xl h-[107px] w-[105px]"
           />
         </div>
-        <div className="text-[13px] ml-2 mr-2 text-left flex-grow">
+        <div className="text-[13px] md:text-xl md:ml-5 ml-2 mr-2 text-left flex-grow">
           <p className="whitespace-normal break-words">
             {stripText(heading, 100)}
           </p>
-          <div className={`flex items-center space-x-2 mt-2 duration-200 ${mode === "light" ? "text-gray-800" : "text-gray-300"}`}>
-            <img src={user.img || profile} alt="" className="h-6 w-6 rounded-full" />
-            <span className="text-xs">{user.username}</span>
-            <IoHeartSharp className="h-6 w-6 rounded-full text-primary" />
-            <span className="text-xs">{like}</span>
+          <div
+            className={`flex items-center space-x-2 mt-2 duration-200 md:w-3/4 w-full justify-between ${
+              mode === "light" ? "text-gray-800" : "text-gray-300"
+            } `}
+          >
+            <span className="flex items-center mr-3">
+              <img
+                src={user.img || profile}
+                alt=""
+                className="h-6 w-6 rounded-full mr-2"
+              />
+              <span className="text-xs md:text-lg ">{user.username}</span>
+            </span>
+            <span className="flex items-center ">
+
+            <IoHeartSharp className="h-6 w-6 md:h-8 md:w-8 rounded-full text-primary mr-2" />
+            <span className="text-xs md:text-lg">{like}</span>
+            </span>
           </div>
         </div>
       </div>

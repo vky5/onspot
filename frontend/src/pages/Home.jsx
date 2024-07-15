@@ -1,5 +1,6 @@
 import MyCarousel from "../components/HomeComponents/MyCarousel";
 import BlogCard from "../components/BlogCard";
+import SideComponent from "../components/HomeComponents/SideComponent";
 
 import { useContext, useEffect, useState } from "react";
 
@@ -16,11 +17,11 @@ function Home() {
 
   useEffect(() => {
     const getBlogs = async () => {
-      try{
+      try {
         const res = await vkyreq("get", "/posts");
         setBlogData(res.data.data);
-      }catch(error){
-        console.log('error', error);
+      } catch (error) {
+        console.log("error", error);
       }
     };
     getBlogs();
@@ -34,7 +35,7 @@ function Home() {
   return (
     <div
       className={`${
-        mode === "light" ? "bg-gray-100 text-priDark" : "bg-priDark text-white"
+        mode === "light" ? "bg-gray-100 text-priDark " : "bg-priDark text-white"
       } duration-200 pb-6`}
     >
       <div className="md:hidden">
@@ -54,7 +55,7 @@ function Home() {
 
       <div className="pt-6">
         <ul
-          className="flex px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium"
+          className="flex sm:hidden px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium"
           style={{ scrollbarWidth: "none" }}
         >
           <li>Latest</li>
@@ -67,16 +68,23 @@ function Home() {
         </ul>
       </div>
 
-      <div className="space-y-3 mt-3">
-        {blogData.map((blogInfo) => (
-          <BlogCard
-            key={blogInfo._id}
-            id={blogInfo._id}
-            heading={blogInfo.heading}
-            user={blogInfo.user}
-            like={blogInfo.like}
-          />
-        ))}
+      <div className="sm:flex">
+        <div className="sm:w-1/2">
+          <div className="space-y-3 md:space-y-6 mt-3">
+            {blogData.map((blogInfo) => (
+              <BlogCard
+                key={blogInfo._id}
+                id={blogInfo._id}
+                heading={blogInfo.heading}
+                user={blogInfo.user}
+                like={blogInfo.like}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="w-1/2 sm:block hidden">
+          <SideComponent/>
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ function Footer() {
       <div className="flex flex-col items-center justify-between w-3/4 max-w-6xl md:flex-row md:justify-between">
         <div className="flex items-center justify-center md:justify-start md:w-auto">
           <img src={logo_w} alt="Logo" className="w-20" />  {/* Increased size */}
-          <div className="text-white text-sm pt-3 ml-2">BLACKTREE</div>
+          <div className="text-white text-sm pt-3 ml-2 hidden md:block">BLACKTREE</div>
         </div>
         <div className="bg-primary w-full md:w-1/3 rounded-xl h-10 mt-4 flex items-center justify-between md:mt-0">
           <input
