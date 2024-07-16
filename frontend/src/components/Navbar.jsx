@@ -67,10 +67,10 @@ function Navbar() {
           <div className={`flex justify-evenly w-3/4 items-center sm:text-xm md:text-xm lg:text-l ${
             mode === "light" ? "bg-gray-100 text-priDark" : "bg-priDark text-gray-100"
           } duration-200`}>
-            <div>HOME</div>
-            <div>BLOGS</div>
-            <div>PROFILE</div>
-            <div>BRANCH</div>
+            <div><Link to='/'>HOME</Link></div>
+            <div><Link to='/blogs'>BLOGS</Link></div>
+            <div><Link to='/profile'>PROFILE</Link></div>
+            <div><Link to='/branch'>BRANCH</Link></div>
           </div>
           <div className="flex w-1/4 relative">
             <input

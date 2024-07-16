@@ -50,7 +50,7 @@ function CardCarBig({ img, heading, id }) {
 CardCarBig.propTypes = {
   img: PropTypes.string.isRequired,
   heading: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default CardCarBig;

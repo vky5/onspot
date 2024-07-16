@@ -30,7 +30,7 @@ function Blogs() {
     >
       <div className="font-bold text-[30px] ml-5">LEAVES</div>
       <div
-        className="pb-3 flex space-x-7 mt-2 pl-2 pr-5 overflow-x-auto"
+        className="pb-3 flex space-x-7 mt-2 pl-2 pr-5 md:pl-8 overflow-x-auto"
         style={{ scrollbarWidth: "none" }}
       >
         {writerList.map((writer) => (
@@ -38,7 +38,7 @@ function Blogs() {
             className="flex flex-col items-center w-28 space-y-2"
             key={writer.username}
           >
-             <div className="w-14 h-14 rounded-full">
+            <div className="w-14 h-14 md:w-24 md:h-24 rounded-full">
               <img
                 src={writer.img || profile} // Use a default image if writer.img is not available
                 alt="Profile"
@@ -46,15 +46,15 @@ function Blogs() {
               />
             </div>
 
-            <div className="text-[12px]">{writer.username}</div>
+            <div className="text-[12px] md:text-lg">{writer.username}</div>
           </div>
         ))}
       </div>
-      <div className="space-y-3 mt-3">
-      {blogData.map((blogInfo) => (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-5 lg:gap-7 mt-3 md:mt-8 w-full">
+        {blogData.map((blogInfo) => (
           <BlogCard
-            key={blogInfo.generatedId}
-            id={blogInfo.generatedId}
+            key={blogInfo._id}
+            id={blogInfo._id}
             heading={blogInfo.heading}
             user={blogInfo.user}
             like={blogInfo.like}

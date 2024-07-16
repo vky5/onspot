@@ -34,7 +34,7 @@ function CardCarousel({ img, heading, id }) {
 CardCarousel.propTypes = {
   img: PropTypes.string.isRequired,
   heading: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default CardCarousel;
