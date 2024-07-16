@@ -5,6 +5,11 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Heading is required']
     },
+    tags: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'Tags'
+    }],
+
     date: {
         type: Date,
         default: Date.now
@@ -51,7 +56,11 @@ postSchema.pre(/^find/, function(next){
     this.populate({
         path: 'user',
         select: 'username img'
+    }).populate({ // we want this to show which tag is the post assigned with in form of array..
+        path: 'tags',
+        select: 'name'
     })
+
     next();
 })
 
