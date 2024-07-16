@@ -12,7 +12,6 @@ function Home() {
 
   const [blogData, setBlogData] = useState([]);
   const [blogsInCarousel, setBlogsInCarousel] = useState([]);
-
   const [loading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,8 +27,10 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    setBlogsInCarousel(blogData.slice(0, 5));
-    setTimeout(() => setIsLoading(false), 100);
+    if (blogData.length > 0) {
+      setBlogsInCarousel(blogData.slice(0, 5));
+      setTimeout(() => setIsLoading(false), 100);
+    }
   }, [blogData]);
 
   return (
@@ -47,7 +48,7 @@ function Home() {
       </div>
       <div className="pt-12">
         {loading ? (
-          <h1>create a loading screen idiot</h1>
+          <h1>Loading...</h1>
         ) : (
           <MyCarousel list={blogsInCarousel} />
         )}

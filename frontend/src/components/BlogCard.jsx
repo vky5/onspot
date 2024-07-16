@@ -47,7 +47,7 @@ function BlogCard({ heading, user, id, like = 0 }) {
             className="rounded-xl h-[107px] w-[105px]"
           />
         </div>
-        <div className="text-[13px] md:text-xl md:ml-5 ml-2 mr-2 text-left flex-grow">
+        <div className="text-[13px] lg:text-xl md:ml-5 ml-2 mr-2 text-left flex-grow">
           <p className="whitespace-normal break-words">
             {stripText(heading, 100)}
           </p>
@@ -60,14 +60,13 @@ function BlogCard({ heading, user, id, like = 0 }) {
               <img
                 src={user.img || profile}
                 alt=""
-                className="h-6 w-6 rounded-full mr-2"
+                className="h-6 w-6 rounded-full lg:mr-2 sm:mr-1"
               />
-              <span className="text-xs md:text-lg ">{user.username}</span>
+              <span className="text-xs lg:text-lg ">{user.username}</span>
             </span>
             <span className="flex items-center ">
-
-            <IoHeartSharp className="h-6 w-6 md:h-8 md:w-8 rounded-full text-primary mr-2" />
-            <span className="text-xs md:text-lg">{like}</span>
+              <IoHeartSharp className="h-6 w-6 lg:h-8 lg:w-8 rounded-full text-primary lg:mr-2 sm:mr-1" />
+              <span className="text-xs lg:text-lg">{like}</span>
             </span>
           </div>
         </div>

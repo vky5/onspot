@@ -3,16 +3,29 @@ import { useNavigate } from "react-router-dom";
 import stripText from "../../utils/textStrip";
 
 import { ModeContext } from "../../main";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function CardCarBig({ img, heading, id }) {
   const navigate = useNavigate();
 
   const {mode} = useContext(ModeContext);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 
   const handleCardClick = () => {
     navigate(`/blogs/${id}`, { state: { id } });
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className={`${mode==='light'?'text-black': 'text-white'} duration-200`}>
@@ -31,7 +44,7 @@ function CardCarBig({ img, heading, id }) {
             <div className="lg:text-xl">
               by <span className="text-primary">Pikachu</span>
             </div>
-            <div className="text-3xl mt-6">{stripText(heading, 275)}</div>
+            <div className="lg:text-3xl text-xl mt-6">{stripText(heading, windowWidth>768?275:90)}</div>
             <div className="mt-4">
               <button
                 className="bg-primary text-white px-4 py-1 rounded-xl mt-10"
