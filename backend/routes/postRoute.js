@@ -1,11 +1,13 @@
 const express = require('express')
 const commentRoute = require('../routes/commentRoutes');
 const likeRoute = require('../routes/likeRoute');
+const tagRoute = require('../routes/tagRoute');
 const authController = require('../controllers/authController')
 const postController = require('../controllers/postController')
 
 const router = express.Router();
 
+router.use('/tags', tagRoute);
 router.use('/:blogid/comments', commentRoute);
 router.use('/:blogid/likes', likeRoute);
 

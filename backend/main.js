@@ -11,7 +11,7 @@ const authRoute = require('./routes/authRoute');
 const commentRoutes = require('./routes/commentRoutes');
 const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
-const tagRoute = require('./routes/tagRoute');
+// const tagRoute = require('./routes/tagRoute');
 
 const globalErrorHandler = require('./controllers/globalErrorHandler');
 
@@ -48,7 +48,7 @@ app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/comments', commentRoutes);
 app.use('/api/v1/posts', postRoute);
-app.use('/api/v1/tags', tagRoute);
+// app.use('/api/v1/tags', tagRoute);
 
 app.use(globalErrorHandler)
 
