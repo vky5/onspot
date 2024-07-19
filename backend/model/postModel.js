@@ -6,10 +6,8 @@ const postSchema = new mongoose.Schema({
         required: [true, 'Heading is required']
     },
     tags: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'Tags'
+        type: String
     }],
-
     date: {
         type: Date,
         default: Date.now
@@ -44,14 +42,21 @@ const postSchema = new mongoose.Schema({
 });
 
 
+// to save all the lowercase
+postSchema.pre('save', function(next){
+    this.tags = this.tags.map(ele => ele.toLowerCase());
+    next();
+});
 
+
+// to add comments to the Posts
 postSchema.virtual('comments',{
     ref: 'CommentModel', // name of the model we want to reference
     foreignField: 'post', // name of the field in CommentModel where reference to the currentmodel is stored
     localField: '_id'   // here we need to tell where that ID that is used as reference like mongoose.Schema.ObjectID is stored in current model. Could have used our generatedId too
 } )
 
-
+// to populate the user and tags from the DB
 postSchema.pre(/^find/, function(next){
     this.populate({
         path: 'user',
