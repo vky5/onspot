@@ -7,60 +7,8 @@ import "react-quill/dist/quill.snow.css"; // Import Quill's CSS
 import "./custom-quill.css"; // Import custom CSS
 import { vkyreq } from "../utils/vkyreq";
 import DOMPurify from "dompurify";
-import Quill from "quill";
-
-// Define and register custom blots
-const Block = Quill.import("blots/block");
-
-class CustomH1Blot extends Block {
-  static create(value) {
-    let node = super.create(value);
-    node.classList.add("ql-h1");
-    return node;
-  }
-}
-
-CustomH1Blot.blotName = "header1";
-CustomH1Blot.tagName = "h1";
-
-class CustomH2Blot extends Block {
-  static create(value) {
-    let node = super.create(value);
-    node.classList.add("ql-h2");
-    return node;
-  }
-}
-
-CustomH2Blot.blotName = "header2";
-CustomH2Blot.tagName = "h2";
-
-class CustomPreBlot extends Block {
-  static create(value) {
-    let node = super.create(value);
-    node.classList.add("ql-pre");
-    return node;
-  }
-}
-
-CustomPreBlot.blotName = "pre";
-CustomPreBlot.tagName = "pre";
-
-class CustomCodeBlot extends Block {
-  static create(value) {
-    let node = super.create(value);
-    node.classList.add("ql-code");
-    return node;
-  }
-}
-
-CustomCodeBlot.blotName = "code";
-CustomCodeBlot.tagName = "code";
-
-Quill.register(CustomH1Blot, true);
-Quill.register(CustomH2Blot, true);
-Quill.register(CustomPreBlot, true);
-Quill.register(CustomCodeBlot, true);
-
+import storage from '../utils/firebaseConf';
+import {ref, uploadBytes, getDownloadURL} from 'firebase/storage'
 
 
 function Branch() {
@@ -70,9 +18,17 @@ function Branch() {
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
 
+
   const quillRef = useRef(null); // Ref for Quill
 
   // handle submition of post
+
+
+const generateRandomString = (length) => {
+  const array = new Uint8Array(length);
+  window.crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+};
 
   const handlePostSubmit = async () => {
     try {
@@ -93,16 +49,20 @@ function Branch() {
 
   // Handle image upload
   const handleImageUpload = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
+    if (!file) return null;
+    // since it is always a good practice to validate user b4 updating DB,
+    try {
+      const res = await vkyreq('get', '/users/me')
+      const storageRef = ref(storage, `blogs/${res.data.data.username}/${generateRandomString(16)}`)
+      await uploadBytes(storageRef, file);
 
-    const response = await fetch("/upload", {
-      method: "POST",
-      body: formData,
-    });
+      const url = await getDownloadURL(storageRef);
 
-    const data = await response.json();
-    return data.url; // Return the URL of the uploaded image
+      return url;
+    
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const modules = useMemo(
