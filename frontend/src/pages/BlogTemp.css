@@ -13,9 +13,25 @@ p{
     line-height: 1.4;
 }
 
-pre{
-    background-color: gray;
-    padding-block:2px ;
-    padding-inline: 4px;
-    width: 100%;
+pre {
+  background-color: gray;
+  padding-block: 2px;
+  padding-inline: 4px;
+  width: 100%;
+  white-space: pre-wrap; /* Wraps the text inside the <pre> element */
+  word-wrap: break-word; /* Ensures long words are wrapped to the next line */
+}
+
+
+ul{
+    list-style-type: bullet;
+}
+
+ol{
+    list-style-type:
+}
+
+.no-margin{
+    margin-left: 0;
+  margin-right: 0;
 }
