@@ -76,12 +76,12 @@ function Branch() {
 
   const handlePostSubmit = async () => {
     try {
-      // const cleanContent = DOMPurify.sanitize(content, {
-      //   USE_PROFILES: { html: true },
-      // });
+      const cleanContent = DOMPurify.sanitize(content, {
+        USE_PROFILES: { html: true },
+      });
       const res = await vkyreq("POST", "/posts", {
         heading: heading,
-        body: content,
+        body: cleanContent,
         tags: tags,
       });
 

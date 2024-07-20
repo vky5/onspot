@@ -1,0 +1,21 @@
+h1{
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+h2{
+    font-size: 1.3rem;
+    line-height: 1.5;
+}
+
+p{
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+pre{
+    background-color: gray;
+    padding-block:2px ;
+    padding-inline: 4px;
+    width: 100%;
+}
