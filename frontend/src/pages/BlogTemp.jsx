@@ -6,6 +6,7 @@ import DOMPurify from "dompurify";
 import formatDateToMonthDay from "../utils/formatDateToMonthDay";
 import "./BlogTemp.css";
 import { IoHeartSharp } from "react-icons/io5";
+import 'react-quill/dist/quill.snow.css'; // Ensure Quill styles are imported
 
 function decodeHTML(html) {
   const txt = document.createElement("textarea");
@@ -28,6 +29,7 @@ function BlogTemp() {
 
         if (res.data && res.data.data) {
           // Decode HTML entities
+          console.log("Fetched blog data:", res.data.data);
           const decodedContent = decodeHTML(res.data.data.body);
 
           // Sanitize HTML content
@@ -46,6 +48,8 @@ function BlogTemp() {
             username: res.data.data.user.username,
             img: res.data.data.user.img,
           });
+        } else {
+          console.warn("No data found for the blog.");
         }
       } catch (error) {
         console.error("Error fetching blog:", error);
@@ -63,39 +67,32 @@ function BlogTemp() {
         mode === "light" ? "text-black bg-gray-100" : "text-white bg-black"
       } duration-200 min-h-screen pb-6`}
     >
-      <div className="content-container ml-2 mr-2 pt-5">
-        {/* this div is to display tags that are saved in the DB need to render them nicely */}
+      <div className="content-container ml-2 mr-2 pt-5 md:ml-10 md:mr-10">
         <div>{body.tags}</div>
-
-        {/* for heading of the blog should be bigger than all other texts */}
-        <div className="text-3xl mt-4">{body.heading}</div>
-
-        {/* for basic info about blog like date on which it is published by who and number of likes */}
+        <div className="text-3xl mt-4 lg:text-4xl">{body.heading}</div>
         <div className="flex justify-between">
-          <span className="mt-3">
+          <span className="mt-3 lga:text-xl">
             <span>{formattedDate}</span> by <span className="text-primary font-semibold">{user.username}</span>
           </span>{" "}
-          {/* this is for displaying likes and heart icon.  */}
           <span className="flex items-center">
             <span className="text-xs lg:text-lg">{body.like}</span>
             <IoHeartSharp className="h-6 w-6 lg:h-8 lg:w-8 rounded-full text-primary lg:ml-3 sm:ml-2 ml-1" />
           </span>
         </div>
       </div>
-
-      {/* this is to add image if the image exists. The image should be across the page */}
       <div className="image-container mt-3">
         <img
-          className="h-64 w-full object-cover"
+          className="h-64 md:h-96 w-full object-cover"
           src={body.img || "https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
         />
       </div>
-
       <div className="content-container ml-2 mr-2">
-        <hr />
-        {/* to save the content stored in DB */}
-        <div className="text-sm mt-3">
-          <div dangerouslySetInnerHTML={{ __html: body.content }} />
+        <div className="text-sm  mt-5 quill-content ql-editor">
+          {body.content ? (
+            <div dangerouslySetInnerHTML={{ __html: body.content }} />
+          ) : (
+            <p>No content available.</p>
+          )}
         </div>
       </div>
     </div>

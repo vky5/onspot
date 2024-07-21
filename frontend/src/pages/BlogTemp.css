@@ -9,29 +9,38 @@ h2{
 }
 
 p{
-    font-size: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+ul, ol{
+    font-size: 1rem;
     line-height: 1.4;
 }
 
 pre {
   background-color: gray;
-  padding-block: 2px;
+  padding-block: 10px;
   padding-inline: 4px;
   width: 100%;
-  white-space: pre-wrap; /* Wraps the text inside the <pre> element */
-  word-wrap: break-word; /* Ensures long words are wrapped to the next line */
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 
-ul{
-    list-style-type: bullet;
-}
+@media (min-width: 1024px) {
+    p, ul, pre, ol {
+      font-size: 1.3rem;
+    }
 
-ol{
-    list-style-type:
-}
+    h1{
+        font-size: 2rem;
+    }
+    h2{
+        font-size: 1.6rem;
+    }
 
-.no-margin{
-    margin-left: 0;
-  margin-right: 0;
-}
+
+  }
+
+
