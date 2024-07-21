@@ -7,7 +7,7 @@ import { vkyreq } from "../utils/vkyreq";
 function Profile() {
   const { mode } = useContext(ModeContext);
   const { userData } = useContext(UserContext);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
   const [blogData, setBlogData] = useState([]);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function Profile() {
     <div
       className={`${
         mode === "light" ? "bg-gray-100 text-black" : "bg-priDark text-white"
-      } duration-200 pb-6`}
+      } duration-200 pb-6 min-h-screen`}
       style={{
         transition: "background-color 0.3s, color 0.3s",
       }}
@@ -62,20 +62,8 @@ function Profile() {
       </div>
       <div className="flex justify-evenly ml-5 mr-5">
         <div
-          className={`font-bold text-base w-24 rounded-xl flex justify-center items-center ${
-            !active ? "bg-primary text-gray-100" : "text-gray-800"
-          }`}
-          onClick={() => setActive(0)}
-          style={{
-            transition: "background-color 0.3s, color 0.3s",
-            cursor: "pointer",
-          }}
-        >
-          Liked
-        </div>
-        <div
           className={`text-base w-24 rounded-xl font-bold flex justify-center items-center p-2 
-         ${active ? "bg-primary text-gray-100" : "text-gray-800"}`}
+            ${active ? "bg-primary text-gray-100" : "text-gray-800"}`}
           onClick={() => setActive(1)}
           style={{
             transition: "background-color 0.3s, color 0.3s",
@@ -84,9 +72,21 @@ function Profile() {
         >
           Published
         </div>
+          <div
+            className={`font-bold text-base w-24 rounded-xl flex justify-center items-center ${
+              !active ? "bg-primary text-gray-100" : "text-gray-800"
+            }`}
+            onClick={() => setActive(0)}
+            style={{
+              transition: "background-color 0.3s, color 0.3s",
+              cursor: "pointer",
+            }}
+          >
+            Liked
+          </div>
       </div>
 
-      <div className="space-y-3 mt-3">
+      <div className="space-y-3 md:space-y-6 mt-3">
         {blogData.map((blogInfo) => (
           <BlogCard
             key={blogInfo._id}

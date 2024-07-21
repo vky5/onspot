@@ -64,7 +64,7 @@ function BlogTemp() {
   return (
     <div
       className={`${
-        mode === "light" ? "text-black bg-gray-100" : "text-white bg-black"
+        mode === "light" ? "text-black bg-gray-100" : "text-white bg-priDark"
       } duration-200 min-h-screen pb-6`}
     >
       <div className="content-container ml-2 mr-2 pt-5 md:ml-10 md:mr-10">

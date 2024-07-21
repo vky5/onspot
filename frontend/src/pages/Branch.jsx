@@ -16,6 +16,7 @@ function Branch() {
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
+  const [imageSrc, setImageSrc] = useState('');
 
   const quillRef = useRef(null); // Ref for Quill
   const hiddenSpan = useRef(null);
@@ -38,10 +39,19 @@ function Branch() {
 
       console.log("Submitting content:", cleanContent); // Verify content here
 
+      let imageUrl = ""
+
+      if (imageSrc){
+        const mimeType = getMimeTypeFromDataUrl(imageSrc);
+        const blob = base64ToBlob(imageSrc, mimeType);
+        imageUrl = await handleImageUpload(blob);
+      }
+
       const res = await vkyreq("POST", "/posts", {
         heading: heading,
         body: cleanContent,
         tags: tags,
+        img: imageUrl,
       });
 
       console.log(res.data);
@@ -127,6 +137,18 @@ function Branch() {
     }
   };
 
+  // handle file change for uploading cover image
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImageSrc(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -151,10 +173,10 @@ function Branch() {
   return (
     <div
       className={`duration-200 transition-colors ${
-        mode === "light" ? "text-black bg-gray-100" : "text-white bg-black"
-      }`}
+        mode === "light" ? "text-black bg-gray-100" : "text-white bg-priDark"
+      } min-h-screen pb-6`}
     >
-      <div className="flex items-center justify-between pl-5 pr-5 pt-7">
+      <div className="flex items-center justify-between ml-2 mr-2 md:ml-10 md:mr-10 pt-4">
         <HiArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} />
         <button
           className="bg-primary text-white px-3 py-1 rounded-xl"
@@ -163,15 +185,15 @@ function Branch() {
           Branch
         </button>
       </div>
-      <div className="relative mt-8 ml-8 mr-8 text-sm pb-10 full-screen-editor">
+      <div className="relative mt-4 ml-2 mr-2 md:ml-10 md:mr-10 text-sm pb-10 full-screen-editor">
         <div className="text-xl mb-2">
           <input
             type="text"
             placeholder="Branch heading..."
-            className={`w-full p-2 rounded-md focus:outline-none transition-colors duration-200 ${
+            className={`w-full md:text-3xl p-2 rounded-md focus:outline-none transition-colors duration-200 ${
               mode === "light"
                 ? "bg-gray-100 text-black"
-                : "bg-black text-white"
+                : "bg-priDark text-white"
             }`}
             value={heading}
             onChange={(e) => setHeading(e.target.value)}
@@ -181,13 +203,31 @@ function Branch() {
           <input
             type="text"
             placeholder="tags heading..."
-            className={`w-full p-2 rounded-md focus:outline-none transition-colors duration-200 ${
+            className={`w-full p-2 md:text-xl rounded-md focus:outline-none transition-colors duration-200 ${
               mode === "light"
                 ? "bg-gray-100 text-black"
-                : "bg-black text-white"
+                : "bg-priDark text-white"
             }`}
             value={tags}
             onChange={(e) => setTags(e.target.value)}
+          />
+        </div>
+        <div className="mb-2 md:mb-5">
+          {imageSrc && <img className="" src={imageSrc}/>}
+        </div>
+        <div className="mb-5">
+          <label
+            htmlFor="file-input"
+            className="cursor-pointer inline-flex items-center px-4 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Select Cover Image
+          </label>
+          <input
+            type="file"
+            id="file-input"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
           />
         </div>
         <div className="mb-4 relative sticky-toolbar">
@@ -196,7 +236,7 @@ function Branch() {
             value={content}
             onChange={setContent}
             modules={modules}
-            className="text-xl"
+            className="text-xl h-72 lg:h-96 mb-6"
           />
         </div>
         <span
