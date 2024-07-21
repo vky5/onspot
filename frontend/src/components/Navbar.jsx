@@ -48,10 +48,11 @@ function Navbar() {
             <img
               src={mode === "light" ? logo : logo_w_header}
               alt="logo of blacktree"
+              className="duration-200"
             />
             <div className={`hidden md:block ml-2 ${
               mode === 'light'? 'text-black': 'text-gray-100'
-            }`}>BLACKTREE</div>
+            } duration-200`}>BLACKTREE</div>
           </div>
         </Link>
       </div>
@@ -106,7 +107,7 @@ function Navbar() {
         <div
           className={`md:hidden ${
             mode === "light" ? "text-priDark" : "text-gray-100"
-          } font-thin`}
+          } font-thin duration-200`}
         >
           <FaSearch />
         </div>
@@ -114,7 +115,7 @@ function Navbar() {
           onClick={toggle}
           className={`mobilemenu relative z-[99] ${
             mode === "light" ? "text-priDark" : "text-gray-100"
-          } md:hidden`}
+          } md:hidden duration-200`}
         >
           {mobileMenu ? (
             <IoMdClose className="text-2xl" />

@@ -179,7 +179,7 @@ function Branch() {
       <div className="flex items-center justify-between ml-2 mr-2 md:ml-10 md:mr-10 pt-4">
         <HiArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} />
         <button
-          className="bg-primary text-white px-3 py-1 rounded-xl"
+          className="bg-primary text-white px-3 py-1 rounded-xl md:text-2xl"
           onClick={convertImageTags}
         >
           Branch
