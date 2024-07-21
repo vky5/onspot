@@ -1,0 +1,46 @@
+h1{
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+h2{
+    font-size: 1.3rem;
+    line-height: 1.5;
+}
+
+p{
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+ul, ol{
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+pre {
+  background-color: gray;
+  padding-block: 10px;
+  padding-inline: 4px;
+  width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+
+@media (min-width: 1024px) {
+    p, ul, pre, ol {
+      font-size: 1.3rem;
+    }
+
+    h1{
+        font-size: 2rem;
+    }
+    h2{
+        font-size: 1.6rem;
+    }
+
+
+  }
+
+

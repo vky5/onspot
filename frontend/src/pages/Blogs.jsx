@@ -13,10 +13,14 @@ function Blogs() {
 
   useEffect(() => {
     const getWriters = async () => {
-      const res = await vkyreq("get", "/users");
-      const res2 = await vkyreq("get", "/posts");
-      setWriterList(res.data.writers);
-      setBlogData(res2.data.data);
+      try {
+        const res = await vkyreq("get", "/users");
+        const res2 = await vkyreq("get", "/posts");
+        setWriterList(res.data.writers);
+        setBlogData(res2.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     getWriters();
@@ -50,15 +54,16 @@ function Blogs() {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-5 lg:gap-7 mt-3 md:mt-8 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10 mt-3 md:mt-8 w-full">
         {blogData.map((blogInfo) => (
-          <BlogCard
-            key={blogInfo._id}
-            id={blogInfo._id}
-            heading={blogInfo.heading}
-            user={blogInfo.user}
-            like={blogInfo.like}
-          />
+          <div className="space-y-5 md:space-y-6" key={blogInfo._id}>
+            <BlogCard
+              id={blogInfo._id}
+              heading={blogInfo.heading}
+              user={blogInfo.user}
+              like={blogInfo.like}
+            />
+          </div>
         ))}
       </div>
     </div>

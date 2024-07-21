@@ -16,7 +16,7 @@ function CardCarousel({ img, heading, id }) {
           className="h-full w-full object-cover"
           alt="Image failed to load."
         />
-        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="absolute inset-0 bg-priDark opacity-50"></div>
         <div className="absolute bottom-0 left-0 p-4 text-white w-5/6">
           <p className="text-xl text-left">{heading}</p>
           <br />
