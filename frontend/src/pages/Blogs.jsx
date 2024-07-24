@@ -4,6 +4,8 @@ import BlogCard from "../components/BlogCard";
 import { useContext, useEffect, useState } from "react";
 import { ModeContext } from "../main";
 import { vkyreq } from "../utils/vkyreq";
+import { Link } from "react-router-dom";
+
 
 function Blogs() {
   const { mode } = useContext(ModeContext);
@@ -42,15 +44,17 @@ function Blogs() {
             className="flex flex-col items-center w-28 space-y-2"
             key={writer.username}
           >
-            <div className="w-14 h-14 md:w-24 md:h-24 rounded-full">
-              <img
-                src={writer.img || profile} // Use a default image if writer.img is not available
-                alt="Profile"
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
+            <Link to={`/users/${writer._id}`}>
+              <div className="w-14 h-14 md:w-24 md:h-24 rounded-full">
+                <img
+                  src={writer.img || profile} // Use a default image if writer.img is not available
+                  alt="Profile"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
 
-            <div className="text-[12px] md:text-lg">{writer.username}</div>
+              <div className="text-[12px] md:text-lg">{writer.username}</div>
+            </Link>
           </div>
         ))}
       </div>

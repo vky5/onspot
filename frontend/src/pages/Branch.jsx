@@ -15,14 +15,28 @@ function Branch() {
   const { mode } = useContext(ModeContext);
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
-  const [tags, setTags] = useState("");
-  const [imageSrc, setImageSrc] = useState('');
-
+  const [imageSrc, setImageSrc] = useState("");
   const quillRef = useRef(null); // Ref for Quill
   const hiddenSpan = useRef(null);
 
-  // handle submition of post
+  const [tags, setTags] = useState([]);
+  const [tagsInputField, setTagsInputField] = useState("");
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && tagsInputField.trim()) {
+      e.preventDefault();
+      setTags([...tags, tagsInputField.trim()]);
+      setTagsInputField(""); // Clear the input field after adding a tag
+    }
+  };
+
+  const removeTag = (indexToRemove) => {
+    setTags((prevTags) =>
+      prevTags.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
+  // handle submition of post
   const generateRandomString = (length) => {
     const array = new Uint8Array(length);
     window.crypto.getRandomValues(array);
@@ -39,9 +53,9 @@ function Branch() {
 
       console.log("Submitting content:", cleanContent); // Verify content here
 
-      let imageUrl = ""
+      let imageUrl = "";
 
-      if (imageSrc){
+      if (imageSrc) {
         const mimeType = getMimeTypeFromDataUrl(imageSrc);
         const blob = base64ToBlob(imageSrc, mimeType);
         imageUrl = await handleImageUpload(blob);
@@ -58,7 +72,7 @@ function Branch() {
 
       setHeading("");
       setContent("");
-      setTags("");
+      setTags([]);
     } catch (error) {
       console.log(error);
     }
@@ -199,21 +213,38 @@ function Branch() {
             onChange={(e) => setHeading(e.target.value)}
           />
         </div>
-        <div className="text-xl mb-2">
+        <div className="text-sm md:text-xl mb-2">
           <input
             type="text"
-            placeholder="tags heading..."
-            className={`w-full p-2 md:text-xl rounded-md focus:outline-none transition-colors duration-200 ${
+            placeholder="tags... Press enter key"
+            className={`w-full p-2 rounded-md focus:outline-none transition-colors duration-200 ${
               mode === "light"
-                ? "bg-gray-100 text-black"
-                : "bg-priDark text-white"
+                ? "bg-gray-100 text-black text-sm md:text-xl" // Adjusted text size for different modes
+                : "bg-priDark text-white text-sm md:text-xl"
             }`}
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
+            value={tagsInputField}
+            onChange={(e) => setTagsInputField(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
+          <div className="flex flex-wrap gap-3 mt-2 mb-6">
+            {tags.map((tag, index) => (
+              <div
+                key={index}
+                className="flex items-center space-x-2 bg-gray-500 px-2 py-1 rounded-xl text-sm md:text-xl flex-shrink-0"
+              >
+                <button
+                  className="text-red-500 hover:text-red-700 text-sm md:text-xl"
+                  onClick={() => removeTag(index)}
+                >
+                  &times;
+                </button>
+                <span className="tag">{tag}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="mb-2 md:mb-5">
-          {imageSrc && <img className="" src={imageSrc}/>}
+          {imageSrc && <img className="" src={imageSrc} />}
         </div>
         <div className="mb-5">
           <label

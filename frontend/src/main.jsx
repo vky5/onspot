@@ -24,6 +24,7 @@ import Profile from "./pages/Profile";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Branch from "./pages/Branch";
+import Users from "./pages/Users";
 import { deleteCookie, getCookie, setCookie } from "./utils/Cookies";
 
 // this context is for light mode / dark mode
@@ -60,6 +61,9 @@ const paths = [
   {
     path: "/profile",
     element: <Profile />,
+  },{
+    path: "/users/:id",
+    element: <Users/>
   },
   {
     path: "/login",
@@ -96,6 +100,7 @@ const AppComponent = () => {
     email: "",
     img: "",
     username: "",
+    _id: ""
   });
 
   // this useEffect is to track whether user is logged in or not.

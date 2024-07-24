@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['admin', 'writer', 'reader'],
-        default: 'reader'
+        default: 'writer'
     },
     passwordChangedAt:{
         type: Date,
@@ -48,6 +48,20 @@ const userSchema = new mongoose.Schema({
             ref: "PostModel"
         }
     ],
+    social: {
+        linkdin: {
+            type: String,
+        },
+        twitter: {
+            type: String,
+        },
+        github: {
+            type: String,
+        }
+    },
+    aboutme: {
+        type: String
+    },
     passwordResetToken: String,
     passwordResetExpires: Date,
     active: {

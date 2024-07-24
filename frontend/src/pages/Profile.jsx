@@ -1,10 +1,8 @@
 import BlogCard from "../components/BlogCard";
-import profile from "../assets/profile.png";
 import { useContext, useEffect, useState } from "react";
 import { ModeContext, UserContext } from "../main";
 import { vkyreq } from "../utils/vkyreq";
-import { HiCog } from "react-icons/hi";
-import { FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
+import MainSection from "../components/Profile/MainSection";
 
 function Profile() {
   const { mode } = useContext(ModeContext);
@@ -27,87 +25,23 @@ function Profile() {
     };
 
     callingBlogs(); // Call the function inside useEffect
-  }, [active]);
+  }, []);
 
   return (
     <div
       className={`${
         mode === "light" ? "bg-gray-100 text-black" : "bg-priDark text-white"
       } duration-200 pb-6 min-h-screen`}
-      style={{
-        transition: "background-color 0.3s, color 0.3s",
-      }}
     >
-      <div className="flex flex-col items-center pt-5 md:ml-10 md:mr-10 w-full ">
-        <div className="flex items-center justify-center space-x-4 md:space-x-6 lg:space-x-10 mb-4">
-          <div className="w-14 h-14 md:h-16 md:w-16 lg:h-32 lg:w-32 rounded-full">
-            <img
-              src={userData.img || profile}
-              alt="Profile"
-              className="w-full h-full object-cover rounded-full"
-            />
-          </div>
-          <div className="flex flex-col items-start space-y-1 md:space-y-2 text-center lg:text-left">
-            <div
-              className={`${
-                mode === "light" ? "text-black" : "text-white"
-              } text-base md:text-xl lg:text-2xl`}
-            >
-              {userData.username}
-            </div>
-            <div
-              className={`${
-                mode === "light" ? "text-black" : "text-white"
-              } text-sm md:text-lg lg:text-xl`}
-            >
-              {userData.name}
-            </div>
-            <div
-              className={`${
-                mode === "light" ? "text-black" : "text-white"
-              } text-sm md:text-lg lg:text-xl`}
-            >
-              {userData.email}
-            </div>
-            <div className="flex space-x-4 lg:space-x-8 mt-10">
-              <a
-                href="https://twitter.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaTwitter className="text-blue-500 text-2xl" />
-              </a>
-              <a
-                href="https://linkedin.com/in/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaLinkedin className="text-blue-700 text-2xl" />
-              </a>
-              <a
-                href="https://github.com/yourusername"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaGithub className="text-gray-800 text-2xl" />
-              </a>
-            </div>
-          </div>
-          <div className="ml-4">
-            <HiCog
-              className={`text-2xl md:text-3xl lg:text-4xl cursor-pointer ${
-                mode === "light" ? "text-black" : "text-white"
-              }`}
-              onClick={() => console.log("Open settings")}
-            />
-          </div>
-        </div>
-      </div>
-
+      <MainSection userData={userData} isProfilePage={true} />
       {/* Grid layout for large screens */}
-      <div className="hidden lg:grid lg:grid-cols-2 lg:gap-6 lg:px-10 lg:mt-10">
+      <div className="hidden lg:grid lg:grid-cols-2 lg:gap-6 lg:px-10 lg:mt-10 mt-5">
         <div className="flex flex-col items-center space-y-5 md:space-y-6">
-          <h2 className={`text-2xl font-bold ${mode === "light" ? "text-black" : "text-white"} text-center`}>
+          <h2
+            className={`text-2xl font-bold ${
+              mode === "light" ? "text-black" : "text-white"
+            } text-center`}
+          >
             Published
           </h2>
           <div className="space-y-5 md:space-y-6">
@@ -124,7 +58,11 @@ function Profile() {
         </div>
 
         <div className="flex flex-col items-center space-y-5 md:space-y-6">
-          <h2 className={`text-2xl font-bold ${mode === "light" ? "text-black" : "text-white"} text-center`}>
+          <h2
+            className={`text-2xl font-bold ${
+              mode === "light" ? "text-black" : "text-white"
+            } text-center`}
+          >
             Liked
           </h2>
           <div className="space-y-5 md:space-y-6">

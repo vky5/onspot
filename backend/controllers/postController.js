@@ -18,7 +18,8 @@ const postBlog = catchAsync(async (req, res, next) => {
     heading: req.body.heading,
     user: req.user._id,
     body: req.body.body,
-    tags: req.body.tags
+    tags: req.body.tags,
+    img: req.body.img
   });
 
   res.status(201).json({

@@ -1,7 +1,9 @@
 const catchAsync = require("../utils/catchAsync");
 const UserModel = require('../model/userModel');
 const AppError = require("../utils/appError");
-const factory = require('./handlerFactory')
+const factory = require('./handlerFactory');
+
+
 // this is to protect from auto binding in which a user might update their role by submitting a post request of {role:admin} in payload
 // it checks for the allowed field and only lets user update those field
 const filterObj = (obj, ...allowedFields)=>{

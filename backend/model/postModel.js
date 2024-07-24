@@ -23,6 +23,9 @@ const postSchema = new mongoose.Schema({
     like: {
         type: Number,
         default: 0
+    },
+    img: {
+        type: String
     }
 }, {
     toJSON: {
