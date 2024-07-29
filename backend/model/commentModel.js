@@ -20,8 +20,20 @@ const commentSchema = new mongoose.Schema({
         default: Date.now
     }
 }, {
-    toJSON: {virtuals: true},
-    toObject: {virtuals: true}
+    toJSON: {
+        virtuals: true,
+        versionKey: false,
+        transform: function (doc, ret) {
+            delete ret.id;
+        }
+    },
+    toObject: {
+        virtuals: true,
+        versionKey: false,
+        transform: function (doc, ret) {
+            delete ret.id;
+        }
+    }
 });
 
 

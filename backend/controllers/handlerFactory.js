@@ -6,7 +6,6 @@ const deleteOne = (Model, delParams) =>
   catchAsync(async (req, res, next) => {
     // Find the document by ID
     const doc = await Model.findById(req.params[delParams]);
-    console.log(doc);
     // Check if the document exists
     if (!doc) {
       return next(new AppError("No document found", 404));
@@ -43,6 +42,7 @@ const updateOne = (Model, updateParams) =>
 
     if (req.body["user"]) delete req.body["user"];
     // this is to prevent user from updating the comment or post username by their own. Example by directly passing someone else's monoogse Schema Id they can make it appear as if someone elsee created it
+    if (req.body["like"]) delete req.body["like"];
 
     // Update the post
     const updatedDoc = await Model.findByIdAndUpdate(
@@ -79,19 +79,27 @@ const getOne = (Model, getParams, select, popOptions) =>
     });
   });
 
-const getAll = (Model, options = {}) =>
+const getAll = (Model,select, ...options) =>
   catchAsync(async (req, res, next) => {
-    let filter = options;
-    if (req.query["blogid"]) {  // Use req.query to access query parameters
-      filter = { post: req.query["blogid"] };
-    }
+    let filter = {};
+    options.forEach(ele=>{
+      if (ele === 'blogid'){
+        filter['post'] = req.params['blogid']
+      }else if (ele==='user'){
+        if (!req.user._id){
+          return next(new AppError('You are not logged in', 401));
+        }else{
+          filter['user'] = req.user._id
+        }
+      }
+    })
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .finding()
       .sorting()
       .filtering()
       .pagination();
-    const docAfterQueries = await features.query; // this is an array of document
+    const docAfterQueries = await features.query.select(select); // this is an array of document
 
     res.status(200).json({
       status: "success",

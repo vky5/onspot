@@ -64,10 +64,11 @@ postSchema.pre(/^find/, function(next){
     this.populate({
         path: 'user',
         select: 'username img'
-    }).populate({ // we want this to show which tag is the post assigned with in form of array..
-        path: 'tags',
-        select: 'name'
     })
+    // .populate({ // we want this to show which tag is the post assigned with in form of array..
+    //     path: 'tags',
+    //     select: 'name'
+    // })
 
     next();
 })

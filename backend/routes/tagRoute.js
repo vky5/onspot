@@ -5,13 +5,13 @@ const tagsController = require("../controllers/tagsController");
 const router = express.Router();
 
 /*
-GET /api/v1/tags // to get the posts related to that tag
+GET /api/v1/posts/tags // to get the posts related to that tag
 */
 
 router
     .route("/")
     .get(
-        tagsController.getPostsOfTags // this takes ID of the tag not name of the tag
+        tagsController.getPostsOfTags // get posts from tags takes tag from body
     )
 
 module.exports = router;

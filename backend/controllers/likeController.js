@@ -63,8 +63,7 @@ const likeAPost = catchAsync(async (req, res, next) => {
     }
 
     res.status(200).json({
-        status: 'success',
-        data: updatedPost
+        status: 'success'
     });
 });
 

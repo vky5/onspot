@@ -26,7 +26,7 @@ const updateUser = catchAsync(async (req, res, next)=>{
         return next(new AppError('This route is not for password updates', 400));
     }
 
-    // filter unwanted fields name that is should not be allowed to be updated
+    // filter wanted fields name that is should be allowed to be updated
     const filterBody = filterObj(req.body, 'name', 'email');
 
     const updateUser = await UserModel.findByIdAndUpdate(req.user._id, filterBody, {
@@ -61,7 +61,7 @@ const meEndpoint = (req, res, next)=>{
 
 // to get the list of all famous writer....
 const getAllWriter = catchAsync(async(req, res, next)=>{
-    const users = await UserModel.find({role:'writer'}); // const usersList = formatRes(users, 'username', 'img'); // STUPID: U could have used select in the query
+    const users = await UserModel.find({role:'writer'}).select('-email -role -likedPosts'); // const usersList = formatRes(users, 'username', 'img'); // STUPID: U could have used select in the query
 
     res.status(200).json({
         status: 'success',

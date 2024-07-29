@@ -1,9 +1,14 @@
 // const Tags = require("../model/tagModel");
 const catchAsync = require("../utils/catchAsync");
-const PostModel = require('../model/postModel')
+const PostModel = require('../model/postModel');
+const AppError = require("../utils/appError");
 
 
 const getPostsOfTags = catchAsync(async (req, res, next)=>{
+
+  if (!req.body.tags){
+    return next(new AppError('No tags specified', 400));
+  }
 
   req.body.tags = req.body.tags.map(ele=>ele.toLowerCase());
 

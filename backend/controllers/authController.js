@@ -149,8 +149,6 @@ const forgotPassword = catchAsync(async (req, res, next)=>{
         await user.save({
             validateBeforeSave: false
         })
-
-        console.log(error)
         return next(
             new AppError('Something went wrong in server side', 500)
         )
