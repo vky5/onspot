@@ -105,17 +105,16 @@ function BlogTemp() {
   }, [body.content]);
 
   useEffect(() => {
-    // Function to handle clicks outside the cancel/confirm buttons
     function handleClickOutside(event) {
       if (
         cancelConfirmRef.current &&
-        !cancelConfirmRef.current.contains(event.target)
+        !cancelConfirmRef.current.contains(event.target) &&
+        !event.target.closest(".bg-red-800") // Exclude the confirm button
       ) {
         setDelStat(0);
       }
     }
 
-    // Add event listener for clicks
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -157,7 +156,11 @@ function BlogTemp() {
                 }`}
                 onClick={() => {}}
               >
-                <FaPencilAlt className="hover:cursor-pointer" onClick={()=>navigate(`/branch/${id}`)}/> {/*TODO add edit feature*/}
+                <FaPencilAlt
+                  className="hover:cursor-pointer"
+                  onClick={() => navigate(`/branch/${id}`)}
+                />{" "}
+                {/*TODO add edit feature*/}
                 <FaTrash
                   className="hover:cursor-pointer text-red-800"
                   onClick={() => setDelStat(1)}

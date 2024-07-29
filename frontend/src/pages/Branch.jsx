@@ -283,7 +283,7 @@ function Branch() {
             className="bg-primary text-white px-3 py-1 rounded-xl md:text-2xl"
             onClick={convertImageTags}
           >
-            Update Post
+            Update
           </button>
         )}
       </div>
