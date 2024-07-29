@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ModeContext } from "../main";
 
-function BlogCard({ heading, user, id, like = 0 }) {
+function BlogCard({ heading, user, id, like = 0, img }) {
   const { mode } = useContext(ModeContext);
 
   const location = useLocation();
@@ -20,6 +20,8 @@ function BlogCard({ heading, user, id, like = 0 }) {
       if (location.pathname === "/liked") {
         setUsePrimary(true);
       }
+
+      console.log(img)
     };
     checkLocation();
   }, [location.pathname]);
@@ -42,7 +44,7 @@ function BlogCard({ heading, user, id, like = 0 }) {
       <div className="flex pt-4 pb-4 items-center">
         <div className="flex-shrink-0">
           <img
-            src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
+            src={img || "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"}
             alt=""
             className="rounded-xl h-[107px] w-[105px]"
           />
@@ -83,6 +85,7 @@ BlogCard.propTypes = {
   }).isRequired,
   id: PropTypes.string.isRequired,
   like: PropTypes.number,
+  img: PropTypes.string
 };
 
 export default BlogCard;

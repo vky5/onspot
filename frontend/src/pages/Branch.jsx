@@ -1,6 +1,6 @@
 import { HiArrowLeft } from "react-icons/hi";
 import { useContext, useState, useMemo, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ModeContext } from "../main";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill's CSS
@@ -10,17 +10,50 @@ import DOMPurify from "dompurify";
 import storage from "../utils/firebaseConf";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+function decodeHTML(html) {
+  const txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
+}
+
 function Branch() {
   const navigate = useNavigate();
   const { mode } = useContext(ModeContext);
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
   const [imageSrc, setImageSrc] = useState("");
+  const [tags, setTags] = useState([]);
+  const [tagsInputField, setTagsInputField] = useState("");
   const quillRef = useRef(null); // Ref for Quill
   const hiddenSpan = useRef(null);
 
-  const [tags, setTags] = useState([]);
-  const [tagsInputField, setTagsInputField] = useState("");
+  const { id } = useParams();
+
+  useEffect(() => {
+    const getPostToUpdate = async () => {
+      try {
+        const res = await vkyreq("GET", `/posts/${id}/info`);
+        if (res.data && res.data.data && id) {
+          const decodedContent = decodeHTML(res.data.data.body);
+          const sanitizedContent = DOMPurify.sanitize(decodedContent);
+          setContent(sanitizedContent);
+          setTags(res.data.data.tags);
+          setHeading(res.data.data.heading);
+          setImageSrc(res.data.data.img);
+        } else {
+          console.warn("No data found for the blog.");
+        }
+      } catch (error) {
+        setContent("");
+        setTags([]);
+        setHeading("");
+        setImageSrc("");
+        console.error("Error fetching blog:", error);
+      }
+    };
+
+    getPostToUpdate();
+  }, [id]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && tagsInputField.trim()) {
@@ -51,11 +84,9 @@ function Branch() {
         USE_PROFILES: { html: true },
       });
 
-      console.log("Submitting content:", cleanContent); // Verify content here
-
       let imageUrl = "";
 
-      if (imageSrc) {
+      if (imageSrc && !imageSrc.startsWith('http')){
         const mimeType = getMimeTypeFromDataUrl(imageSrc);
         const blob = base64ToBlob(imageSrc, mimeType);
         imageUrl = await handleImageUpload(blob);
@@ -73,6 +104,40 @@ function Branch() {
       setHeading("");
       setContent("");
       setTags([]);
+      setImageSrc("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePostUpdate = async (updatedContent) => {
+    try {
+      const cleanContent = DOMPurify.sanitize(updatedContent, {
+        USE_PROFILES: { html: true },
+      });
+
+      let imageUrl = "";
+
+      if (imageSrc) {
+        const mimeType = getMimeTypeFromDataUrl(imageSrc);
+        const blob = base64ToBlob(imageSrc, mimeType);
+        imageUrl = await handleImageUpload(blob);
+      }
+
+      const res = await vkyreq("PATCH", `/posts/${id}/info`, {
+        heading: heading,
+        body: cleanContent,
+        tags: tags,
+        img: imageUrl,
+      });
+
+      console.log(res.data);
+
+      setHeading("");
+      setContent("");
+      setTags([]);
+      setImageSrc("");
+      navigate(-1);
     } catch (error) {
       console.log(error);
     }
@@ -100,9 +165,20 @@ function Branch() {
         const listOfImagesUploadedUrl = await Promise.all(
           Array.from(imgTags).map(async (imgTag) => {
             const dataUrl = imgTag.getAttribute("src");
-            const mimeType = getMimeTypeFromDataUrl(dataUrl);
-            const blob = base64ToBlob(dataUrl, mimeType);
-            return handleImageUpload(blob, res.data.data.username);
+            if (dataUrl && !dataUrl.startsWith("http")) {
+              const mimeType = getMimeTypeFromDataUrl(dataUrl);
+              const blob = base64ToBlob(dataUrl, mimeType);
+
+              if (blob) {
+                return handleImageUpload(blob, res.data.data.username);
+              } else {
+                console.error("Error converting Base64 data URL to Blob");
+                return ""; // Fallback URL or empty string if blob conversion fails
+              }
+            } else {
+              // If it's already a URL, just return it
+              return dataUrl;
+            }
           })
         );
 
@@ -113,11 +189,14 @@ function Branch() {
 
         // Extract inner HTML excluding the <span> itself
         const innerHtml = hiddenSpan.current.innerHTML;
-        console.log(innerHtml);
-
         // Set the content state with the updated HTML
         setContent(innerHtml);
-        handlePostSubmit(innerHtml);
+        if (!id) {
+          handlePostSubmit(innerHtml);
+        } else {
+          console.log("we are here");
+          handlePostUpdate(innerHtml);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -192,12 +271,21 @@ function Branch() {
     >
       <div className="flex items-center justify-between ml-2 mr-2 md:ml-10 md:mr-10 pt-4">
         <HiArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} />
-        <button
-          className="bg-primary text-white px-3 py-1 rounded-xl md:text-2xl"
-          onClick={convertImageTags}
-        >
-          Branch
-        </button>
+        {(!id && (
+          <button
+            className="bg-primary text-white px-3 py-1 rounded-xl md:text-2xl"
+            onClick={convertImageTags}
+          >
+            Branch
+          </button>
+        )) || (
+          <button
+            className="bg-primary text-white px-3 py-1 rounded-xl md:text-2xl"
+            onClick={convertImageTags}
+          >
+            Update Post
+          </button>
+        )}
       </div>
       <div className="relative mt-4 ml-2 mr-2 md:ml-10 md:mr-10 text-sm pb-10 full-screen-editor">
         <div className="text-xl mb-2">

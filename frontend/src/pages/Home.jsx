@@ -70,8 +70,8 @@ function Home() {
       </div>
 
       <div className="sm:flex">
-        <div className="sm:w-1/2">
-          <div className="space-y-3 md:space-y-6 mt-3">
+        <div className="lg:w-1/2">
+          <div className="space-y-3 md:space-y-6 lg:space-y-8 mt-3">
             {blogData.map((blogInfo) => (
               <BlogCard
                 key={blogInfo._id}
@@ -79,11 +79,12 @@ function Home() {
                 heading={blogInfo.heading}
                 user={blogInfo.user}
                 like={blogInfo.like}
+                img={blogInfo.img}
               />
             ))}
           </div>
         </div>
-        <div className="w-1/2 sm:block hidden">
+        <div className="w-1/2 lg:block hidden">
           <SideComponent/>
         </div>
       </div>

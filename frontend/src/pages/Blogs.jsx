@@ -32,7 +32,7 @@ function Blogs() {
     <div
       className={`${
         mode === "light" ? "bg-gray-100 text-black" : "bg-priDark text-white"
-      } duration-200 pb-6`}
+      } duration-200 pb-6 min-h-screen`}
     >
       <div className="font-bold text-[30px] ml-5">LEAVES</div>
       <div
@@ -66,6 +66,7 @@ function Blogs() {
               heading={blogInfo.heading}
               user={blogInfo.user}
               like={blogInfo.like}
+              img={blogInfo.img}
             />
           </div>
         ))}

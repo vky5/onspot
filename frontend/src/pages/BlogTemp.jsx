@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { ModeContext } from "../main";
+import { useContext, useEffect, useState, useRef } from "react";
+import { ModeContext, UserContext } from "../main";
 import { useParams } from "react-router-dom";
 import { vkyreq } from "../utils/vkyreq";
 import DOMPurify from "dompurify";
@@ -7,6 +7,8 @@ import formatDateToMonthDay from "../utils/formatDateToMonthDay";
 import "./BlogTemp.css";
 import { IoHeartSharp } from "react-icons/io5";
 import "react-quill/dist/quill.snow.css"; // Ensure Quill styles are imported
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function decodeHTML(html) {
   const txt = document.createElement("textarea");
@@ -20,10 +22,16 @@ function encodeHeading(headingText) {
 
 function BlogTemp() {
   const { mode } = useContext(ModeContext);
+  const { userData } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const { id } = useParams(); // Use useParams to get the ID from the URL
   const [body, setBody] = useState({});
   const [user, setUser] = useState({});
   const [headings, setHeadings] = useState([]);
+  const [deleteStat, setDelStat] = useState(0);
+
+  const cancelConfirmRef = useRef(null);
 
   useEffect(() => {
     const getBlog = async () => {
@@ -96,7 +104,32 @@ function BlogTemp() {
     }
   }, [body.content]);
 
+  useEffect(() => {
+    // Function to handle clicks outside the cancel/confirm buttons
+    function handleClickOutside(event) {
+      if (
+        cancelConfirmRef.current &&
+        !cancelConfirmRef.current.contains(event.target)
+      ) {
+        setDelStat(0);
+      }
+    }
+
+    // Add event listener for clicks
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const formattedDate = body.date ? formatDateToMonthDay(body.date) : "";
+
+  const deletePost = async () => {
+    try {
+      await vkyreq("delete", `/posts/${id}/info`);
+      navigate(-1);
+    } catch (error) {
+      console.log("Something went wrong : " + error);
+    }
+  };
 
   return (
     <div
@@ -105,15 +138,52 @@ function BlogTemp() {
       } duration-200 min-h-screen pb-6`}
     >
       <div className="content-container ml-2 mr-2 pt-5 md:ml-10 md:mr-10">
-        <div className="flex flex-wrap gap-3 mt-2 mb-6 text-white">
-          {body.tags?.map((tag, index) => (
-            <span
-              className="flex items-center bg-primary px-2 py-1 rounded-xl text-sm md:text-xl"
-              key={index}
-            >
-              {tag.toUpperCase()}
-            </span>
-          ))}
+        <div className="flex justify-between items-center">
+          <div className="flex flex-wrap gap-3 mt-2 mb-6 text-white">
+            {body.tags?.map((tag, index) => (
+              <span
+                className="flex items-center bg-primary px-2 py-1 rounded-xl text-sm md:text-xl"
+                key={index}
+              >
+                {tag.toUpperCase()}
+              </span>
+            ))}
+          </div>
+          {userData.username === user.username && (
+            <>
+              <span
+                className={`md:text-2xl lg:text-3xl space-x-5 lg:space-x-8 ${
+                  deleteStat === 1 ? "hidden" : "flex"
+                }`}
+                onClick={() => {}}
+              >
+                <FaPencilAlt className="hover:cursor-pointer" onClick={()=>navigate(`/branch/${id}`)}/> {/*TODO add edit feature*/}
+                <FaTrash
+                  className="hover:cursor-pointer text-red-800"
+                  onClick={() => setDelStat(1)}
+                />
+              </span>
+              <span
+                className={`${
+                  deleteStat === 0 ? "hidden" : "flex"
+                } space-x-5 lg:space-x-8`}
+              >
+                <button
+                  className="flex items-center py-1 px-2 rounded-xl text-sm md:text-xl border border-primary text-primary"
+                  ref={cancelConfirmRef}
+                  onClick={() => setDelStat(0)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="flex items-center bg-red-800 px-2 py-1 rounded-xl text-sm md:text-xl"
+                  onClick={deletePost}
+                >
+                  Confirm
+                </button>
+              </span>
+            </>
+          )}
         </div>
 
         <div className="text-3xl mt-4 lg:text-4xl">{body.heading}</div>
@@ -159,6 +229,14 @@ function BlogTemp() {
                     <a
                       href={`#${heading.id}`}
                       className="text-blue-500 hover:underline text-2xl"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const element = document.getElementById(heading.id);
+                        if (element) {
+                          element.scrollIntoView({ behavior: "smooth" });
+                          window.history.pushState(null, "", `#${heading.id}`);
+                        }
+                      }}
                     >
                       {heading.text}
                     </a>

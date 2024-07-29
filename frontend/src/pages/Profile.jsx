@@ -52,6 +52,7 @@ function Profile() {
                 heading={blogInfo.heading}
                 user={blogInfo.user}
                 like={blogInfo.like}
+                img={blogInfo.img}
               />
             ))}
           </div>
@@ -73,6 +74,7 @@ function Profile() {
                 heading={blogInfo.heading}
                 user={blogInfo.user}
                 like={blogInfo.like}
+                img={blogInfo.img}
               />
             ))}
           </div>
@@ -120,6 +122,7 @@ function Profile() {
               heading={blogInfo.heading}
               user={blogInfo.user}
               like={blogInfo.like}
+              img={blogInfo.img}
             />
           ))) ||
           likedBlogs.map((blogInfo) => (
@@ -129,6 +132,7 @@ function Profile() {
               heading={blogInfo.heading}
               user={blogInfo.user}
               like={blogInfo.like}
+              img={blogInfo.img}
             />
           ))}
       </div>

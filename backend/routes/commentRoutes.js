@@ -29,7 +29,6 @@ PATCH api/v1/comments/:commentid
 DELETE api/v1/comments/:commentid
 */
 
-//TODO get all comments by a user in particular post
 
 router 
     .route('/')

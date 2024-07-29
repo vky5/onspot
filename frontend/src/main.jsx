@@ -49,12 +49,7 @@ const paths = [
   {
     path: "/blogs/:id",
     element: <BlogTemp />,
-  },
-  // {
-  //   path: "/liked",
-  //   element: <Liked />,
-  // },
-  {
+  },{
     path: "/about",
     element: <About />,
   },
@@ -75,6 +70,9 @@ const paths = [
   },
   {
     path: "/branch",
+    element: <Branch/>
+  },{
+    path: "/branch/:id",
     element: <Branch/>
   }
 ];
