@@ -7,7 +7,7 @@ const factory = require('./handlerFactory');
 const getAllLikedPostsByUser = catchAsync(async (req, res, next)=>{
     const getLikedPosts = await userModel.findById(req.user._id).populate({
         path: 'likedPosts',
-        select: 'like _id heading user'
+        select: '-body -tags'
     }).select('likedPosts');
 
     res.status(200).json({
@@ -18,6 +18,7 @@ const getAllLikedPostsByUser = catchAsync(async (req, res, next)=>{
 
 // this is to like a post or unlike a post
 const likeAPost = catchAsync(async (req, res, next) => {
+    let counter = 0;
     const post = await PostModel.findById(req.params.blogid);
     if (!post) {
         return next(new AppError('Document not found', 404));
@@ -43,6 +44,8 @@ const likeAPost = catchAsync(async (req, res, next) => {
             { $pull: { likedPosts: req.params.blogid } }, // this one's new we can directly delete from array or add new to array
             { new: true, runValidators: true }
         );
+        counter-=1;
+
     } else {
         // Like the post
         updatedPost = await PostModel.findByIdAndUpdate(
@@ -56,6 +59,8 @@ const likeAPost = catchAsync(async (req, res, next) => {
             { $push: { likedPosts: req.params.blogid } },
             { new: true, runValidators: true }
         );
+
+        counter+=1;
     }
 
     if (!updatedPost) {
@@ -63,7 +68,9 @@ const likeAPost = catchAsync(async (req, res, next) => {
     }
 
     res.status(200).json({
-        status: 'success'
+        status: 'success',
+        counter
+
     });
 });
 

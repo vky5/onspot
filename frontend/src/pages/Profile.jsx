@@ -10,6 +10,7 @@ function Profile() {
   const [active, setActive] = useState(1);
   const [likedBlogs, setLikedBlogs] = useState([]);
   const [publishedBlogs, setPublishedBlogs] = useState([]);
+  const [somethingChanged, setSomethingChanged] = useState(false);
 
   useEffect(() => {
     const callingBlogs = async () => {
@@ -25,7 +26,7 @@ function Profile() {
     };
 
     callingBlogs(); // Call the function inside useEffect
-  }, []);
+  }, [somethingChanged]);
 
   return (
     <div
@@ -44,7 +45,7 @@ function Profile() {
           >
             Published
           </h2>
-          <div className="space-y-5 md:space-y-6">
+          <div className="space-y-5 md:space-y-6 w-full">
             {publishedBlogs.map((blogInfo) => (
               <BlogCard
                 key={blogInfo._id}
@@ -53,6 +54,8 @@ function Profile() {
                 user={blogInfo.user}
                 like={blogInfo.like}
                 img={blogInfo.img}
+                status={blogInfo.status}
+                handleChange ={setSomethingChanged}
               />
             ))}
           </div>
@@ -66,7 +69,7 @@ function Profile() {
           >
             Liked
           </h2>
-          <div className="space-y-5 md:space-y-6">
+          <div className="space-y-5 md:space-y-6 w-full">
             {likedBlogs.map((blogInfo) => (
               <BlogCard
                 key={blogInfo._id}
@@ -75,6 +78,8 @@ function Profile() {
                 user={blogInfo.user}
                 like={blogInfo.like}
                 img={blogInfo.img}
+                status={blogInfo.status}
+                handleChange ={setSomethingChanged}
               />
             ))}
           </div>
@@ -123,6 +128,8 @@ function Profile() {
               user={blogInfo.user}
               like={blogInfo.like}
               img={blogInfo.img}
+              status={blogInfo.status}
+              handleChange ={setSomethingChanged}
             />
           ))) ||
           likedBlogs.map((blogInfo) => (
@@ -133,6 +140,8 @@ function Profile() {
               user={blogInfo.user}
               like={blogInfo.like}
               img={blogInfo.img}
+              status={blogInfo.status}
+              handleChange ={setSomethingChanged}
             />
           ))}
       </div>

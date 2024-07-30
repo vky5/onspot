@@ -5,7 +5,7 @@ import stripText from "../../utils/textStrip";
 import { ModeContext } from "../../main";
 import { useContext, useEffect, useState } from "react";
 
-function CardCarBig({ img, heading, id }) {
+function CardCarBig({ img, heading, id, username }) {
   const navigate = useNavigate();
 
   const {mode} = useContext(ModeContext);
@@ -42,7 +42,7 @@ function CardCarBig({ img, heading, id }) {
           )}
           <div className={img ? "ml-10 text-left w-1/2" : "text-left w-full"}>
             <div className="lg:text-xl">
-              by <span className="text-primary">Pikachu</span>
+              by <span className="text-primary">{username}</span>
             </div>
             <div className="lg:text-3xl text-xl mt-6">{stripText(heading, windowWidth>768?275:90)}</div>
             <div className="mt-4">
@@ -64,6 +64,7 @@ CardCarBig.propTypes = {
   img: PropTypes.string.isRequired,
   heading: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired
 };
 
 export default CardCarBig;

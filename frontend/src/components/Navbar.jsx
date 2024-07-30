@@ -15,6 +15,8 @@ import light_mode from "../assets/light_mode.png";
 import logo_w_header from "../assets/logo_w_header.png";
 import { ModeContext, LoggedInContext, UserContext } from "../main";
 import { deleteCookie } from "../utils/Cookies";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Badge from "@mui/material/Badge";
 
 function Navbar() {
   const { isLoggedin, setLoggedin } = useContext(LoggedInContext);
@@ -50,9 +52,13 @@ function Navbar() {
               alt="logo of blacktree"
               className="duration-200"
             />
-            <div className={`hidden md:block ml-2 ${
-              mode === 'light'? 'text-black': 'text-gray-100'
-            } duration-200`}>BLACKTREE</div>
+            <div
+              className={`hidden md:block ml-2 ${
+                mode === "light" ? "text-black" : "text-gray-100"
+              } duration-200`}
+            >
+              BLACKTREE
+            </div>
           </div>
         </Link>
       </div>
@@ -65,13 +71,25 @@ function Navbar() {
 
         {/* Long Menu on Navbar to be appeared only on bigger screen than mobile */}
         <div className="hidden md:flex w-full justify-around items-center lg:pr-10 md:pr-4">
-          <div className={`flex justify-evenly w-3/4 items-center sm:text-xm md:text-xm lg:text-l ${
-            mode === "light" ? "bg-gray-100 text-priDark" : "bg-priDark text-gray-100"
-          } duration-200`}>
-            <div><Link to='/'>HOME</Link></div>
-            <div><Link to='/blogs'>BLOGS</Link></div>
-            <div><Link to='/profile'>PROFILE</Link></div>
-            <div><Link to='/branch'>BRANCH</Link></div>
+          <div
+            className={`flex justify-evenly w-3/4 items-center sm:text-xm md:text-xm lg:text-l ${
+              mode === "light"
+                ? "bg-gray-100 text-priDark"
+                : "bg-priDark text-gray-100"
+            } duration-200`}
+          >
+            <div>
+              <Link to="/">HOME</Link>
+            </div>
+            <div>
+              <Link to="/blogs">BLOGS</Link>
+            </div>
+            <div>
+              <Link to="/profile">PROFILE</Link>
+            </div>
+            <div>
+              <Link to="/branch">BRANCH</Link>
+            </div>
           </div>
           <div className="flex w-1/4 relative">
             <input
@@ -83,6 +101,15 @@ function Navbar() {
               <FaSearch />
             </div>
           </div>
+        </div>
+        <div
+          className={`${
+            mode === "light" ? "text-priDark" : "text-gray-100"
+          } duration-200`}
+        >
+          <Badge badgeContent={100} color="primary">
+            <NotificationsIcon />
+          </Badge>
         </div>
 
         <div>

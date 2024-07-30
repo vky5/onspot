@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@material-tailwind/react": "^2.1.9",
+    "@mui/icons-material": "^5.16.5",
+    "@mui/material": "^5.16.5",
     "@react-oauth/google": "^0.12.1",
     "axios": "^1.7.2",
     "dompurify": "^3.1.6",

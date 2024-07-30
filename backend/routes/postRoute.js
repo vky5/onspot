@@ -34,7 +34,7 @@ router
             req.params.user = req.user._id
             next();
         }
-        ,postController.getAllWriterPosts
+        ,postController.getAllPostsByMe
     )
 
 router // this is to get info about a blog or patch blog only admin and original writer can make changes in a blog

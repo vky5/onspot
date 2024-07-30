@@ -26,6 +26,11 @@ const postSchema = new mongoose.Schema({
     },
     img: {
         type: String
+    },
+    status: {
+        type: String,
+        enum: ['moderation', 'blogs', 'projects', 'rejected'],
+        default: 'moderation'
     }
 }, {
     toJSON: {

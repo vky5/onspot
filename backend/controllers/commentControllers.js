@@ -7,8 +7,8 @@ const factory = require('./handlerFactory');
 const updateComment = factory.updateOne(CommentModel, 'commentid'); // to update the comment from commentid
 const deleteComment = factory.deleteOne(CommentModel, 'commentid'); // to delete comment from commentid 
 const getParticularComment = factory.getOne(CommentModel, 'commentid'); // this is to get a particular comment from using commentId
-const getCommentForPost = factory.getAll(CommentModel,'-post', 'blogid'); // if we do not pass anything in params or body then we will get all comments with pagination rules set as default
-const getCommentsForMe = factory.getAll(CommentModel, '-post', "blogid", "user")
+const getCommentForPost = factory.getAll(CommentModel,'-post',{} ,'blogid'); // if we do not pass anything in params or body then we will get all comments with pagination rules set as default
+const getCommentsForMe = factory.getAll(CommentModel, '-post', {},  "blogid", "user")
 
 
 const transferToParams = (req, res, next) =>{

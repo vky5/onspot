@@ -43,6 +43,7 @@ const updateOne = (Model, updateParams) =>
     if (req.body["user"]) delete req.body["user"];
     // this is to prevent user from updating the comment or post username by their own. Example by directly passing someone else's monoogse Schema Id they can make it appear as if someone elsee created it
     if (req.body["like"]) delete req.body["like"];
+    if (req.body["status"]) delete req.body["status"];
 
     // Update the post
     const updatedDoc = await Model.findByIdAndUpdate(
@@ -79,9 +80,9 @@ const getOne = (Model, getParams, select, popOptions) =>
     });
   });
 
-const getAll = (Model,select, ...options) =>
+const getAll = (Model,select,directOptions ={},...options) =>
   catchAsync(async (req, res, next) => {
-    let filter = {};
+    let filter = directOptions;
     options.forEach(ele=>{
       if (ele === 'blogid'){
         filter['post'] = req.params['blogid']
