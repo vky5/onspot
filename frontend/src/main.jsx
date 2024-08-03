@@ -12,6 +12,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { vkyreq } from "./utils/vkyreq";
+import { deleteCookie, getCookie, setCookie } from "./utils/Cookies";
 
 // Importing components
 import Navbar from "./components/Navbar";
@@ -25,7 +26,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Branch from "./pages/Branch";
 import Users from "./pages/Users";
-import { deleteCookie, getCookie, setCookie } from "./utils/Cookies";
+import Settings from "./pages/Settings";
 
 // this context is for light mode / dark mode
 export const ModeContext = createContext();
@@ -57,6 +58,10 @@ const paths = [
     path: "/profile",
     element: <Profile />,
   },{
+    path: '/profile/settings',
+    element: <Settings />
+  },
+  {
     path: "/users/:id",
     element: <Users/>
   },

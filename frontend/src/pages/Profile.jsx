@@ -15,7 +15,7 @@ function Profile() {
   useEffect(() => {
     const callingBlogs = async () => {
       try {
-        const res = await vkyreq("GET", "/users/likes");
+        const res = await vkyreq("GET", "/users/likes"); // wee have created an endpoint which takes jwt from headers and return an array f likes
         setLikedBlogs(res.data.data.likedPosts);
 
         const res2 = await vkyreq("GET", "/posts/myposts");

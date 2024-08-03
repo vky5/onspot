@@ -15,8 +15,8 @@ const filterObj = (obj, ...allowedFields)=>{
     return newObj;
 }
 
-const getUserData = factory.getOne(UserModel, 'user', 'img username name'); // to get the data of the user
-const getUserDataForMe = factory.getOne(UserModel, 'user');
+const getUserData = factory.getOne(UserModel, 'user', 'img username name about social'); // to get the data of the user
+const getUserDataForMe = factory.getOne(UserModel, 'user', '-likedPosts -role');
 
 
 // this is to update a user's data
@@ -27,7 +27,7 @@ const updateUser = catchAsync(async (req, res, next)=>{
     }
 
     // filter wanted fields name that is should be allowed to be updated
-    const filterBody = filterObj(req.body, 'name', 'email');
+    const filterBody = filterObj(req.body, 'name', 'email', 'about', 'social');
 
     const updateUser = await UserModel.findByIdAndUpdate(req.user._id, filterBody, {
         new: true,

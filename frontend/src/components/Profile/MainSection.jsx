@@ -2,8 +2,11 @@ import PropTypes from "prop-types";
 import profile from "../../assets/profile.png";
 import { HiCog } from "react-icons/hi";
 import { FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function MainSection({ userData, isProfilePage = false }) {
+
+  const navigate = useNavigate();
 
   return (
     <div className={`flex flex-col items-center pt-5 md:ml-10 md:mr-10 w-full`}>
@@ -55,7 +58,7 @@ function MainSection({ userData, isProfilePage = false }) {
           <div className="ml-4">
             <HiCog
               className={`text-2xl md:text-3xl lg:text-4xl cursor-pointer`}
-              onClick={() => console.log("Open settings")}
+              onClick={() => navigate('/profile/settings')}
             />
           </div>
         )}

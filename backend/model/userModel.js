@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    about: {
+        type: String
+    },
     email: {
         type: String,
         required: [true, 'Please enter an email'],
@@ -58,9 +61,6 @@ const userSchema = new mongoose.Schema({
         github: {
             type: String,
         }
-    },
-    aboutme: {
-        type: String
     },
     passwordResetToken: String,
     passwordResetExpires: Date,

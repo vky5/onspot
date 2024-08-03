@@ -102,15 +102,16 @@ function Navbar() {
             </div>
           </div>
         </div>
-        <div
-          className={`${
-            mode === "light" ? "text-priDark" : "text-gray-100"
-          } duration-200`}
-        >
-          <Badge badgeContent={100} color="primary">
-            <NotificationsIcon />
-          </Badge>
-        </div>
+        
+          {/* <div
+            className={`${
+              mode === "light" ? "text-priDark" : "text-gray-100"
+            } duration-200`}
+          >
+            <Badge badgeContent={100} color="primary">
+              <NotificationsIcon />
+            </Badge>
+          </div> */}
 
         <div>
           {!isLoggedin ? (
