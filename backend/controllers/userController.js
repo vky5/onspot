@@ -32,7 +32,7 @@ const updateUser = catchAsync(async (req, res, next)=>{
     const updateUser = await UserModel.findByIdAndUpdate(req.user._id, filterBody, {
         new: true,
         runValidator: true
-    })
+    }).select('-likedPosts -role')
 
     res.status(200).json({
         status: 'success',

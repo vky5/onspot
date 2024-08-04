@@ -200,7 +200,7 @@ const updatePassword = catchAsync (async (req, res, next)=>{
     }
     // 3) update password
     user.password = req.body.newPassword;
-    user.checkPassword = req.body.newCheckPassword
+    // user.checkPassword = req.body.newCheckPassword
 
     await user.save();
 

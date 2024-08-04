@@ -10,6 +10,10 @@ import {
   FaPlus,
 } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import storage from "../utils/firebaseConf";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 function Settings() {
   const [userObj, setUserObj] = useState({
@@ -25,10 +29,81 @@ function Settings() {
   });
 
   const [username, setUsername] = useState("");
+  const [passObj, setPassObj] = useState({
+    password: "",
+    newPassword: "",
+  });
+
   const [activeTextarea, setActiveTextarea] = useState(false);
 
   const { mode } = useContext(ModeContext);
   const containerRef = useRef(null);
+
+  const updateDetails = async () => {
+    try {
+      // Update user details
+      await vkyreq("PATCH", "/users/updateme", userObj);
+      toast.success("Details updated successfully!");
+
+      // Update password
+
+      if (passObj.newPassword !== "") {
+        const res = await vkyreq("PATCH", "/auth/updatepassword", passObj);
+
+        // Check response status or data
+        if (res.success) {
+          // Adjust based on actual response structure
+          toast.success("Password updated successfully!");
+        } else {
+          toast.error("Failed to update password. Please check your input.");
+        }
+      }
+    } catch (error) {
+      if (error.response) {
+        // Accessing response details
+        const { status, data } = error.response;
+
+        if (status === 401) {
+          toast.error(
+            data.message ||
+              "Unauthorized access. Please check your credentials."
+          );
+        } else {
+          toast.error(
+            data.message || "Failed to update details. Please try again later."
+          );
+        }
+      } else {
+        // Handle network errors or other issues
+        toast.error("An unexpected error occurred. Please try again later.");
+      }
+    }
+  };
+
+  const generateRandomString = (length) => {
+    const array = new Uint8Array(length);
+    window.crypto.getRandomValues(array);
+    return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
+      ""
+    );
+  };
+
+  const handleImageUpload = async (blob) => {
+    try {
+      const storageRef = ref(
+        storage,
+        `pfp/${userObj.username}/${generateRandomString(16)}`
+      );
+      await uploadBytes(storageRef, blob);
+      const url = await getDownloadURL(storageRef);
+      setUserObj((prevState) => ({
+        ...prevState,
+        img: url,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -72,7 +147,7 @@ function Settings() {
     getDetails();
   }, []);
 
-  useEffect(() => console.log(userObj), [userObj]);
+  useEffect(() => console.log(passObj), [passObj]);
 
   const handleSocialChange = (platform, value) => {
     setUserObj((prevState) => ({
@@ -82,6 +157,13 @@ function Settings() {
         [platform]: value,
       },
     }));
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      handleImageUpload(file);
+    }
   };
 
   return (
@@ -96,14 +178,29 @@ function Settings() {
           alt="Profile"
           className="w-full h-full object-cover"
         />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          style={{ display: "none" }}
+          id="fileInput"
+        />
         <FaPlus
-          className={`absolute bottom-5 right-3 text-xl  cursor-pointer p-1 rounded-full shadow-md duration-200 ${
+          onClick={() => document.getElementById("fileInput").click()}
+          className={`absolute bottom-5 right-3 text-xl cursor-pointer p-1 rounded-full shadow-md duration-200 ${
             mode === "light" ? " bg-gray-100" : " bg-priDark"
           } text-primary`}
         />
       </div>
 
       <div className="text-2xl">{username}</div>
+
+      <button
+        className="bg-primary text-white px-3 py-1 rounded-xl md:text-2xl mt-6"
+        onClick={updateDetails}
+      >
+        Save
+      </button>
       <div className="mt-3 w-full">
         <span className="text-xl">Name</span>
         <input
@@ -122,6 +219,7 @@ function Settings() {
           }
         />
       </div>
+
       <div className="mt-3 w-full">
         <span className="text-xl">Email</span>
         <input
@@ -140,6 +238,50 @@ function Settings() {
           }
         />
       </div>
+
+      <div className="mt-3 w-full">
+        <span className="mt-2 text-xl">Current Password</span>
+        <input
+          type="password"
+          className={`w-full p-2 rounded border ${
+            mode === "light"
+              ? "bg-gray-100 text-black border-gray-800"
+              : "bg-priDark text-white border-gray-300"
+          } duration-200 text-sm mt-2`}
+          value={passObj.password}
+          onChange={(e) =>
+            setPassObj((prevState) => {
+              return {
+                ...prevState,
+                password: e.target.value,
+              };
+            })
+          }
+          placeholder="Current Password"
+        />
+      </div>
+      <div className="mt-3 w-full">
+        <span className="pt-3 text-xl">New Password</span>
+        <input
+          type="password"
+          className={`w-full p-2 rounded border ${
+            mode === "light"
+              ? "bg-gray-100 text-black border-gray-800"
+              : "bg-priDark text-white border-gray-300"
+          } duration-200 text-sm mt-2`}
+          value={passObj.newPassword}
+          onChange={(e) =>
+            setPassObj((prevState) => {
+              return {
+                ...prevState,
+                newPassword: e.target.value,
+              };
+            })
+          }
+          placeholder="New Password"
+        />
+      </div>
+
       <div className="w-full max-w-md">
         <div className="text-center mt-3 text-xl flex">
           <div className="flex items-center">
@@ -237,6 +379,17 @@ function Settings() {
           </div>
         </section>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
