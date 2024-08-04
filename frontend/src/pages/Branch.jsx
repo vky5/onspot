@@ -9,6 +9,7 @@ import { vkyreq } from "../utils/vkyreq";
 import DOMPurify from "dompurify";
 import storage from "../utils/firebaseConf";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { generateRandomString } from "../utils/generateRandomString";
 
 function decodeHTML(html) {
   const txt = document.createElement("textarea");
@@ -66,15 +67,6 @@ function Branch() {
   const removeTag = (indexToRemove) => {
     setTags((prevTags) =>
       prevTags.filter((_, index) => index !== indexToRemove)
-    );
-  };
-
-  // handle submition of post
-  const generateRandomString = (length) => {
-    const array = new Uint8Array(length);
-    window.crypto.getRandomValues(array);
-    return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
-      ""
     );
   };
 
