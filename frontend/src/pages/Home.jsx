@@ -7,6 +7,8 @@ import { useContext, useEffect, useState } from "react";
 import { ModeContext } from "../main";
 import { vkyreq } from "../utils/vkyreq";
 
+import { Skeleton } from "@mui/material";
+
 function Home() {
   const { mode } = useContext(ModeContext);
 
@@ -51,7 +53,7 @@ function Home() {
       </div>
       <div className="pt-12">
         {loading ? (
-          <h1>Loading...</h1>
+          <div><Skeleton variant="rectangualar" className=""/></div>
         ) : (
           <MyCarousel list={blogsInCarousel} />
         )}
