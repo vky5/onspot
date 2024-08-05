@@ -27,7 +27,8 @@ const updateUser = catchAsync(async (req, res, next)=>{
     }
 
     // filter wanted fields name that is should be allowed to be updated
-    const filterBody = filterObj(req.body, 'name', 'email', 'about', 'social');
+    const filterBody = filterObj(req.body, 'name', 'email', 'about', 'social', 'img');
+    console.log(req.body);
 
     const updateUser = await UserModel.findByIdAndUpdate(req.user._id, filterBody, {
         new: true,

@@ -28,6 +28,8 @@ import Branch from "./pages/Branch";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 // this context is for light mode / dark mode
 export const ModeContext = createContext();
 
@@ -103,6 +105,7 @@ const AppComponent = () => {
     email: "",
     img: "",
     username: "",
+    about: "",
     _id: ""
   });
 
@@ -143,6 +146,7 @@ const AppComponent = () => {
 
   return (
     <div>
+      <SpeedInsights />
       <UserContext.Provider value={{ userData, setUserData }}>
         <LoggedInContext.Provider value={{ isLoggedin, setLoggedin }}>
           <ModeContext.Provider value={{ mode, toggleMode }}>

@@ -10,6 +10,8 @@ import DOMPurify from "dompurify";
 import storage from "../utils/firebaseConf";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { generateRandomString } from "../utils/generateRandomString";
+import { getMimeTypeFromDataUrl } from "../utils/getMimeTypeFromDataUrl";
+import { base64ToBlob } from "../utils/base64toBlob";
 
 function decodeHTML(html) {
   const txt = document.createElement("textarea");
@@ -135,16 +137,7 @@ function Branch() {
     }
   };
 
-  // get MIME type from Data URL
-  const getMimeTypeFromDataUrl = (dataUrl) => {
-    // Split the data URL to get the MIME type part
-    const mimeTypePart = dataUrl.split(";")[0];
-
-    // Extract the MIME type
-    const mimeType = mimeTypePart.split(":")[1];
-
-    return mimeType;
-  };
+  
 
   // convert images in base64 to url by uploading on remote DB b4 saving
   const convertImageTags = async () => {
@@ -195,17 +188,7 @@ function Branch() {
     }
   };
 
-  // Convert Base64 data to Blob
-  const base64ToBlob = (dataUrl, mimeType) => {
-    const base64 = dataUrl.split(",")[1];
-    const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: mimeType });
-  };
+  
 
   // Handle image upload
   const handleImageUpload = async (blob, username) => {

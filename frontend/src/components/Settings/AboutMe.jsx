@@ -23,9 +23,8 @@ function AboutMe({ mode, about, handleChange }) {
   }, []);
 
   return (
-    <div>
-      <div className="w-full max-w-md">
-        <div className="text-center mt-3 text-xl flex">
+    <div className="w-full">
+        <div className="text-center mt-3 text-xl md:text-2xl flex">
           <div className="flex items-center">
             <span>About me</span>
             {(!activeTextarea && (
@@ -42,14 +41,14 @@ function AboutMe({ mode, about, handleChange }) {
           </div>
         </div>
 
-        <div ref={containerRef} className="w-full max-w-md">
+        <div ref={containerRef} className="w-full">
           {!activeTextarea && (
             <div
               className={`${
                 about === "" ? "text-gray-500 text-center" : "text-left"
               } ${
                 mode === "light" ? "border-gray-800" : "border-gray-300"
-              } border py-2 rounded mt-2 text-sm px-2`}
+              } border py-2 rounded mt-2 text-sm px-2 md:text-lg`}
             >
               {about === "" ? "Tell us about yourself" : about}
             </div>
@@ -62,7 +61,7 @@ function AboutMe({ mode, about, handleChange }) {
                 mode === "light"
                   ? "bg-gray-100 text-black border-gray-800"
                   : "bg-priDark text-white  border-gray-300"
-              } duration-200 text-sm mt-2 h-64`}
+              } duration-200 text-sm md:text-lg mt-2 h-64`}
               value={about}
               onChange={(e) =>
                 handleChange((prevState) => ({
@@ -74,7 +73,6 @@ function AboutMe({ mode, about, handleChange }) {
           )}
         </div>
       </div>
-    </div>
   );
 }
 

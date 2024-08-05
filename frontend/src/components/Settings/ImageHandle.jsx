@@ -1,36 +1,10 @@
 import PropTypes from "prop-types";
 import { FaPlus } from "react-icons/fa";
+import profile from "../../assets/profile.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import storage from "../../utils/firebaseConf";
-import { generateRandomString } from "../../utils/generateRandomString";
-import profile from '../../assets/profile.png';
 
-const ImageHandle = ({ mode = 'light', username = '', handleUpdate = () => {}, img = profile }) => {
-  const handleImageUpload = async (blob) => {
-    try {
-      const storageRef = ref(
-        storage,
-        `pfp/${username}/${generateRandomString(16)}`
-      );
-      await uploadBytes(storageRef, blob);
-      const url = await getDownloadURL(storageRef);
-      handleUpdate((prevState) => ({
-        ...prevState,
-        img: url,
-      }));
-      toast.success("Image uploaded successfully!", {
-        position: "bottom-right",
-      });
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      toast.error("Failed to upload image. Please try again later.", {
-        position: "bottom-right",
-      });
-    }
-  };
-
+const ImageHandle = ({ mode, img, handleUpdate }) => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -57,15 +31,22 @@ const ImageHandle = ({ mode = 'light', username = '', handleUpdate = () => {}, i
         return;
       }
 
-      handleImageUpload(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const blob = new Blob([reader.result], { type: file.type });
+        handleUpdate((prevState) => ({
+          ...prevState,
+          img: blob,
+        }));
+      };
+      reader.readAsArrayBuffer(file);
     }
   };
 
   return (
-    <div>
-      <ToastContainer />
-      <div className="relative w-28 h-28 rounded-full overflow-hidden mb-4">
-        <img src={img} alt="Profile" className="w-full h-full object-cover" />
+    <div className="">
+      <div className="relative w-28 h-28 md:w-36 md:h-36 lg:w-60 lg:h-60 rounded-full overflow-hidden mb-4">
+        <img src={img instanceof Blob ? URL.createObjectURL(img) : img || profile} alt="Profile" className="w-full h-full object-cover" />
         <input
           type="file"
           accept="image/*"
@@ -79,6 +60,7 @@ const ImageHandle = ({ mode = 'light', username = '', handleUpdate = () => {}, i
             mode === "light" ? " bg-gray-100" : " bg-priDark"
           } text-primary`}
         />
+        <ToastContainer />
       </div>
     </div>
   );
@@ -86,10 +68,9 @@ const ImageHandle = ({ mode = 'light', username = '', handleUpdate = () => {}, i
 
 ImageHandle.propTypes = {
   mode: PropTypes.oneOf(["light", "dark"]).isRequired,
-  username: PropTypes.string.isRequired,
   handleUpdate: PropTypes.func.isRequired,
-  img: PropTypes.string.isRequired,
+  img: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Blob)])
+    .isRequired,
 };
 
 export default ImageHandle;
-``
