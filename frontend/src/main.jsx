@@ -146,7 +146,6 @@ const AppComponent = () => {
 
   return (
     <div>
-      <SpeedInsights />
       <UserContext.Provider value={{ userData, setUserData }}>
         <LoggedInContext.Provider value={{ isLoggedin, setLoggedin }}>
           <ModeContext.Provider value={{ mode, toggleMode }}>
@@ -170,6 +169,7 @@ const appRouter = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <SpeedInsights />
     <RouterProvider router={appRouter} />
   </React.StrictMode>
 );
