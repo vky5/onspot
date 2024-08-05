@@ -12,6 +12,7 @@ function Home() {
 
   const [blogData, setBlogData] = useState([]);
   const [blogsInCarousel, setBlogsInCarousel] = useState([]);
+  const [tags, setTags] = useState([]);
   const [loading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +20,8 @@ function Home() {
       try {
         const res = await vkyreq("get", "/posts");
         setBlogData(res.data.data);
+        const res2 = await vkyreq('get', '/posts/tags/gettags');
+        setTags(res2.data.data);
       } catch (error) {
         console.log("error", error);
       }
@@ -37,7 +40,7 @@ function Home() {
     <div
       className={`${
         mode === "light" ? "bg-gray-100 text-priDark " : "bg-priDark text-white"
-      } duration-200 pb-6`}
+      } duration-200 pb-6 min-h-screen`}
     >
       <div className="md:hidden">
         <div className="flex flex-col text-center pt-6">
@@ -59,13 +62,7 @@ function Home() {
           className="flex sm:hidden px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium"
           style={{ scrollbarWidth: "none" }}
         >
-          <li>Latest</li>
-          <li>Trending</li>
-          <li>Blockchain</li>
-          <li>AI</li>
-          <li>Networking</li>
-          <li>Cyber Security</li>
-          <li>System Design</li>
+          {tags.map(ele => <li key={ele}>{ele}</li>)}
         </ul>
       </div>
 
@@ -85,7 +82,7 @@ function Home() {
           </div>
         </div>
         <div className="w-1/2 lg:block hidden">
-          <SideComponent/>
+          <SideComponent tags={tags}/>
         </div>
       </div>
     </div>

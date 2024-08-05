@@ -14,4 +14,6 @@ router
         tagsController.getPostsOfTags // get posts from tags takes tag from body
     )
 
+router.get('/gettags', tagsController.getAllTags);
+
 module.exports = router;

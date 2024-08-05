@@ -1,22 +1,20 @@
 // const Tags = require("../model/tagModel");
 const catchAsync = require("../utils/catchAsync");
-const PostModel = require('../model/postModel');
+const PostModel = require("../model/postModel");
 const AppError = require("../utils/appError");
 
-
-const getPostsOfTags = catchAsync(async (req, res, next)=>{
-
-  if (!req.body.tags){
-    return next(new AppError('No tags specified', 400));
+const getPostsOfTags = catchAsync(async (req, res, next) => {
+  if (!req.body.tags) {
+    return next(new AppError("No tags specified", 400));
   }
 
-  req.body.tags = req.body.tags.map(ele=>ele.toLowerCase());
+  req.body.tags = req.body.tags.map((ele) => ele.toLowerCase());
 
   const posts = await PostModel.find({
-    tags: {$all : req.body.tags}
-  })
+    tags: { $all: req.body.tags },
+  });
 
-    if (posts.length === 0) {
+  if (posts.length === 0) {
     return res.status(200).json({
       status: "success",
       result: 0,
@@ -31,6 +29,32 @@ const getPostsOfTags = catchAsync(async (req, res, next)=>{
   });
 });
 
+const getAllTags = catchAsync(async (req, res, next) => {
+  const tags = await PostModel.aggregate([
+    { $match: { status: "blogs" } }, // Match only the posts with status 'blogs'
+    { $unwind: "$tags" }, // Deconstruct the tags array
+    {
+      $group: {
+        // Group by tag to aggregate likes
+        _id: "$tags", // Group by the tag name
+        totalLikes: { $sum: "$like" }, // Sum the likes for each tag
+      },
+    },
+    { $sort: { totalLikes: -1 } }, // Sort tags by total likes in descending order
+    { $limit: 10 }, // Limit to the top 10 tags
+    { $project: { _id: 0, tag: "$_id" } }, // Project only the tag names
+  ]);
+
+  const tagNames = tags.map((tag) => tag.tag);
+
+  res.status(200).json({
+    status: "success",
+    results: tagNames.length,
+    data: tagNames,
+  });
+});
+
+module.exports = { getPostsOfTags, getAllTags };
 
 // const newTag = catchAsync(async (req, res, next) => {
 //   // Step 1: Take the array from the body and get all the documents where the tag name is equal to name
@@ -89,6 +113,3 @@ const getPostsOfTags = catchAsync(async (req, res, next)=>{
 //     data: posts,
 //   });
 // });
-
-
-module.exports = { getPostsOfTags };

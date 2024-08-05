@@ -1,9 +1,10 @@
-import profile from "../../../src/assets/profile.png";
-import { ModeContext } from "../../main";
-import { useContext } from "react";
+// import profile from "../../../src/assets/profile.png";
+// import { ModeContext } from "../../main";
+// import { useContext } from "react";
+import PropTypes from "prop-types";
 
-function SideComponent() {
-  const { mode } = useContext(ModeContext);
+function SideComponent({tags}) {
+  // const { mode } = useContext(ModeContext);
 
   return (
     <div className="flex flex-col items-center justify-center text-center">
@@ -11,33 +12,16 @@ function SideComponent() {
         Recommended Topics
       </div>
       <div className="w-3/4 space-x-4 space-y-4">
-        <button className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg">
-          UI/UX Design
+      {tags.map((tag, index) => (
+        <button
+          key={index}
+          className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg"
+        >
+          {tag}
         </button>
-        <button className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg">
-          UI/UX Design
-        </button>
-        <button className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg">
-          UI/UX Design
-        </button>
-        <button className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg">
-          UI/UX Design
-        </button>
-        <button className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg">
-          UI/UX Design
-        </button>
-        <button className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg">
-          UI/UX Design
-        </button>
-        <button className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg">
-          UI/UX Design
-        </button>
-        <button className="bg-gray-500 lg:px-4 lg:py-2 px-3 py-1 rounded-3xl text-sm lg:text-lg">
-          UI/UX Design
-        </button>
-      </div>
-
-      <div className="mt-10 lg:mt-24 lg:mb-5 mb-3 lg:text-2xl text-xl">
+      ))}
+    </div>
+      {/* <div className="mt-10 lg:mt-24 lg:mb-5 mb-3 lg:text-2xl text-xl">
         Popular Bloggers this week
       </div>
       <div className="space-y-4 lg:space-y-7 flex flex-col text-sm lg:text-xl">
@@ -92,9 +76,13 @@ function SideComponent() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
+}
+
+SideComponent.propTypes= {
+  tags: PropTypes.array
 }
 
 export default SideComponent;
