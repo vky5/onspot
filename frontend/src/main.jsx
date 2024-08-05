@@ -28,7 +28,7 @@ import Branch from "./pages/Branch";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // this context is for light mode / dark mode
 export const ModeContext = createContext();
