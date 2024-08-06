@@ -18,6 +18,10 @@ const commentSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    upvotes: {
+        type: Number,
+        default: 0
     }
 }, {
     toJSON: {

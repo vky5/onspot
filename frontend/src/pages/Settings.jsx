@@ -8,10 +8,12 @@ import ImageHandle from "../components/Settings/ImageHandle";
 import Socials from "../components/Settings/Socials";
 import AboutMe from "../components/Settings/AboutMe";
 import UpdateField from "../components/Settings/UpdateField";
-import { UserContext } from "../main";
+import { UserContext, LoggedInContext } from "../main";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import storage from "../utils/firebaseConf";
 import { generateRandomString } from "../utils/generateRandomString";
+import { useNavigate } from "react-router-dom";
+import { deleteCookie } from "../utils/Cookies";
 
 function Settings() {
   const [userObj, setUserObj] = useState({
@@ -32,6 +34,10 @@ function Settings() {
     newPassword: "",
   });
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  const {setLoggedin} = useContext(LoggedInContext);
 
   const { mode } = useContext(ModeContext);
   const { setUserData } = useContext(UserContext);
@@ -120,6 +126,17 @@ function Settings() {
     }
   };
 
+  const deleteAcc = async () => {
+    try {
+      await vkyreq('delete', "/users/deleteme");
+      navigate('/');
+      deleteCookie('jwt');
+      setLoggedin(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getDetails = async () => {
       try {
@@ -166,7 +183,7 @@ function Settings() {
 
       <div className="flex flex-col items-center md:w-2/3">
         <button
-          className="bg-primary text-white px-3 py-1 rounded-xl md:text-2xl mt-6"
+          className="bg-primary text-white px-3 py-1 text-left rounded-xl md:text-2xl mt-6"
           onClick={updatePasswd}
         >
           Save
@@ -227,6 +244,12 @@ function Settings() {
           draggable
           pauseOnHover
         />
+        <button
+          className="bg-red-800 mt-10 text-white px-3 py-1 rounded-xl md:text-2xl"
+          onClick={deleteAcc}
+        >
+          Delete Account
+        </button>
       </div>
     </div>
   );

@@ -55,7 +55,7 @@ function Blogs() {
                 />
               </div>
 
-              <div className="text-[12px] md:text-lg">{writer.username}</div>
+              <div className="text-[12px] text-center mt-2 md:text-lg">{writer.username}</div>
             </Link>
           </div>
         ))}

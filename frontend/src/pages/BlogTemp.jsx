@@ -30,8 +30,23 @@ function BlogTemp() {
   const [user, setUser] = useState({});
   const [headings, setHeadings] = useState([]);
   const [deleteStat, setDelStat] = useState(0);
+  const [likeState, setLike] = useState(0);
 
   const cancelConfirmRef = useRef(null);
+
+  const updateLikeOfCard = async (e) => {
+    e.stopPropagation();
+    try {
+      const res = await vkyreq("PATCH", `/posts/${id}/likes`);
+      if (res.data.counter === 1) {
+        setLike((curr) => curr + 1);
+      } else {
+        setLike((curr) => curr - 1);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const getBlog = async () => {
@@ -75,6 +90,8 @@ function BlogTemp() {
             date: res.data.data.date,
             img: res.data.data.img || "",
           });
+
+          setLike(res.data.data.like);
 
           setUser({
             username: res.data.data.user.username,
@@ -160,7 +177,6 @@ function BlogTemp() {
                   className="hover:cursor-pointer"
                   onClick={() => navigate(`/branch/${id}`)}
                 />{" "}
-                {/*TODO add edit feature*/}
                 <FaTrash
                   className="hover:cursor-pointer text-red-800"
                   onClick={() => setDelStat(1)}
@@ -195,8 +211,8 @@ function BlogTemp() {
             <span>{formattedDate}</span> by{" "}
             <span className="text-primary font-semibold">{user.username}</span>
           </span>{" "}
-          <span className="flex items-center">
-            <span className="text-xs lg:text-lg">{body.like}</span>
+          <span className="flex items-center" onClick={updateLikeOfCard}>
+            <span className="text-xs lg:text-lg">{likeState}</span>
             <IoHeartSharp className="h-6 w-6 lg:h-8 lg:w-8 rounded-full text-primary lg:ml-3 sm:ml-2 ml-1" />
           </span>
         </div>

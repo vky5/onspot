@@ -44,15 +44,24 @@ const updateUser = catchAsync(async (req, res, next)=>{
 })
 
 // this is to delete a user's data
-const deleteUser = catchAsync(async (req, res, next)=>{
-    await UserModel.findByIdAndUpdate(req.user._id, {active: false});
+// const deleteUser = catchAsync(async (req, res, next)=>{
+//     await UserModel.findByIdAndUpdate(req.user._id, {active: false});
 
-    res.status(204).json({ // this is the code for deleted
+//     res.status(204).json({ // this is the code for deleted
+//         status: 'success',
+//         data: null
+//     })
+// })
+
+
+const deleteUser = catchAsync(async (req, res, next)=>{
+    await UserModel.findByIdAndDelete(req.user._id);
+
+    res.status(204).json({
         status: 'success',
-        data: null
+        data: null  
     })
 })
-
 
 const meEndpoint = (req, res, next)=>{
     req.params.user = req.user._id
