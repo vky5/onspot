@@ -65,7 +65,7 @@ function BlogCard({ heading, user, id, like = 0, img, status, handleChange }) {
                 <img
                   src={user.img || profile}
                   alt=""
-                  className="h-6 w-6 rounded-full lg:mr-2 sm:mr-1"
+                  className="h-6 w-6 rounded-full mr-1 lg:mr-2"
                 />
                 <span className="text-xs lg:text-lg">{user.username}</span>
               </span>

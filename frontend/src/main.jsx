@@ -27,11 +27,11 @@ import Signup from "./pages/Signup";
 import Branch from "./pages/Branch";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
-
+import ProtectedComponent from "./pages/frontend/src/components/ProtectedRoutes";
 
 // Analytics and speed insights
 import { SpeedInsights } from "@vercel/speed-insights/react";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 
 // this context is for light mode / dark mode
 export const ModeContext = createContext();
@@ -55,20 +55,35 @@ const paths = [
   {
     path: "/blogs/:id",
     element: <BlogTemp />,
-  },{
+  },
+  {
     path: "/about",
     element: <About />,
   },
   {
     path: "/profile",
-    element: <Profile />,
-  },{
-    path: '/profile/settings',
-    element: <Settings />
+    element: (
+      <ProtectedComponent>
+        <Profile />
+      </ProtectedComponent>
+    ),
+  },
+  {
+    path: "/profile/settings",
+
+    element: (
+      <ProtectedComponent>
+        <Settings />
+      </ProtectedComponent>
+    ),
   },
   {
     path: "/users/:id",
-    element: <Users/>
+    element: (
+      <ProtectedComponent>
+        <Users />
+      </ProtectedComponent>
+    ),
   },
   {
     path: "/login",
@@ -80,11 +95,20 @@ const paths = [
   },
   {
     path: "/branch",
-    element: <Branch/>
-  },{
+    element: (
+      <ProtectedComponent>
+        <Branch />
+      </ProtectedComponent>
+    ),
+  },
+  {
     path: "/branch/:id",
-    element: <Branch/>
-  }
+    element: (
+      <ProtectedComponent>
+        <Branch />
+      </ProtectedComponent>
+    ),
+  },
 ];
 
 const AppComponent = () => {
@@ -109,7 +133,7 @@ const AppComponent = () => {
     img: "",
     username: "",
     about: "",
-    _id: ""
+    _id: "",
   });
 
   // this useEffect is to track whether user is logged in or not.
@@ -125,13 +149,12 @@ const AppComponent = () => {
           setLoggedin(false);
         }
 
-        if (getCookie("theme")){
+        if (getCookie("theme")) {
           setMode(getCookie("theme"));
-        }else{
+        } else {
           setMode("dark");
           setCookie("theme", mode);
         }
-
       } catch (error) {
         setLoggedin(false);
         deleteCookie("jwt");
@@ -144,7 +167,7 @@ const AppComponent = () => {
 
   const toggleMode = () => {
     setMode((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-    setCookie("theme", mode)
+    setCookie("theme", mode);
   };
 
   return (
@@ -173,7 +196,7 @@ const appRouter = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <SpeedInsights />
-    <Analytics/>
+    <Analytics />
     <RouterProvider router={appRouter} />
   </React.StrictMode>
 );

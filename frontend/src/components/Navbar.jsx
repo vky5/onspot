@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../assets/logo.png";
 import dark_mode from "../assets/dark_mode_button.png";
@@ -9,14 +9,12 @@ import { useState, useContext } from "react";
 import logo_w from "../assets/logo_w.png";
 import { MdHome } from "react-icons/md";
 import { MdBook } from "react-icons/md";
-import { FaHeart, FaSearch, FaCog, FaPencilAlt } from "react-icons/fa";
+import { FaHeart, FaSearch, FaPencilAlt } from "react-icons/fa";
 import profile from "../assets/profile.png";
 import light_mode from "../assets/light_mode.png";
 import logo_w_header from "../assets/logo_w_header.png";
 import { ModeContext, LoggedInContext, UserContext } from "../main";
 import { deleteCookie } from "../utils/Cookies";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import Badge from "@mui/material/Badge";
 
 function Navbar() {
   const { isLoggedin, setLoggedin } = useContext(LoggedInContext);
@@ -24,6 +22,8 @@ function Navbar() {
   const [mobileMenu, setMobileMenu] = useState(false);
 
   const { mode, toggleMode } = useContext(ModeContext);
+
+  const navigate = useNavigate();
 
   const { userData } = useContext(UserContext);
 
@@ -70,13 +70,15 @@ function Navbar() {
         </div>
 
         {/* Long Menu on Navbar to be appeared only on bigger screen than mobile */}
-        <div className="hidden md:flex w-full justify-around items-center lg:pr-10 md:pr-4">
+        <div className="hidden md:flex w-full justify-between items-center lg:pr-10 md:pr-4">
           <div
-            className={`flex justify-evenly w-3/4 items-center sm:text-xm md:text-xm lg:text-l ${
+            className={`flex items-center sm:text-xm md:text-xm lg:text-l ${
               mode === "light"
                 ? "bg-gray-100 text-priDark"
                 : "bg-priDark text-gray-100"
-            } duration-200`}
+            } duration-200 ${
+              !isLoggedin ? "w-1/2 justify-evenly" : "justify-evenly w-3/4"
+            }`}
           >
             <div>
               <Link to="/">HOME</Link>
@@ -84,12 +86,16 @@ function Navbar() {
             <div>
               <Link to="/blogs">BLOGS</Link>
             </div>
-            <div>
-              <Link to="/profile">PROFILE</Link>
-            </div>
-            <div>
-              <Link to="/branch">BRANCH</Link>
-            </div>
+            {isLoggedin && (
+              <>
+                <div>
+                  <Link to="/profile">PROFILE</Link>
+                </div>
+                <div>
+                  <Link to="/branch">BRANCH</Link>
+                </div>
+              </>
+            )}
           </div>
           <div className="flex w-1/4 relative">
             <input
@@ -102,8 +108,8 @@ function Navbar() {
             </div>
           </div>
         </div>
-        
-          {/* <div
+
+        {/* <div
             className={`${
               mode === "light" ? "text-priDark" : "text-gray-100"
             } duration-200`}
@@ -126,6 +132,7 @@ function Navbar() {
               onClick={() => {
                 deleteCookie("jwt");
                 setLoggedin(false);
+                navigate("/");
               }}
             >
               Logout
@@ -161,7 +168,7 @@ function Navbar() {
           <div className="h-5/6 fixed bottom-0 px-3 flex flex-col justify-between w-full mb-8 overflow-y-auto">
             <div className="space-y-6">
               {/* used flex and items-center to align everything in one line */}
-              <div className="flex items-center text-white space-x-4">
+              <div className={`items-center text-white space-x-4 ${isLoggedin?'flex': 'hidden'}`}>
                 {/* this is for the profile picture */}
                 <div className="flex justify-center items-center">
                   <div className="w-16 h-16 rounded-full overflow-hidden">
@@ -199,26 +206,26 @@ function Navbar() {
                   <span className="">Blogs</span> {/* Text */}
                 </Link>
 
-                <Link
-                  to="/profile"
-                  onClick={toggle}
-                  className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
-                >
-                  <FaHeart className="mr-2" />
-                  <span className="">Profile</span>
-                </Link>
-                <Link
-                  to="/branch"
-                  onClick={toggle}
-                  className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
-                >
-                  <FaPencilAlt className="mr-2" />
-                  <span className="">Branch</span>
-                </Link>
-                <div className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors">
-                  <FaCog className="mr-2" /> {/* Icon */}
-                  <span className="">Settings</span> {/* Text */}
-                </div>
+                {isLoggedin && (
+                  <>
+                    <Link
+                      to="/profile"
+                      onClick={toggle}
+                      className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
+                    >
+                      <FaHeart className="mr-2" />
+                      <span className="">Profile</span>
+                    </Link>
+                    <Link
+                      to="/branch"
+                      onClick={toggle}
+                      className="flex items-center justify-center w-full px-12 rounded-xl border-2 p-2 cursor-pointer bg-transparent border-gray-200 text-white hover:text-black hover:bg-white hover:border-black transition-colors"
+                    >
+                      <FaPencilAlt className="mr-2" />
+                      <span className="">Branch</span>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
 

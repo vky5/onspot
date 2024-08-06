@@ -29,7 +29,7 @@ function Signin() {
       const userDetailInfo = await vkyreq('get', '/users/me');
       setUserData(userDetailInfo.data.data)
 
-      navigate("/");
+      navigate(-1);
 
     } catch (error) {
       console.log(error);

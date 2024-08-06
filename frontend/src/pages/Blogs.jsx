@@ -5,10 +5,12 @@ import { useContext, useEffect, useState } from "react";
 import { ModeContext } from "../main";
 import { vkyreq } from "../utils/vkyreq";
 import { Link } from "react-router-dom";
+import { LoggedInContext } from "../main";
 
 
 function Blogs() {
   const { mode } = useContext(ModeContext);
+  const {isLoggedin} = useContext(LoggedInContext);
 
   const [writerList, setWriterList] = useState([]);
   const [blogData, setBlogData] = useState([]);
@@ -44,7 +46,7 @@ function Blogs() {
             className="flex flex-col items-center w-28 space-y-2"
             key={writer.username}
           >
-            <Link to={`/users/${writer._id}`}>
+            <Link to={isLoggedin?`/users/${writer._id}`:'/login'}>
               <div className="w-14 h-14 md:w-24 md:h-24 rounded-full">
                 <img
                   src={writer.img || profile} // Use a default image if writer.img is not available
