@@ -1,12 +1,12 @@
-import { useContext } from "react";
+
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
-import { LoggedInContext } from "../../../../main";
+import { getCookie } from "../../../../utils/Cookies";
 
 const ProtectedComponent = ({ children }) => {
-  const { isLoggedin } = useContext(LoggedInContext);
 
-  if (!isLoggedin) {
+
+  if (!getCookie('jwt')) {
     return <Navigate to="/login" replace />; // Redirect to login page on unauthorized access
   }
 
