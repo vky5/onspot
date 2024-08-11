@@ -15,10 +15,10 @@ function Users() {
   useEffect(() => {
     const handleComponentMount = async () => {
       try {
-        const res = await vkyreq("get", `/users/${id}`);
-        const res2 = await vkyreq("get", `/posts/${id}/authors`);
-        setBlogData(res2.data.data); // set blogData
-        setUserData(res.data.data); // Set the fetched data to userData state
+
+        const resAll = await Promise.all([vkyreq("get", `/users/${id}`), vkyreq("get", `/posts/${id}/authors`)]);
+        setUserData(resAll[0].data.data); // Set the fetched data to userData state
+        setBlogData(resAll[1].data.data); // set blogData
       } catch (error) {
         console.log(error);
       }

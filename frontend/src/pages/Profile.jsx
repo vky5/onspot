@@ -15,11 +15,9 @@ function Profile() {
   useEffect(() => {
     const callingBlogs = async () => {
       try {
-        const res = await vkyreq("GET", "/users/likes"); // wee have created an endpoint which takes jwt from headers and return an array f likes
-        setLikedBlogs(res.data.data.likedPosts);
-
-        const res2 = await vkyreq("GET", "/posts/myposts");
-        setPublishedBlogs(res2.data.data);
+        const resAll = await Promise.all([vkyreq("GET", "/users/likes"), vkyreq("GET", "/posts/myposts") ])
+        setLikedBlogs(resAll[0].data.data.likedPosts);
+        setPublishedBlogs(resAll[1].data.data);
       } catch (error) {
         console.error("Error fetching blog data:", error);
       }

@@ -20,10 +20,10 @@ function Home() {
   useEffect(() => {
     const getBlogs = async () => {
       try {
-        const res = await vkyreq("get", "/posts");
-        setBlogData(res.data.data);
-        const res2 = await vkyreq('get', '/posts/tags/gettags');
-        setTags(res2.data.data);
+        const resAll = await Promise.app([vkyreq("get", "/posts"),vkyreq('get', '/posts/tags/gettags')]);
+        setBlogData(resAll[0].data.data);
+        setTags(resAll[1].data.data);
+
       } catch (error) {
         console.log("error", error);
       }

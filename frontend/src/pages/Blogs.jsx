@@ -18,10 +18,9 @@ function Blogs() {
   useEffect(() => {
     const getWriters = async () => {
       try {
-        const res = await vkyreq("get", "/users");
-        const res2 = await vkyreq("get", "/posts");
-        setWriterList(res.data.writers);
-        setBlogData(res2.data.data);
+        const resAll = await Promise.all([vkyreq("get", "/users"), vkyreq("get", "/posts")])
+        setWriterList(resAll[0].data.writers);
+        setBlogData(resAll[1].data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
