@@ -1,25 +1,35 @@
-import { Skeleton } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Skeleton } from "@mui/material";
+import Box from "@mui/material/Box";
 
-function CardCarouselSkeleton() {
+function CardCarBigSkeleton() {
   return (
-    <Box className="relative h-[390px] bg-gray-200 animate-pulse">
-      {/* Image Placeholder */}
-      <Skeleton variant="rectangular" className="h-full w-full" />
+    <div className="ml-4 mr-4 lg:ml-10 lg:mr-10">
+      <div className="flex">
+        {/* Image Skeleton */}
+        <Box className="w-1/2">
+          <Skeleton
+            variant="rectangular"
+            className="w-full rounded-3xl"
+            style={{ height: '24rem' }} // Fixed height for the image placeholder
+          />
+        </Box>
 
-      {/* Overlay */}
-      <Box className="absolute inset-0 bg-gray-500 opacity-50" />
+        {/* Text and Button Skeleton */}
+        <Box className="ml-10 text-left w-1/2">
+          {/* Username Skeleton */}
+          <Skeleton variant="text" className="h-8 w-1/3 mb-4" />
+          
+          {/* Heading Skeleton */}
+          <Skeleton variant="text" className="h-12 w-full mb-4" />
+          <Skeleton variant="text" className="h-12 w-full mb-4" />
+          <Skeleton variant="text" className="h-12 w-full mb-4" />
 
-      {/* Text Placeholder */}
-      <Box className="absolute bottom-0 left-0 p-4 w-5/6">
-        <Skeleton className="h-6 bg-gray-400 rounded mb-2" />
-        <Skeleton className="h-4 bg-gray-400 rounded" />
-      </Box>
-
-      {/* Clickable Area Placeholder */}
-      <Box className="absolute inset-0 cursor-pointer bg-gray-400 opacity-0" />
-    </Box>
+          {/* Button Skeleton */}
+          <Skeleton variant="rectangular" className="h-10 w-32 rounded-xl mt-10" />
+        </Box>
+      </div>
+    </div>
   );
 }
 
-export default CardCarouselSkeleton;
+export default CardCarBigSkeleton;

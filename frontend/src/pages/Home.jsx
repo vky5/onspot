@@ -7,8 +7,6 @@ import { useContext, useEffect, useState } from "react";
 import { ModeContext } from "../main";
 import { vkyreq } from "../utils/vkyreq";
 
-import { Skeleton } from "@mui/material";
-
 function Home() {
   const { mode } = useContext(ModeContext);
 
@@ -20,10 +18,12 @@ function Home() {
   useEffect(() => {
     const getBlogs = async () => {
       try {
-        const resAll = await Promise.all([vkyreq("get", "/posts"),vkyreq('get', '/posts/tags/gettags')]);
+        const resAll = await Promise.all([
+          vkyreq("get", "/posts"),
+          vkyreq("get", "/posts/tags/gettags"),
+        ]);
         setBlogData(resAll[0].data.data);
         setTags(resAll[1].data.data);
-
       } catch (error) {
         console.log("error", error);
       }
@@ -52,11 +52,7 @@ function Home() {
         </div>
       </div>
       <div className="pt-12">
-        {loading ? (
-          <div><Skeleton variant="rectangualar" className=""/></div>
-        ) : (
-          <MyCarousel list={blogsInCarousel} />
-        )}
+        <MyCarousel list={blogsInCarousel} loading={loading} />
       </div>
 
       <div className="pt-6">
@@ -64,7 +60,9 @@ function Home() {
           className="flex sm:hidden px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium"
           style={{ scrollbarWidth: "none" }}
         >
-          {tags.map(ele => <li key={ele}>{ele}</li>)}
+          {tags.map((ele) => (
+            <li key={ele}>{ele}</li>
+          ))}
         </ul>
       </div>
 
@@ -84,7 +82,7 @@ function Home() {
           </div>
         </div>
         <div className="w-1/2 lg:block hidden">
-          <SideComponent tags={tags}/>
+          <SideComponent tags={tags} />
         </div>
       </div>
     </div>
