@@ -1,11 +1,14 @@
 import MyCarousel from "../components/HomeComponents/MyCarousel";
 import BlogCard from "../components/BlogCard";
 import SideComponent from "../components/HomeComponents/SideComponent";
+import BlogCardSkeleton from "../loading/BlogCard/BlogCardSkeleton";
+import { Skeleton } from "@mui/material";
 
 import { useContext, useEffect, useState } from "react";
 
 import { ModeContext } from "../main";
 import { vkyreq } from "../utils/vkyreq";
+import SideComponentSkeleton from "../loading/SideComponentSkeleton";
 
 function Home() {
   const { mode } = useContext(ModeContext);
@@ -56,33 +59,68 @@ function Home() {
       </div>
 
       <div className="pt-6">
-        <ul
-          className="flex sm:hidden px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium"
-          style={{ scrollbarWidth: "none" }}
-        >
-          {tags.map((ele) => (
-            <li key={ele}>{ele}</li>
-          ))}
-        </ul>
+        {loading ? (
+          <ul
+            className="flex sm:hidden px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {Array.from({ length: 5 }).map((_, index) => (
+              <li
+                key={index}
+                className={`w-24 h-8 rounded-full ${
+                  mode === "light" ? "bg-gray-200" : "bg-gray-800"
+                } flex items-center justify-center duration-200`}
+              >
+                <Skeleton
+                  variant="text"
+                  className="w-full h-full"
+                  style={{ backgroundColor: "transparent" }} // Ensure background color of skeleton is transparent
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul
+            className="flex sm:hidden px-4 list-none space-x-7 scrollbar overflow-auto text-xs font-medium"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {tags.map((ele) => (
+              <li
+                key={ele}
+                className={`text-xs font-medium ${
+                  mode === "light" ? "text-gray-800" : "text-gray-300"
+                }`}
+              >
+                {ele}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div className="sm:flex">
         <div className="lg:w-1/2">
           <div className="space-y-3 md:space-y-6 lg:space-y-8 mt-3">
-            {blogData.map((blogInfo) => (
-              <BlogCard
-                key={blogInfo._id}
-                id={blogInfo._id}
-                heading={blogInfo.heading}
-                user={blogInfo.user}
-                like={blogInfo.like}
-                img={blogInfo.img}
-              />
-            ))}
+            {loading
+              ? // Rendering 5 BlogCardSkeleton components while loading
+                Array.from({ length: 5 }).map((_, index) => (
+                  <BlogCardSkeleton key={index} />
+                ))
+              : // Rendering BlogCard components when data is available
+                blogData.map((blogInfo) => (
+                  <BlogCard
+                    key={blogInfo._id}
+                    id={blogInfo._id}
+                    heading={blogInfo.heading}
+                    user={blogInfo.user}
+                    like={blogInfo.like}
+                    img={blogInfo.img}
+                  />
+                ))}
           </div>
         </div>
         <div className="w-1/2 lg:block hidden">
-          <SideComponent tags={tags} />
+          {loading ? <SideComponentSkeleton /> : <SideComponent tags={tags} />}
         </div>
       </div>
     </div>

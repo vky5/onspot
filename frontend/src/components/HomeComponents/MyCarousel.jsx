@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import CardCarousel from "./CardCarousel";
 import { useNavigate } from "react-router-dom";
 import CardCarBig from "./CardCarBig";
-import CardCarouselSkeleton from "./CardCarouslSkeleton";
-import CardCarouselSmol from "./CardCarouselSmol";
+import CardCarouselSkeleton from '../../loading/Carousel/CardCarouslSkeleton';
+import CardCarouselSmol from '../../loading/Carousel/CardCarouselSmol';
 
 function MyCarousel({ list, loading }) {
   const navigate = useNavigate();
@@ -29,11 +29,13 @@ function MyCarousel({ list, loading }) {
 
   return (
     <div>
-      {(loading && windowWidth >= 768 ? (
-        <CardCarouselSkeleton />
+      {loading ? (
+        windowWidth >= 768 ? (
+          <CardCarouselSkeleton />
+        ) : (
+          <CardCarouselSmol />
+        )
       ) : (
-        <CardCarouselSmol />
-      )) || (
         <Carousel
           showThumbs={false}
           showStatus={false}
