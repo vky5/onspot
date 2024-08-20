@@ -1,1 +1,2 @@
-This is the blogging site of the blacktree. It's name is Onspot
+this is onspot a tech knowledge sharing platform
+
