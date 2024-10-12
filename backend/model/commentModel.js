@@ -55,7 +55,7 @@ commentSchema.pre(/^find/, function(next){
 
     this.populate({
         path: 'user',
-        select: 'username'
+        select: 'username img'
     })
 
     next();

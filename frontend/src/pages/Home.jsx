@@ -49,7 +49,7 @@ function Home() {
     >
       <div className="md:hidden">
         <div className="flex flex-col text-center pt-6">
-          <div className="text-[10px] tracking-widest font-thin">BLACKTREE</div>
+          <div className="text-[10px] tracking-widest font-thin">OnSpot</div>
           <div className="font-bold text-xl mt-2">Unveiling Stories</div>
           <div className="font-bold text-xl">Branching Perspectives</div>
         </div>

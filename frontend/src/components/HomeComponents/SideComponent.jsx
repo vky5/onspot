@@ -21,7 +21,7 @@ function SideComponent({tags}) {
         </button>
       ))}
     </div>
-      <div className="mt-10 lg:mt-24 lg:mb-5 mb-3 lg:text-2xl text-xl">
+      {/* <div className="mt-10 lg:mt-24 lg:mb-5 mb-3 lg:text-2xl text-xl">
         Popular Bloggers this week
       </div>
       <div className="space-y-4 lg:space-y-7 flex flex-col text-sm lg:text-xl">
@@ -76,7 +76,7 @@ function SideComponent({tags}) {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

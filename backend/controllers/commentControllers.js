@@ -28,7 +28,8 @@ const postComment = catchAsync(async (req, res, next) => {
   const addedComment = await CommentModel.create({
     text: req.body.text,
     user: req.user._id, // get the user from request object not from the body for security purposes
-    post: blogid
+    post: blogid,
+    repliedTo: req.body.replied
   });
 
   if (!addedComment) {

@@ -49,7 +49,7 @@ function Navbar() {
           <div className="flex justify-center items-center">
             <img
               src={mode === "light" ? logo : logo_w_header}
-              alt="logo of blacktree"
+              alt="logo of OnSpot"
               className="duration-200"
             />
             <div
@@ -57,13 +57,13 @@ function Navbar() {
                 mode === "light" ? "text-black" : "text-gray-100"
               } duration-200`}
             >
-              BLACKTREE
+              OnSpot
             </div>
           </div>
         </Link>
       </div>
 
-      {/* This div is for everything other than the BLACKTREE logo */}
+      {/* This div is for everything other than the OnSpot logo */}
       <div className="flex w-3/5 justify-evenly items-center md:w-4/5 ">
         <div onClick={toggleMode} className="ml-3">
           <img src={mode === "light" ? dark_mode : light_mode} />
@@ -233,7 +233,7 @@ function Navbar() {
               <div>
                 <img src={logo_w} />
               </div>
-              <div className="ml-3 text-[17px]">BLACKTREE</div>
+              <div className="ml-3 text-[17px]">OnSpot</div>
             </div>
           </div>
         </div>

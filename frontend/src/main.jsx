@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import { vkyreq } from "./utils/vkyreq";
 import { deleteCookie, getCookie, setCookie } from "./utils/Cookies";
+import { useParams } from "react-router-dom";
 
 // Importing components
 import Navbar from "./components/Navbar";
@@ -28,7 +29,7 @@ import Branch from "./pages/Branch";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import ProtectedComponent from "./pages/frontend/src/components/ProtectedRoutes";
-
+import Comment from './components/Blogs/Comment'
 // Analytics and speed insights
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
@@ -42,6 +43,21 @@ export const LoggedInContext = createContext();
 // this context is for basic user info like his name email profile and username...
 export const UserContext = createContext();
 
+
+// extra components
+const BlogComponent = () => {
+  const { id } = useParams(); // Extract the id from the URL
+
+  return (
+    <>
+      <BlogTemp />
+      <Comment id={id} />
+    </>
+  );
+};
+
+
+
 // defining different routes in frontend
 const paths = [
   {
@@ -54,7 +70,7 @@ const paths = [
   },
   {
     path: "/blogs/:id",
-    element: <BlogTemp />,
+    element: <BlogComponent />
   },
   {
     path: "/about",
@@ -200,3 +216,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <RouterProvider router={appRouter} />
   </React.StrictMode>
 );
+

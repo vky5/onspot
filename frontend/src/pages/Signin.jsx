@@ -97,19 +97,6 @@ function Signin() {
           Forget Password?
         </div>
         <div>
-          
-          {/* <label className="flex mt-3">
-            <input
-              type="checkbox"
-              className="form-checkbox text-6DADA2 focus:ring-6DADA2"
-              checked={isChecked}
-              onChange={handleCheckboxChange}
-            />
-            <div className="ml-1 text-xs text-white">Remember Me</div>
-          </label>
-          */}
-
-
           <div> 
             <button className="bg-white text-xl text-primary w-full mt-8 pt-3 pb-3 rounded-3xl" onClick={()=>sendLogin(userInfo)}>
               Login
