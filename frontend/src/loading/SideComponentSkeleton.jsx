@@ -30,35 +30,35 @@ function SideComponentSkeleton() {
         ))}
       </div>
 
-      <div className="mt-10 lg:mt-24 lg:mb-5 mb-3 lg:text-2xl text-xl">
+      {/* <div className="mt-10 lg:mt-24 lg:mb-5 mb-3 lg:text-2xl text-xl">
         Popular Bloggers this week
-      </div>
+      </div> */}
 
       {/* Skeleton for Blogger Items */}
-      <div className="space-y-4 lg:space-y-7 flex flex-col text-sm lg:text-xl">
+      {/* <div className="space-y-4 lg:space-y-7 flex flex-col text-sm lg:text-xl">
         {Array.from({ length: 2 }).map((_, index) => (
           <div
             key={index}
             className={`flex items-center space-x-3 px-4 py-2 lg:px-6 lg:py-4 rounded-3xl ${
               mode === "light" ? "bg-gray-200" : "bg-gray-800"
             }`}
-          >
+          > */}
             {/* Skeleton for Profile Image */}
-            <div className="w-10 h-10 lg:h-16 lg:w-16 rounded-full overflow-hidden">
+            {/* <div className="w-10 h-10 lg:h-16 lg:w-16 rounded-full overflow-hidden">
               <Skeleton variant="circular" width={64} height={64} />
-            </div>
+            </div> */}
             {/* Skeleton for Blogger Name */}
-            <Skeleton
+            {/* <Skeleton
               variant="text"
               width={120}
               height={30}
               className="flex-grow"
-            />
+            /> */}
             {/* Skeleton for Visit Button */}
-            <Skeleton variant="rectangular" width={60} height={30} />
+            {/* <Skeleton variant="rectangular" width={60} height={30} />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
