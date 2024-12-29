@@ -59,7 +59,11 @@ const sendProd = (err, res)=>{
     }
 }
 
-module.exports = (err, req, res, next) => {
+module.exports = (err, req, res, next) => { 
+    /*
+    in express middlewares look like (req, res, next) but if the middleware func has (err, req, res, next), it is automatically treated as 
+    error handler middleware
+    */
     if (process.env.NODE_ENV === 'development') {
         sendDev(err, res);
 
