@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
+
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -45,6 +48,14 @@ app.use(mongoSanitize());
 app.use(xss());
 
 app.use(hpp()); // we can whitelist some fields if we want to allow multiple fields with same name
+
+// Health check route
+app.get('/', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'Server is running perfectly!'
+    });
+});
 
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/users', userRoute);

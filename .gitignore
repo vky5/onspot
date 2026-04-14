@@ -1,1 +1,4 @@
 .vscode
+*.env.backup
+node_modules
+.qwen
