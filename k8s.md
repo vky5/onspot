@@ -99,6 +99,10 @@ Initially, I exposed services using NodePort for quick validation.
 
 I later replaced that with Ingress-based routing to provide a single entry point into the cluster.
 
+To enable host-based access, I first checked the Minikube node IP (`minikube ip`) and then updated `/etc/hosts` to map `app.local` to that IP.
+
+Before host-based routing, I validated direct NodePort access (frontend on `http://192.168.49.2:30008` and backend on `http://192.168.49.2:30007`). After host mapping, traffic was accessed cleanly through `app.local` with path-based routing.
+
 Ingress configuration:
 
 * `app.local` -> frontend
@@ -241,6 +245,7 @@ to troubleshoot scheduling issues, volume binding delays, and ingress routing be
 * Ingress-based routing removes dependency on backend URLs
 * Backend access was previously tested with a separate domain (`api.local`), then replaced with path-based routing to simplify architecture and remove redundant domain configuration.
 * Host mapping is simplified: only `app.local` is required in `/etc/hosts`.
+* Host mapping was created after confirming the Minikube IP (`192.168.49.2`) so `app.local` resolves directly to the cluster entry point.
 
 ---
 
