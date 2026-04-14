@@ -154,7 +154,7 @@ Value: <EC2-PUBLIC-IP>
 Proxy: OFF (DNS only)
 ```
 
-![Cloudflare DNS configuration for root domain](cloudflare-dns-config.png)
+![Cloudflare DNS configuration for root domain](awsertasd.png)
 
 This maps `blacktree.in` to the EC2 instance.
 
