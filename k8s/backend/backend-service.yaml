@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 8000 # the port that the service will listen on
+      targetPort: 8000 # the port that the backend container is listening on
+      nodePort: 30007 # physical port on the node to access the service
+  type: NodePort
