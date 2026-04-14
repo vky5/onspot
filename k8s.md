@@ -2,7 +2,7 @@
 
 This project showcases how I deployed a full-stack application (React + Express + MongoDB) on Kubernetes using Minikube.
 
-The focus was not only to run containers, but to model the system with clear Kubernetes boundaries, secure configuration handling, persistent storage, and ingress-based routing.
+The goal was to model the system using Kubernetes primitives with clear service boundaries, proper configuration handling, persistent storage, and ingress-based routing.
 
 ---
 
@@ -30,7 +30,7 @@ The cluster runs on Minikube, and I build images directly inside Minikube's Dock
 eval $(minikube docker-env)
 ```
 
-This avoids a remote registry and allows Kubernetes to use local images with:
+This avoids pushing images to a remote registry and allows Kubernetes to directly use locally built images within the Minikube environment, with:
 
 ```text
 imagePullPolicy: Never
@@ -93,9 +93,11 @@ Important detail:
 
 ## Networking Strategy
 
+![alt text](image-4.png)
+
 Initially, I exposed services using NodePort for quick validation.
 
-After that, I moved to Ingress-based routing for cleaner architecture.
+I later replaced that with Ingress-based routing to provide a single entry point into the cluster.
 
 Ingress configuration:
 
@@ -106,7 +108,13 @@ Ingress manifest:
 
 * [k8s/ingress.yaml](k8s/ingress.yaml)
 
-This removes the need to hardcode backend URLs in the frontend.
+This allows the frontend to communicate with the backend using relative paths:
+
+```text
+/api
+```
+
+instead of hardcoded backend URLs.
 
 ### Key Improvement
 
@@ -124,7 +132,9 @@ the frontend calls:
 
 Ingress handles routing to the backend service.
 
-This decouples frontend from backend service location and avoids rebuilds when backend endpoints change.
+This mirrors production systems where a single entry point routes traffic to multiple services and removes environment-specific frontend configuration.
+
+This design centralizes traffic entry through a single ingress layer, similar to production setups using load balancers or API gateways.
 
 ---
 
@@ -174,7 +184,7 @@ kubectl rollout status deployment/frontend
 
 ## Validation
 ![alt text](image-3.png)
-I validated:
+Validation was performed by:
 
 * Pods reached `Running` and `Ready`
 * PVC successfully bound to PV
@@ -202,6 +212,18 @@ Browser → app.local
 
 ---
 
+## Debugging
+
+During development, I used:
+
+* kubectl logs <pod>
+* kubectl describe pod <pod>
+* kubectl get events
+
+to troubleshoot scheduling issues, volume binding delays, and ingress routing behavior.
+
+---
+
 ## Tradeoffs and Limitations
 
 * Single-node cluster (Minikube)
@@ -217,10 +239,15 @@ Browser → app.local
 * Backend configuration is dynamic (ConfigMap/Secret)
 * Frontend configuration is static (build-time, Vite)
 * Ingress-based routing removes dependency on backend URLs
+* Backend access was previously tested with a separate domain (`api.local`), then replaced with path-based routing to simplify architecture and remove redundant domain configuration.
+* Host mapping is simplified: only `app.local` is required in `/etc/hosts`.
 
 ---
 
 ## Summary
+
+![alt text](image-5.png)
+
 
 This setup demonstrates:
 
